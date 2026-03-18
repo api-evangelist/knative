@@ -1,0 +1,1262 @@
+openapi: 3.1.0
+info:
+  title: Knative Serving API
+  description: >-
+    The Knative Serving API extends the Kubernetes API with custom resources
+    for deploying and managing serverless workloads. The four core resources —
+    Service, Route, Configuration, and Revision — enable automatic scaling
+    including scale-to-zero, traffic splitting between revisions, and
+    progressive rollouts. Service is the top-level resource that automatically
+    manages Routes and Configurations. All resources are served through the
+    Kubernetes API server under the serving.knative.dev API group.
+  version: '1.0'
+  contact:
+    name: Knative Community
+    url: https://knative.dev/community/
+externalDocs:
+  description: Knative Serving API Reference
+  url: https://knative.dev/docs/serving/reference/serving-api/
+servers:
+  - url: https://kubernetes.default.svc
+    description: Kubernetes API Server (in-cluster)
+tags:
+  - name: Services
+    description: >-
+      Knative Service resources are the top-level abstraction for deploying
+      serverless workloads. A Service automatically manages the lifecycle of
+      Routes and Configurations, creating a new Revision on each spec update
+      and managing traffic routing.
+  - name: Routes
+    description: >-
+      Knative Route resources manage the network endpoints and traffic
+      distribution across Revisions. Routes support percentage-based traffic
+      splitting for canary deployments and named route targets.
+  - name: Configurations
+    description: >-
+      Knative Configuration resources maintain the desired state for a
+      deployment by capturing container templates. Each update to a
+      Configuration creates a new immutable Revision.
+  - name: Revisions
+    description: >-
+      Knative Revision resources are immutable snapshots of application code
+      and configuration at a point in time. Revisions are created by
+      Configuration updates and are the actual units that are scaled.
+  - name: DomainMappings
+    description: >-
+      Knative DomainMapping resources map a custom domain name to a Knative
+      Service, enabling services to be served under custom hostnames with
+      automatic TLS certificate provisioning.
+security:
+  - bearerAuth: []
+paths:
+  /apis/serving.knative.dev/v1/namespaces/{namespace}/services:
+    get:
+      operationId: listServices
+      summary: List Knative Services
+      description: >-
+        Returns a list of all Knative Service resources in the specified
+        namespace. Services are the primary resource for deploying serverless
+        workloads and automatically manage Routes, Configurations, and Revisions.
+      tags:
+        - Services
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed Services.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ServiceList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createService
+      summary: Create a Knative Service
+      description: >-
+        Creates a new Knative Service resource. Knative will automatically
+        create a corresponding Route and Configuration, and will create the
+        first Revision from the provided template. The Service begins routing
+        traffic to the Revision once it becomes ready.
+      tags:
+        - Services
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Service'
+      responses:
+        '201':
+          description: Service successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /apis/serving.knative.dev/v1/namespaces/{namespace}/services/{name}:
+    get:
+      operationId: getService
+      summary: Get a Knative Service
+      description: >-
+        Returns the details of a specific Knative Service including its
+        template spec, traffic configuration, and status conditions reflecting
+        readiness, latestCreatedRevisionName, and latestReadyRevisionName.
+      tags:
+        - Services
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Successfully retrieved the Service.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: replaceService
+      summary: Replace a Knative Service
+      description: >-
+        Replaces a Knative Service. Any change to the spec.template causes
+        Knative to create a new Revision. Traffic routing continues to the
+        previous Revision until the new one becomes ready, unless traffic
+        configuration specifies otherwise.
+      tags:
+        - Services
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Service'
+      responses:
+        '200':
+          description: Service successfully replaced.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Service'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteService
+      summary: Delete a Knative Service
+      description: >-
+        Deletes a Knative Service and all its owned resources including Routes,
+        Configurations, and Revisions. Pods are terminated and the DNS entries
+        are removed.
+      tags:
+        - Services
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Service deletion initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /apis/serving.knative.dev/v1/namespaces/{namespace}/routes:
+    get:
+      operationId: listRoutes
+      summary: List Knative Routes
+      description: >-
+        Returns a list of all Knative Route resources in the specified
+        namespace. Routes map network endpoints to Revisions and manage
+        percentage-based traffic distribution.
+      tags:
+        - Routes
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed Routes.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RouteList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createRoute
+      summary: Create a Knative Route
+      description: >-
+        Creates a new Knative Route resource. Routes can distribute traffic
+        across multiple Revisions using percentage-based splitting. Traffic
+        percentages across all targets must sum to 100.
+      tags:
+        - Routes
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Route'
+      responses:
+        '201':
+          description: Route successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Route'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /apis/serving.knative.dev/v1/namespaces/{namespace}/routes/{name}:
+    get:
+      operationId: getRoute
+      summary: Get a Knative Route
+      description: >-
+        Returns the details of a specific Knative Route including its traffic
+        targets, URLs for named routes, and status conditions.
+      tags:
+        - Routes
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Successfully retrieved the Route.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Route'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteRoute
+      summary: Delete a Knative Route
+      description: >-
+        Deletes a Knative Route. Traffic to the associated URL will cease.
+        Note that Routes owned by a Service are automatically deleted when
+        the Service is deleted.
+      tags:
+        - Routes
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Route deletion initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /apis/serving.knative.dev/v1/namespaces/{namespace}/configurations:
+    get:
+      operationId: listConfigurations
+      summary: List Knative Configurations
+      description: >-
+        Returns a list of all Knative Configuration resources in the specified
+        namespace. Configurations hold the desired state template and track
+        the latest created and ready Revisions.
+      tags:
+        - Configurations
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed Configurations.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConfigurationList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /apis/serving.knative.dev/v1/namespaces/{namespace}/configurations/{name}:
+    get:
+      operationId: getConfiguration
+      summary: Get a Knative Configuration
+      description: >-
+        Returns details of a specific Knative Configuration including its
+        revision template, latestCreatedRevisionName, and latestReadyRevisionName
+        in the status.
+      tags:
+        - Configurations
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Successfully retrieved the Configuration.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Configuration'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /apis/serving.knative.dev/v1/namespaces/{namespace}/revisions:
+    get:
+      operationId: listRevisions
+      summary: List Knative Revisions
+      description: >-
+        Returns a list of all Knative Revision resources in the specified
+        namespace. Revisions are immutable snapshots created by Configuration
+        updates and are the actual units that are autoscaled to handle traffic.
+      tags:
+        - Revisions
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed Revisions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RevisionList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /apis/serving.knative.dev/v1/namespaces/{namespace}/revisions/{name}:
+    get:
+      operationId: getRevision
+      summary: Get a Knative Revision
+      description: >-
+        Returns the details of a specific Knative Revision including its
+        container spec, autoscaling annotations, and status conditions
+        reflecting whether it is Ready and Active.
+      tags:
+        - Revisions
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Successfully retrieved the Revision.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Revision'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteRevision
+      summary: Delete a Knative Revision
+      description: >-
+        Deletes a specific Knative Revision. Only Revisions that are not
+        receiving traffic can be deleted. Revisions owned by a Service may
+        have a retain policy; check the Service's revisionHistoryLimit.
+      tags:
+        - Revisions
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Revision deletion initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /apis/serving.knative.dev/v1alpha1/namespaces/{namespace}/domainmappings:
+    get:
+      operationId: listDomainMappings
+      summary: List DomainMappings
+      description: >-
+        Returns a list of all DomainMapping resources in the specified
+        namespace. DomainMappings associate custom domain names with Knative
+        Services and manage TLS certificate provisioning.
+      tags:
+        - DomainMappings
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed DomainMappings.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomainMappingList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createDomainMapping
+      summary: Create a DomainMapping
+      description: >-
+        Creates a DomainMapping to associate a custom domain name with a
+        Knative Service. Knative will handle TLS certificate provisioning
+        via cert-manager or another configured certificate provider.
+      tags:
+        - DomainMappings
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DomainMapping'
+      responses:
+        '201':
+          description: DomainMapping successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomainMapping'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /apis/serving.knative.dev/v1alpha1/namespaces/{namespace}/domainmappings/{name}:
+    get:
+      operationId: getDomainMapping
+      summary: Get a DomainMapping
+      description: >-
+        Returns the details of a specific DomainMapping including its reference
+        target, URL, and TLS certificate status conditions.
+      tags:
+        - DomainMappings
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Successfully retrieved the DomainMapping.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomainMapping'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteDomainMapping
+      summary: Delete a DomainMapping
+      description: >-
+        Deletes a DomainMapping. The custom domain will no longer route to
+        the Knative Service and the TLS certificate will be released.
+      tags:
+        - DomainMappings
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: DomainMapping deletion initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >-
+        Kubernetes service account token or user bearer token. RBAC policies
+        control access to Knative Serving resources.
+  parameters:
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: Kubernetes namespace containing the resource.
+      schema:
+        type: string
+    name:
+      name: name
+      in: path
+      required: true
+      description: Name of the Knative resource.
+      schema:
+        type: string
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: Selector to filter resources by label key-value pairs.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return in a single response.
+      schema:
+        type: integer
+        minimum: 1
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Pagination token returned by a previous list call.
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: The request was malformed or failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    Conflict:
+      description: A resource with this name already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+  schemas:
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Unique name of the resource within its namespace.
+        namespace:
+          type: string
+          description: Namespace the resource belongs to.
+        labels:
+          type: object
+          description: Key-value labels for organizing and selecting resources.
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: Non-identifying metadata, including autoscaling configuration annotations.
+          additionalProperties:
+            type: string
+        resourceVersion:
+          type: string
+          description: Opaque string identifying the resource version for optimistic concurrency.
+        uid:
+          type: string
+          description: Unique identifier assigned by the API server.
+        generation:
+          type: integer
+          description: Sequence number incremented on each spec change.
+        creationTimestamp:
+          type: string
+          format: date-time
+          description: Time the resource was created.
+        deletionTimestamp:
+          type: string
+          format: date-time
+          description: Time after which the resource will be deleted.
+        ownerReferences:
+          type: array
+          description: References to objects that own this resource.
+          items:
+            type: object
+            properties:
+              apiVersion:
+                type: string
+                description: API version of the owner.
+              kind:
+                type: string
+                description: Kind of the owner.
+              name:
+                type: string
+                description: Name of the owner.
+              uid:
+                type: string
+                description: UID of the owner.
+    Condition:
+      type: object
+      description: A status condition on a Knative resource.
+      required:
+        - type
+        - status
+      properties:
+        type:
+          type: string
+          description: Type of condition such as Ready or Active.
+        status:
+          type: string
+          enum:
+            - 'True'
+            - 'False'
+            - Unknown
+          description: Status of the condition.
+        reason:
+          type: string
+          description: Machine-readable reason for the last condition transition.
+        message:
+          type: string
+          description: Human-readable message explaining the current condition.
+        lastTransitionTime:
+          type: string
+          format: date-time
+          description: Time of the last condition transition.
+    Status:
+      type: object
+      description: Kubernetes API Status response for errors and operation results.
+      properties:
+        apiVersion:
+          type: string
+          description: API version of the Status object.
+        kind:
+          type: string
+          const: Status
+          description: Always Status.
+        status:
+          type: string
+          description: Success or Failure.
+        message:
+          type: string
+          description: Human-readable description of the status.
+        reason:
+          type: string
+          description: Machine-readable reason, such as NotFound or AlreadyExists.
+        code:
+          type: integer
+          description: HTTP status code.
+    RevisionTemplate:
+      type: object
+      description: >-
+        Template for creating Knative Revisions. The template includes
+        container spec, scaling configuration, and other pod-level settings.
+        Each unique combination of template values results in a distinct Revision.
+      properties:
+        metadata:
+          type: object
+          description: Metadata for the Revision template including autoscaling annotations.
+          properties:
+            name:
+              type: string
+              description: >-
+                Optional explicit Revision name. If omitted, Knative generates a name.
+                Use this for predictable Revision names in traffic targets.
+            labels:
+              type: object
+              description: Labels applied to the Revision.
+              additionalProperties:
+                type: string
+            annotations:
+              type: object
+              description: >-
+                Annotations for autoscaling configuration. Common annotations include
+                autoscaling.knative.dev/minScale, autoscaling.knative.dev/maxScale,
+                and autoscaling.knative.dev/target.
+              additionalProperties:
+                type: string
+        spec:
+          type: object
+          description: Revision spec defining containers, volumes, and scaling behavior.
+          properties:
+            containerConcurrency:
+              type: integer
+              minimum: 0
+              description: >-
+                Maximum number of simultaneous requests per container instance.
+                A value of 0 means unlimited concurrency.
+            timeoutSeconds:
+              type: integer
+              minimum: 0
+              description: Maximum number of seconds a request can take before timing out.
+            serviceAccountName:
+              type: string
+              description: Name of the service account to use for the revision pods.
+            containers:
+              type: array
+              description: List of containers in the revision pod template.
+              items:
+                $ref: '#/components/schemas/Container'
+            volumes:
+              type: array
+              description: Volumes to mount into containers.
+              items:
+                type: object
+                description: A Kubernetes volume definition.
+    Container:
+      type: object
+      description: A container definition for a Knative Revision.
+      required:
+        - image
+      properties:
+        name:
+          type: string
+          description: Name of the container. Defaults to the first container name.
+        image:
+          type: string
+          description: OCI image reference for the container.
+        ports:
+          type: array
+          description: Ports exposed by the container. Knative uses the first container port for routing.
+          items:
+            type: object
+            properties:
+              containerPort:
+                type: integer
+                description: Port number exposed by the container.
+              name:
+                type: string
+                description: Port name, typically h2c for HTTP/2 or http1 for HTTP/1.1.
+              protocol:
+                type: string
+                description: Protocol for the port, usually TCP.
+        env:
+          type: array
+          description: Environment variables set in the container.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Environment variable name.
+              value:
+                type: string
+                description: Literal value for the environment variable.
+              valueFrom:
+                type: object
+                description: Source for the environment variable value from a ConfigMap or Secret.
+        resources:
+          type: object
+          description: Compute resource requests and limits for the container.
+          properties:
+            requests:
+              type: object
+              description: Minimum resources requested.
+              additionalProperties:
+                type: string
+            limits:
+              type: object
+              description: Maximum resources allowed.
+              additionalProperties:
+                type: string
+        readinessProbe:
+          type: object
+          description: Probe to determine when the container is ready to accept traffic.
+        livenessProbe:
+          type: object
+          description: Probe to determine if the container is still running.
+        volumeMounts:
+          type: array
+          description: Volume mounts for the container.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Name of the volume to mount.
+              mountPath:
+                type: string
+                description: Path within the container to mount the volume.
+    TrafficTarget:
+      type: object
+      description: A traffic target that routes a percentage of traffic to a specific Revision or the latest ready Revision.
+      properties:
+        revisionName:
+          type: string
+          description: Specific Revision name to route traffic to. Mutually exclusive with configurationName.
+        configurationName:
+          type: string
+          description: Configuration name to route traffic to the latest ready Revision of that Configuration.
+        latestRevision:
+          type: boolean
+          description: Whether to route to the latest ready Revision. Mutually exclusive with revisionName.
+        percent:
+          type: integer
+          minimum: 0
+          maximum: 100
+          description: Percentage of traffic to route to this target. All percentages must sum to 100.
+        tag:
+          type: string
+          description: Optional name that creates a named subdomain URL for this traffic target.
+        url:
+          type: string
+          format: uri
+          description: >-
+            Read-only URL for this traffic target. Set by Knative in status.
+            Named tags receive a subdomain URL.
+    Service:
+      type: object
+      description: >-
+        A Knative Service that manages the full lifecycle of a serverless
+        workload including its Route, Configuration, and Revisions. Service
+        is the primary API for deploying applications on Knative Serving.
+      required:
+        - apiVersion
+        - kind
+        - metadata
+        - spec
+      properties:
+        apiVersion:
+          type: string
+          const: serving.knative.dev/v1
+          description: API version for the Knative Service.
+        kind:
+          type: string
+          const: Service
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Specification for the Knative Service.
+          required:
+            - template
+          properties:
+            template:
+              $ref: '#/components/schemas/RevisionTemplate'
+            traffic:
+              type: array
+              description: Traffic distribution across Revisions. Percentages must sum to 100.
+              items:
+                $ref: '#/components/schemas/TrafficTarget'
+        status:
+          type: object
+          description: Status of the Knative Service as observed by the controller.
+          properties:
+            url:
+              type: string
+              format: uri
+              description: Primary URL for the Service.
+            address:
+              type: object
+              description: Cluster-internal URL for the Service.
+              properties:
+                url:
+                  type: string
+                  description: Cluster-internal URL.
+            latestCreatedRevisionName:
+              type: string
+              description: Name of the most recently created Revision.
+            latestReadyRevisionName:
+              type: string
+              description: Name of the most recently ready Revision that is currently serving traffic.
+            observedGeneration:
+              type: integer
+              description: Generation observed by the controller.
+            conditions:
+              type: array
+              description: Status conditions for the Service.
+              items:
+                $ref: '#/components/schemas/Condition'
+            traffic:
+              type: array
+              description: Current traffic distribution as observed by Knative.
+              items:
+                $ref: '#/components/schemas/TrafficTarget'
+    ServiceList:
+      type: object
+      description: A list of Knative Service resources.
+      required:
+        - apiVersion
+        - kind
+        - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list.
+        kind:
+          type: string
+          const: ServiceList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of Knative Service resources.
+          items:
+            $ref: '#/components/schemas/Service'
+    Route:
+      type: object
+      description: >-
+        A Knative Route that manages traffic distribution across Revisions.
+        Routes map network endpoints to one or more Revisions and support
+        percentage-based traffic splitting for progressive rollouts.
+      required:
+        - apiVersion
+        - kind
+        - metadata
+        - spec
+      properties:
+        apiVersion:
+          type: string
+          const: serving.knative.dev/v1
+          description: API version for the Knative Route.
+        kind:
+          type: string
+          const: Route
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Specification for the Route.
+          properties:
+            traffic:
+              type: array
+              description: Traffic targets for this Route. Percentages must sum to 100.
+              items:
+                $ref: '#/components/schemas/TrafficTarget'
+        status:
+          type: object
+          description: Status of the Route.
+          properties:
+            url:
+              type: string
+              format: uri
+              description: Primary URL assigned to this Route.
+            conditions:
+              type: array
+              description: Status conditions for the Route.
+              items:
+                $ref: '#/components/schemas/Condition'
+            traffic:
+              type: array
+              description: Observed traffic distribution.
+              items:
+                $ref: '#/components/schemas/TrafficTarget'
+    RouteList:
+      type: object
+      description: A list of Knative Route resources.
+      required:
+        - apiVersion
+        - kind
+        - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list.
+        kind:
+          type: string
+          const: RouteList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of Route resources.
+          items:
+            $ref: '#/components/schemas/Route'
+    Configuration:
+      type: object
+      description: >-
+        A Knative Configuration that holds the desired state for a serverless
+        workload. Each update to the Configuration spec creates a new immutable
+        Revision. The Configuration tracks the latest created and ready Revisions.
+      required:
+        - apiVersion
+        - kind
+        - metadata
+        - spec
+      properties:
+        apiVersion:
+          type: string
+          const: serving.knative.dev/v1
+          description: API version for the Knative Configuration.
+        kind:
+          type: string
+          const: Configuration
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Specification for the Configuration.
+          properties:
+            template:
+              $ref: '#/components/schemas/RevisionTemplate'
+        status:
+          type: object
+          description: Status of the Configuration.
+          properties:
+            latestCreatedRevisionName:
+              type: string
+              description: Name of the most recently created Revision.
+            latestReadyRevisionName:
+              type: string
+              description: Name of the most recently ready Revision.
+            conditions:
+              type: array
+              description: Status conditions for the Configuration.
+              items:
+                $ref: '#/components/schemas/Condition'
+    ConfigurationList:
+      type: object
+      description: A list of Knative Configuration resources.
+      required:
+        - apiVersion
+        - kind
+        - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list.
+        kind:
+          type: string
+          const: ConfigurationList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of Configuration resources.
+          items:
+            $ref: '#/components/schemas/Configuration'
+    Revision:
+      type: object
+      description: >-
+        A Knative Revision, an immutable snapshot of application code and
+        configuration at a point in time. Revisions are created automatically
+        when a Configuration is updated and are the units that Knative scales
+        up and down to handle traffic.
+      required:
+        - apiVersion
+        - kind
+        - metadata
+      properties:
+        apiVersion:
+          type: string
+          const: serving.knative.dev/v1
+          description: API version for the Knative Revision.
+        kind:
+          type: string
+          const: Revision
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: The immutable spec of the Revision.
+          properties:
+            containerConcurrency:
+              type: integer
+              description: Maximum concurrent requests per container instance.
+            timeoutSeconds:
+              type: integer
+              description: Request timeout in seconds.
+            serviceAccountName:
+              type: string
+              description: Service account used by the Revision pods.
+            containers:
+              type: array
+              description: Containers in the Revision pod.
+              items:
+                $ref: '#/components/schemas/Container'
+        status:
+          type: object
+          description: Status of the Revision.
+          properties:
+            serviceName:
+              type: string
+              description: Name of the Service that owns this Revision.
+            logUrl:
+              type: string
+              description: URL to the log output for this Revision.
+            conditions:
+              type: array
+              description: Status conditions for the Revision.
+              items:
+                $ref: '#/components/schemas/Condition'
+    RevisionList:
+      type: object
+      description: A list of Knative Revision resources.
+      required:
+        - apiVersion
+        - kind
+        - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list.
+        kind:
+          type: string
+          const: RevisionList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of Revision resources.
+          items:
+            $ref: '#/components/schemas/Revision'
+    DomainMapping:
+      type: object
+      description: >-
+        A Knative DomainMapping that maps a custom domain name to a Knative
+        Service, enabling services to be reached at custom hostnames with
+        automatic TLS certificate provisioning.
+      required:
+        - apiVersion
+        - kind
+        - metadata
+        - spec
+      properties:
+        apiVersion:
+          type: string
+          const: serving.knative.dev/v1alpha1
+          description: API version for the DomainMapping resource.
+        kind:
+          type: string
+          const: DomainMapping
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Specification for the DomainMapping.
+          required:
+            - ref
+          properties:
+            ref:
+              type: object
+              description: Reference to the Knative Service to map the domain to.
+              required:
+                - name
+                - kind
+                - apiVersion
+              properties:
+                name:
+                  type: string
+                  description: Name of the referenced Service.
+                kind:
+                  type: string
+                  description: Kind of the referenced resource, typically Service.
+                apiVersion:
+                  type: string
+                  description: API version of the referenced resource.
+            tls:
+              type: object
+              description: TLS configuration for the domain mapping.
+              properties:
+                secretName:
+                  type: string
+                  description: Name of the Kubernetes secret containing the TLS certificate.
+        status:
+          type: object
+          description: Status of the DomainMapping.
+          properties:
+            url:
+              type: string
+              format: uri
+              description: The custom URL for this domain mapping.
+            conditions:
+              type: array
+              description: Status conditions including CertificateProvisioned and Ready.
+              items:
+                $ref: '#/components/schemas/Condition'
+    DomainMappingList:
+      type: object
+      description: A list of DomainMapping resources.
+      required:
+        - apiVersion
+        - kind
+        - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list.
+        kind:
+          type: string
+          const: DomainMappingList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of DomainMapping resources.
+          items:
+            $ref: '#/components/schemas/DomainMapping'

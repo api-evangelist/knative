@@ -1,0 +1,1621 @@
+openapi: 3.1.0
+info:
+  title: Knative Eventing API
+  description: >-
+    The Knative Eventing API extends Kubernetes with custom resources for
+    building event-driven architectures. It provides two main patterns:
+    Broker and Trigger for cloud-native event routing with filtering, and
+    Channel and Subscription for pub/sub messaging. Event sources such as
+    ApiServerSource, PingSource, and SinkBinding connect external event
+    producers to the eventing mesh. All events conform to the CloudEvents
+    specification. Resources are served through the Kubernetes API server
+    under the eventing.knative.dev and messaging.knative.dev API groups.
+  version: '1.0'
+  contact:
+    name: Knative Community
+    url: https://knative.dev/community/
+externalDocs:
+  description: Knative Eventing API Reference
+  url: https://knative.dev/docs/eventing/reference/eventing-api/
+servers:
+  - url: https://kubernetes.default.svc
+    description: Kubernetes API Server (in-cluster)
+tags:
+  - name: Brokers
+    description: >-
+      Knative Broker resources collect pools of events that can be consumed
+      using Triggers. Brokers provide event routing with filtering, guaranteed
+      delivery, and dead-letter sink support. The default broker implementation
+      uses an in-memory channel.
+  - name: Triggers
+    description: >-
+      Knative Trigger resources define filtered delivery options for events
+      arriving at a Broker. A Trigger selects events by attribute filters and
+      routes matching events to a destination such as a Knative Service.
+  - name: Channels
+    description: >-
+      Knative Channel resources represent a generic pub/sub messaging channel.
+      Channels receive events and fan them out to all Subscriptions. The
+      default channel implementation uses an in-memory channel.
+  - name: Subscriptions
+    description: >-
+      Knative Subscription resources define a delivery destination for events
+      sent to a Channel. Each Subscription routes events from a Channel to a
+      subscriber destination with optional reply and dead-letter handling.
+  - name: EventSources
+    description: >-
+      Knative event source resources connect external event producers to the
+      eventing mesh. Built-in sources include ApiServerSource for Kubernetes
+      API events, PingSource for scheduled events, and SinkBinding for
+      injecting sink URIs into workloads.
+  - name: EventTypes
+    description: >-
+      Knative EventType resources maintain a catalog of event types that can
+      be consumed from Brokers. EventTypes help consumers discover what events
+      are available without inspecting Broker contents directly.
+security:
+  - bearerAuth: []
+paths:
+  /apis/eventing.knative.dev/v1/namespaces/{namespace}/brokers:
+    get:
+      operationId: listBrokers
+      summary: List Brokers
+      description: >-
+        Returns a list of all Broker resources in the specified namespace.
+        Brokers act as event ingestion points and route events to matching
+        Triggers based on CloudEvent attribute filters.
+      tags:
+        - Brokers
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed Brokers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BrokerList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createBroker
+      summary: Create a Broker
+      description: >-
+        Creates a new Broker resource. Brokers collect events sent to them and
+        deliver events to all Triggers associated with the Broker whose filters
+        match the event. Optionally configure delivery settings for dead-letter
+        sinks and retry policies.
+      tags:
+        - Brokers
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Broker'
+      responses:
+        '201':
+          description: Broker successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Broker'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /apis/eventing.knative.dev/v1/namespaces/{namespace}/brokers/{name}:
+    get:
+      operationId: getBroker
+      summary: Get a Broker
+      description: >-
+        Returns details of a specific Broker resource including its delivery
+        configuration and status conditions reflecting whether it is Ready
+        and its ingress address.
+      tags:
+        - Brokers
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Successfully retrieved the Broker.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Broker'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteBroker
+      summary: Delete a Broker
+      description: >-
+        Deletes a Broker. All associated Triggers must be deleted first or
+        they will fail to find their target Broker. In-flight events may be
+        lost upon deletion.
+      tags:
+        - Brokers
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Broker deletion initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /apis/eventing.knative.dev/v1/namespaces/{namespace}/triggers:
+    get:
+      operationId: listTriggers
+      summary: List Triggers
+      description: >-
+        Returns a list of all Trigger resources in the specified namespace.
+        Triggers define which events from a Broker should be delivered to
+        a specific subscriber destination.
+      tags:
+        - Triggers
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed Triggers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriggerList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createTrigger
+      summary: Create a Trigger
+      description: >-
+        Creates a new Trigger resource. A Trigger subscribes to events from a
+        named Broker with optional attribute filters. Matching events are
+        delivered to the specified subscriber destination via HTTP POST in
+        CloudEvents format.
+      tags:
+        - Triggers
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Trigger'
+      responses:
+        '201':
+          description: Trigger successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trigger'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /apis/eventing.knative.dev/v1/namespaces/{namespace}/triggers/{name}:
+    get:
+      operationId: getTrigger
+      summary: Get a Trigger
+      description: >-
+        Returns details of a specific Trigger including its Broker reference,
+        attribute filters, subscriber destination, and status conditions.
+      tags:
+        - Triggers
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Successfully retrieved the Trigger.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trigger'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteTrigger
+      summary: Delete a Trigger
+      description: >-
+        Deletes a Trigger. The subscriber destination will stop receiving
+        events from the associated Broker once the Trigger is deleted.
+      tags:
+        - Triggers
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Trigger deletion initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /apis/messaging.knative.dev/v1/namespaces/{namespace}/channels:
+    get:
+      operationId: listChannels
+      summary: List Channels
+      description: >-
+        Returns a list of all Channel resources in the specified namespace.
+        Channels provide a generic pub/sub interface and fan events out to
+        all Subscriptions.
+      tags:
+        - Channels
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed Channels.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChannelList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createChannel
+      summary: Create a Channel
+      description: >-
+        Creates a new Channel resource. Channels receive events and deliver
+        them to all associated Subscriptions independently. The Channel
+        implementation type is specified via channelTemplate.
+      tags:
+        - Channels
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Channel'
+      responses:
+        '201':
+          description: Channel successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Channel'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /apis/messaging.knative.dev/v1/namespaces/{namespace}/channels/{name}:
+    get:
+      operationId: getChannel
+      summary: Get a Channel
+      description: >-
+        Returns details of a specific Channel including its channel template,
+        delivery configuration, and status conditions.
+      tags:
+        - Channels
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Successfully retrieved the Channel.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Channel'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteChannel
+      summary: Delete a Channel
+      description: >-
+        Deletes a Channel and all of its Subscriptions. In-flight events
+        may be lost upon deletion.
+      tags:
+        - Channels
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Channel deletion initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /apis/messaging.knative.dev/v1/namespaces/{namespace}/subscriptions:
+    get:
+      operationId: listSubscriptions
+      summary: List Subscriptions
+      description: >-
+        Returns a list of all Subscription resources in the specified namespace.
+        Subscriptions route events from a Channel to a subscriber destination
+        with optional reply and dead-letter sink configuration.
+      tags:
+        - Subscriptions
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed Subscriptions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createSubscription
+      summary: Create a Subscription
+      description: >-
+        Creates a new Subscription to a Channel. Events received by the Channel
+        are independently delivered to each Subscription's subscriber destination.
+        Reply events from the subscriber can be forwarded to another destination.
+      tags:
+        - Subscriptions
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Subscription'
+      responses:
+        '201':
+          description: Subscription successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /apis/messaging.knative.dev/v1/namespaces/{namespace}/subscriptions/{name}:
+    get:
+      operationId: getSubscription
+      summary: Get a Subscription
+      description: >-
+        Returns details of a specific Subscription including its Channel
+        reference, subscriber destination, reply destination, and dead-letter
+        sink configuration.
+      tags:
+        - Subscriptions
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Successfully retrieved the Subscription.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteSubscription
+      summary: Delete a Subscription
+      description: >-
+        Deletes a Subscription. The subscriber destination will stop receiving
+        events from the associated Channel.
+      tags:
+        - Subscriptions
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Subscription deletion initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /apis/sources.knative.dev/v1/namespaces/{namespace}/apiserversources:
+    get:
+      operationId: listApiServerSources
+      summary: List ApiServerSources
+      description: >-
+        Returns a list of all ApiServerSource resources in the specified
+        namespace. ApiServerSources watch the Kubernetes API server for events
+        on specified resource types and forward them as CloudEvents to a sink.
+      tags:
+        - EventSources
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed ApiServerSources.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerSourceList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createApiServerSource
+      summary: Create an ApiServerSource
+      description: >-
+        Creates a new ApiServerSource that watches the Kubernetes API server
+        for events on specified resource types and forwards them as CloudEvents
+        to the configured sink. Requires a service account with appropriate
+        RBAC permissions to watch the specified resources.
+      tags:
+        - EventSources
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiServerSource'
+      responses:
+        '201':
+          description: ApiServerSource successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerSource'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /apis/sources.knative.dev/v1/namespaces/{namespace}/pingsources:
+    get:
+      operationId: listPingSources
+      summary: List PingSources
+      description: >-
+        Returns a list of all PingSource resources in the namespace. PingSources
+        emit CloudEvents on a cron-based schedule with a configurable event
+        payload.
+      tags:
+        - EventSources
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed PingSources.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PingSourceList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createPingSource
+      summary: Create a PingSource
+      description: >-
+        Creates a new PingSource that fires CloudEvents on a cron schedule.
+        The event payload can be a static JSON data field. PingSources are
+        useful for triggering periodic workflows and scheduled tasks.
+      tags:
+        - EventSources
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PingSource'
+      responses:
+        '201':
+          description: PingSource successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PingSource'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /apis/sources.knative.dev/v1/namespaces/{namespace}/sinkbindings:
+    get:
+      operationId: listSinkBindings
+      summary: List SinkBindings
+      description: >-
+        Returns a list of all SinkBinding resources in the namespace. SinkBindings
+        augment a PodSpecable workload by injecting the sink URI as the K_SINK
+        environment variable, enabling the workload to send CloudEvents to the
+        configured sink.
+      tags:
+        - EventSources
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed SinkBindings.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SinkBindingList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createSinkBinding
+      summary: Create a SinkBinding
+      description: >-
+        Creates a new SinkBinding that injects K_SINK into a PodSpecable
+        subject such as a Deployment, StatefulSet, or CronJob. The sink URI
+        is automatically updated if the sink address changes.
+      tags:
+        - EventSources
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SinkBinding'
+      responses:
+        '201':
+          description: SinkBinding successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SinkBinding'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /apis/eventing.knative.dev/v1beta2/namespaces/{namespace}/eventtypes:
+    get:
+      operationId: listEventTypes
+      summary: List EventTypes
+      description: >-
+        Returns a list of all EventType resources in the namespace. EventTypes
+        define the catalog of event types that can be consumed from Brokers,
+        enabling event consumers to discover available events.
+      tags:
+        - EventTypes
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+        - $ref: '#/components/parameters/labelSelector'
+        - $ref: '#/components/parameters/limit'
+        - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed EventTypes.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventTypeList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createEventType
+      summary: Create an EventType
+      description: >-
+        Creates a new EventType to register an event type in the catalog.
+        EventTypes describe the CloudEvents type, source schema, and broker
+        association so consumers can discover and validate events.
+      tags:
+        - EventTypes
+      parameters:
+        - $ref: '#/components/parameters/namespace'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventType'
+      responses:
+        '201':
+          description: EventType successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventType'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >-
+        Kubernetes service account token or user bearer token. RBAC policies
+        control access to Knative Eventing resources.
+  parameters:
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: Kubernetes namespace containing the resource.
+      schema:
+        type: string
+    name:
+      name: name
+      in: path
+      required: true
+      description: Name of the Knative resource.
+      schema:
+        type: string
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: Selector to filter resources by label key-value pairs.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return in a single response.
+      schema:
+        type: integer
+        minimum: 1
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Pagination token returned by a previous list call.
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: The request was malformed or failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    Conflict:
+      description: A resource with this name already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+  schemas:
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          description: Unique name of the resource within its namespace.
+        namespace:
+          type: string
+          description: Namespace the resource belongs to.
+        labels:
+          type: object
+          description: Key-value labels for organizing and selecting resources.
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: Non-identifying metadata for the resource.
+          additionalProperties:
+            type: string
+        resourceVersion:
+          type: string
+          description: Opaque string identifying the resource version.
+        uid:
+          type: string
+          description: Unique identifier assigned by the API server.
+        generation:
+          type: integer
+          description: Sequence number incremented on each spec change.
+        creationTimestamp:
+          type: string
+          format: date-time
+          description: Time the resource was created.
+    Condition:
+      type: object
+      description: A status condition on a Knative resource.
+      required:
+        - type
+        - status
+      properties:
+        type:
+          type: string
+          description: Type of condition such as Ready or Addressable.
+        status:
+          type: string
+          enum:
+            - 'True'
+            - 'False'
+            - Unknown
+          description: Status of the condition.
+        reason:
+          type: string
+          description: Machine-readable reason for the last transition.
+        message:
+          type: string
+          description: Human-readable message for the condition.
+        lastTransitionTime:
+          type: string
+          format: date-time
+          description: Time of the last condition transition.
+    Status:
+      type: object
+      description: Kubernetes API Status response.
+      properties:
+        apiVersion:
+          type: string
+          description: API version of the Status object.
+        kind:
+          type: string
+          const: Status
+          description: Always Status.
+        status:
+          type: string
+          description: Success or Failure.
+        message:
+          type: string
+          description: Human-readable description.
+        reason:
+          type: string
+          description: Machine-readable reason.
+        code:
+          type: integer
+          description: HTTP status code.
+    Destination:
+      type: object
+      description: >-
+        A destination for delivering CloudEvents. Can reference a Kubernetes
+        service, a Knative Service, a Broker, or a Channel via ref, or specify
+        a direct URI.
+      properties:
+        ref:
+          type: object
+          description: Reference to a Kubernetes resource that is a destination.
+          required:
+            - apiVersion
+            - kind
+            - name
+          properties:
+            apiVersion:
+              type: string
+              description: API version of the destination resource.
+            kind:
+              type: string
+              description: Kind of the destination resource.
+            name:
+              type: string
+              description: Name of the destination resource.
+            namespace:
+              type: string
+              description: Namespace of the destination resource.
+        uri:
+          type: string
+          format: uri
+          description: Direct URI to deliver events to. Mutually exclusive with ref.
+    DeliverySpec:
+      type: object
+      description: Delivery configuration for event sources and Brokers.
+      properties:
+        deadLetterSink:
+          $ref: '#/components/schemas/Destination'
+          description: Destination for events that cannot be delivered after retries.
+        retry:
+          type: integer
+          minimum: 0
+          description: Minimum number of retries before sending to the dead-letter sink.
+        backoffPolicy:
+          type: string
+          enum:
+            - linear
+            - exponential
+          description: Backoff policy for retries.
+        backoffDelay:
+          type: string
+          description: >-
+            Delay between retries in ISO 8601 duration format, for example PT2S.
+        timeout:
+          type: string
+          description: Timeout per delivery attempt in ISO 8601 duration format.
+    Broker:
+      type: object
+      description: >-
+        A Knative Broker that collects a pool of events and routes them to
+        matching Triggers. Brokers provide event filtering, guaranteed delivery,
+        and dead-letter sink support conforming to the CloudEvents specification.
+      required:
+        - apiVersion
+        - kind
+        - metadata
+      properties:
+        apiVersion:
+          type: string
+          const: eventing.knative.dev/v1
+          description: API version for the Broker.
+        kind:
+          type: string
+          const: Broker
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Specification for the Broker.
+          properties:
+            config:
+              type: object
+              description: Reference to a ConfigMap that configures the Broker implementation.
+              properties:
+                apiVersion:
+                  type: string
+                  description: API version of the configuration resource.
+                kind:
+                  type: string
+                  description: Kind of the configuration resource.
+                name:
+                  type: string
+                  description: Name of the configuration resource.
+                namespace:
+                  type: string
+                  description: Namespace of the configuration resource.
+            delivery:
+              $ref: '#/components/schemas/DeliverySpec'
+        status:
+          type: object
+          description: Status of the Broker.
+          properties:
+            address:
+              type: object
+              description: URL to which events should be sent for this Broker.
+              properties:
+                url:
+                  type: string
+                  format: uri
+                  description: Addressable URL for the Broker ingress.
+            conditions:
+              type: array
+              description: Status conditions for the Broker.
+              items:
+                $ref: '#/components/schemas/Condition'
+    BrokerList:
+      type: object
+      description: A list of Broker resources.
+      required:
+        - apiVersion
+        - kind
+        - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list.
+        kind:
+          type: string
+          const: BrokerList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of Broker resources.
+          items:
+            $ref: '#/components/schemas/Broker'
+    TriggerFilter:
+      type: object
+      description: >-
+        A filter for selecting CloudEvents based on CloudEvent attributes.
+        Only events matching all specified attribute values will be delivered.
+      properties:
+        attributes:
+          type: object
+          description: >-
+            Map of CloudEvent attribute names to exact match values.
+            Common attributes include type, source, subject, and any extension attributes.
+          additionalProperties:
+            type: string
+    Trigger:
+      type: object
+      description: >-
+        A Knative Trigger that subscribes to events from a Broker and routes
+        matching events to a subscriber destination. Triggers support filtering
+        by CloudEvent attributes to select only relevant events.
+      required:
+        - apiVersion
+        - kind
+        - metadata
+        - spec
+      properties:
+        apiVersion:
+          type: string
+          const: eventing.knative.dev/v1
+          description: API version for the Trigger.
+        kind:
+          type: string
+          const: Trigger
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Specification for the Trigger.
+          required:
+            - broker
+            - subscriber
+          properties:
+            broker:
+              type: string
+              description: Name of the Broker to subscribe to.
+            filter:
+              $ref: '#/components/schemas/TriggerFilter'
+            subscriber:
+              $ref: '#/components/schemas/Destination'
+            delivery:
+              $ref: '#/components/schemas/DeliverySpec'
+        status:
+          type: object
+          description: Status of the Trigger.
+          properties:
+            subscriberUri:
+              type: string
+              format: uri
+              description: Resolved URI of the subscriber destination.
+            conditions:
+              type: array
+              description: Status conditions for the Trigger.
+              items:
+                $ref: '#/components/schemas/Condition'
+    TriggerList:
+      type: object
+      description: A list of Trigger resources.
+      required:
+        - apiVersion
+        - kind
+        - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list.
+        kind:
+          type: string
+          const: TriggerList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of Trigger resources.
+          items:
+            $ref: '#/components/schemas/Trigger'
+    Channel:
+      type: object
+      description: >-
+        A Knative Channel that provides a pub/sub interface. Events sent to
+        the Channel are delivered to all Subscriptions independently. The
+        backing implementation is specified via channelTemplate.
+      required:
+        - apiVersion
+        - kind
+        - metadata
+      properties:
+        apiVersion:
+          type: string
+          const: messaging.knative.dev/v1
+          description: API version for the Channel.
+        kind:
+          type: string
+          const: Channel
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Specification for the Channel.
+          properties:
+            channelTemplate:
+              type: object
+              description: Template specifying the Channel implementation to use.
+              properties:
+                apiVersion:
+                  type: string
+                  description: API version of the channel implementation resource.
+                kind:
+                  type: string
+                  description: Kind of the channel implementation, such as InMemoryChannel or KafkaChannel.
+            delivery:
+              $ref: '#/components/schemas/DeliverySpec'
+        status:
+          type: object
+          description: Status of the Channel.
+          properties:
+            address:
+              type: object
+              description: URL to which events should be sent for this Channel.
+              properties:
+                url:
+                  type: string
+                  format: uri
+                  description: Addressable URL for the Channel ingress.
+            conditions:
+              type: array
+              description: Status conditions for the Channel.
+              items:
+                $ref: '#/components/schemas/Condition'
+    ChannelList:
+      type: object
+      description: A list of Channel resources.
+      required:
+        - apiVersion
+        - kind
+        - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list.
+        kind:
+          type: string
+          const: ChannelList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of Channel resources.
+          items:
+            $ref: '#/components/schemas/Channel'
+    Subscription:
+      type: object
+      description: >-
+        A Knative Subscription that routes events from a Channel to a subscriber
+        destination. Each Subscription maintains its own delivery state
+        independently of other Subscriptions on the same Channel.
+      required:
+        - apiVersion
+        - kind
+        - metadata
+        - spec
+      properties:
+        apiVersion:
+          type: string
+          const: messaging.knative.dev/v1
+          description: API version for the Subscription.
+        kind:
+          type: string
+          const: Subscription
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Specification for the Subscription.
+          required:
+            - channel
+          properties:
+            channel:
+              type: object
+              description: Reference to the Channel to subscribe to.
+              required:
+                - name
+              properties:
+                apiVersion:
+                  type: string
+                  description: API version of the Channel.
+                kind:
+                  type: string
+                  description: Kind of the Channel resource.
+                name:
+                  type: string
+                  description: Name of the Channel.
+            subscriber:
+              $ref: '#/components/schemas/Destination'
+            reply:
+              $ref: '#/components/schemas/Destination'
+            delivery:
+              $ref: '#/components/schemas/DeliverySpec'
+        status:
+          type: object
+          description: Status of the Subscription.
+          properties:
+            physicalSubscription:
+              type: object
+              description: Resolved physical subscription details set by the controller.
+              properties:
+                subscriberUri:
+                  type: string
+                  format: uri
+                  description: Resolved subscriber URI.
+                replyUri:
+                  type: string
+                  format: uri
+                  description: Resolved reply URI.
+                deadLetterSinkUri:
+                  type: string
+                  format: uri
+                  description: Resolved dead-letter sink URI.
+            conditions:
+              type: array
+              description: Status conditions for the Subscription.
+              items:
+                $ref: '#/components/schemas/Condition'
+    SubscriptionList:
+      type: object
+      description: A list of Subscription resources.
+      required:
+        - apiVersion
+        - kind
+        - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list.
+        kind:
+          type: string
+          const: SubscriptionList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of Subscription resources.
+          items:
+            $ref: '#/components/schemas/Subscription'
+    ApiServerSource:
+      type: object
+      description: >-
+        A Knative ApiServerSource that watches Kubernetes API server events
+        for specified resource types and forwards them as CloudEvents to a
+        sink. Requires a service account with RBAC permissions to watch
+        the specified resources.
+      required:
+        - apiVersion
+        - kind
+        - metadata
+        - spec
+      properties:
+        apiVersion:
+          type: string
+          const: sources.knative.dev/v1
+          description: API version for the ApiServerSource.
+        kind:
+          type: string
+          const: ApiServerSource
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Specification for the ApiServerSource.
+          required:
+            - resources
+            - sink
+          properties:
+            resources:
+              type: array
+              description: List of API server resource types to watch.
+              items:
+                type: object
+                required:
+                  - apiVersion
+                  - kind
+                properties:
+                  apiVersion:
+                    type: string
+                    description: API version of the resource to watch.
+                  kind:
+                    type: string
+                    description: Kind of the resource to watch.
+                  selector:
+                    type: object
+                    description: Optional label selector to filter watched resources.
+            sink:
+              $ref: '#/components/schemas/Destination'
+            serviceAccountName:
+              type: string
+              description: Service account with RBAC permissions to watch the listed resources.
+            mode:
+              type: string
+              enum:
+                - Reference
+                - Resource
+              description: >-
+                Event mode. Reference sends a reference to the resource;
+                Resource sends the full resource body.
+            namespaceSelector:
+              type: object
+              description: Selector for namespaces to watch. If empty, watches the source's namespace.
+        status:
+          type: object
+          description: Status of the ApiServerSource.
+          properties:
+            sinkUri:
+              type: string
+              format: uri
+              description: Resolved URI of the sink destination.
+            conditions:
+              type: array
+              description: Status conditions for the ApiServerSource.
+              items:
+                $ref: '#/components/schemas/Condition'
+    ApiServerSourceList:
+      type: object
+      description: A list of ApiServerSource resources.
+      required:
+        - apiVersion
+        - kind
+        - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list.
+        kind:
+          type: string
+          const: ApiServerSourceList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of ApiServerSource resources.
+          items:
+            $ref: '#/components/schemas/ApiServerSource'
+    PingSource:
+      type: object
+      description: >-
+        A Knative PingSource that fires CloudEvents on a cron-based schedule.
+        PingSources are used for periodic triggering of event-driven workflows
+        and scheduled tasks.
+      required:
+        - apiVersion
+        - kind
+        - metadata
+        - spec
+      properties:
+        apiVersion:
+          type: string
+          const: sources.knative.dev/v1
+          description: API version for the PingSource.
+        kind:
+          type: string
+          const: PingSource
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Specification for the PingSource.
+          required:
+            - schedule
+            - sink
+          properties:
+            schedule:
+              type: string
+              description: >-
+                Cron expression specifying when to fire events, for example
+                "*/2 * * * *" fires every two minutes.
+            data:
+              type: string
+              description: Event payload body sent with each fired event.
+            dataContentType:
+              type: string
+              description: Content type of the event data, typically application/json.
+            sink:
+              $ref: '#/components/schemas/Destination'
+            timezone:
+              type: string
+              description: >-
+                Timezone for interpreting the cron schedule, for example
+                America/New_York. Defaults to UTC.
+        status:
+          type: object
+          description: Status of the PingSource.
+          properties:
+            sinkUri:
+              type: string
+              format: uri
+              description: Resolved URI of the sink destination.
+            conditions:
+              type: array
+              description: Status conditions for the PingSource.
+              items:
+                $ref: '#/components/schemas/Condition'
+    PingSourceList:
+      type: object
+      description: A list of PingSource resources.
+      required:
+        - apiVersion
+        - kind
+        - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list.
+        kind:
+          type: string
+          const: PingSourceList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of PingSource resources.
+          items:
+            $ref: '#/components/schemas/PingSource'
+    SinkBinding:
+      type: object
+      description: >-
+        A Knative SinkBinding that augments a PodSpecable workload by injecting
+        the sink's URI as the K_SINK environment variable. This enables existing
+        workloads to send CloudEvents without being rewritten as Knative-native
+        event sources.
+      required:
+        - apiVersion
+        - kind
+        - metadata
+        - spec
+      properties:
+        apiVersion:
+          type: string
+          const: sources.knative.dev/v1
+          description: API version for the SinkBinding.
+        kind:
+          type: string
+          const: SinkBinding
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Specification for the SinkBinding.
+          required:
+            - subject
+            - sink
+          properties:
+            subject:
+              type: object
+              description: Reference to the PodSpecable workload to bind to.
+              required:
+                - apiVersion
+                - kind
+                - name
+              properties:
+                apiVersion:
+                  type: string
+                  description: API version of the subject resource.
+                kind:
+                  type: string
+                  description: Kind of the subject resource, such as Deployment or StatefulSet.
+                name:
+                  type: string
+                  description: Name of the subject resource.
+                namespace:
+                  type: string
+                  description: Namespace of the subject resource.
+            sink:
+              $ref: '#/components/schemas/Destination'
+            ceOverrides:
+              type: object
+              description: CloudEvent overrides to merge into all events sent by the subject.
+              properties:
+                extensions:
+                  type: object
+                  description: CloudEvent extension attributes to set on all events.
+                  additionalProperties:
+                    type: string
+        status:
+          type: object
+          description: Status of the SinkBinding.
+          properties:
+            sinkUri:
+              type: string
+              format: uri
+              description: Resolved URI of the sink injected as K_SINK.
+            conditions:
+              type: array
+              description: Status conditions for the SinkBinding.
+              items:
+                $ref: '#/components/schemas/Condition'
+    SinkBindingList:
+      type: object
+      description: A list of SinkBinding resources.
+      required:
+        - apiVersion
+        - kind
+        - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list.
+        kind:
+          type: string
+          const: SinkBindingList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of SinkBinding resources.
+          items:
+            $ref: '#/components/schemas/SinkBinding'
+    EventType:
+      type: object
+      description: >-
+        A Knative EventType that catalogs an event type available from a Broker.
+        EventTypes help consumers discover which events are available without
+        having to inspect Broker or Trigger configuration directly.
+      required:
+        - apiVersion
+        - kind
+        - metadata
+      properties:
+        apiVersion:
+          type: string
+          const: eventing.knative.dev/v1beta2
+          description: API version for the EventType.
+        kind:
+          type: string
+          const: EventType
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Specification for the EventType.
+          properties:
+            type:
+              type: string
+              description: CloudEvents type attribute value for this event type.
+            source:
+              type: string
+              description: CloudEvents source attribute value for this event type.
+            schema:
+              type: string
+              format: uri
+              description: URI to the event schema, such as a JSON Schema or AsyncAPI definition.
+            schemaURL:
+              type: string
+              format: uri
+              description: Deprecated alias for schema.
+            description:
+              type: string
+              description: Human-readable description of what this event type represents.
+            broker:
+              type: string
+              description: Name of the Broker that produces this event type.
+    EventTypeList:
+      type: object
+      description: A list of EventType resources.
+      required:
+        - apiVersion
+        - kind
+        - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list.
+        kind:
+          type: string
+          const: EventTypeList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of EventType resources.
+          items:
+            $ref: '#/components/schemas/EventType'

@@ -1,0 +1,460 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://knative.dev/schemas/eventing.json",
+  "title": "Knative Eventing Resources",
+  "description": "JSON Schema for Knative Eventing custom resources including Broker, Trigger, Channel, Subscription, and event sources. These resources enable event-driven architectures on Kubernetes with CloudEvents-compliant event routing and delivery.",
+  "type": "object",
+  "oneOf": [
+    { "$ref": "#/$defs/Broker" },
+    { "$ref": "#/$defs/Trigger" },
+    { "$ref": "#/$defs/Channel" },
+    { "$ref": "#/$defs/Subscription" },
+    { "$ref": "#/$defs/ApiServerSource" },
+    { "$ref": "#/$defs/PingSource" },
+    { "$ref": "#/$defs/SinkBinding" }
+  ],
+  "$defs": {
+    "ObjectMeta": {
+      "type": "object",
+      "description": "Standard Kubernetes object metadata.",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Unique name of the resource within its namespace.",
+          "maxLength": 253
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Kubernetes namespace."
+        },
+        "labels": {
+          "type": "object",
+          "description": "Key-value labels.",
+          "additionalProperties": { "type": "string" }
+        },
+        "annotations": {
+          "type": "object",
+          "description": "Non-identifying metadata.",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+    "Destination": {
+      "type": "object",
+      "description": "A CloudEvent delivery destination. Specifies either a Kubernetes resource reference or a direct URI.",
+      "oneOf": [
+        {
+          "required": ["ref"],
+          "properties": {
+            "ref": {
+              "type": "object",
+              "description": "Reference to a Kubernetes resource that acts as an addressable destination.",
+              "required": ["apiVersion", "kind", "name"],
+              "properties": {
+                "apiVersion": {
+                  "type": "string",
+                  "description": "API version of the destination resource."
+                },
+                "kind": {
+                  "type": "string",
+                  "description": "Kind of the destination resource, such as Service or Broker."
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Name of the destination resource."
+                },
+                "namespace": {
+                  "type": "string",
+                  "description": "Namespace of the destination resource."
+                }
+              }
+            }
+          }
+        },
+        {
+          "required": ["uri"],
+          "properties": {
+            "uri": {
+              "type": "string",
+              "format": "uri",
+              "description": "Direct URI to deliver events to."
+            }
+          }
+        }
+      ]
+    },
+    "DeliverySpec": {
+      "type": "object",
+      "description": "Retry and dead-letter delivery configuration.",
+      "properties": {
+        "deadLetterSink": {
+          "$ref": "#/$defs/Destination",
+          "description": "Destination for events that fail delivery after all retries."
+        },
+        "retry": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Minimum number of retries before sending to dead-letter sink."
+        },
+        "backoffPolicy": {
+          "type": "string",
+          "enum": ["linear", "exponential"],
+          "description": "Strategy for spacing retries. Linear uses a fixed interval; exponential doubles each retry."
+        },
+        "backoffDelay": {
+          "type": "string",
+          "pattern": "^PT?[0-9]+(\\.[0-9]+)?[SMHDWY]$",
+          "description": "ISO 8601 duration for the delay between retries, for example PT2S for 2 seconds."
+        },
+        "timeout": {
+          "type": "string",
+          "description": "ISO 8601 duration timeout per delivery attempt."
+        }
+      }
+    },
+    "Broker": {
+      "type": "object",
+      "description": "A Knative Broker that accepts CloudEvents and routes them to matching Triggers based on attribute filters.",
+      "required": ["apiVersion", "kind", "metadata"],
+      "properties": {
+        "apiVersion": {
+          "type": "string",
+          "const": "eventing.knative.dev/v1",
+          "description": "API version for the Broker."
+        },
+        "kind": {
+          "type": "string",
+          "const": "Broker",
+          "description": "Resource kind identifier."
+        },
+        "metadata": { "$ref": "#/$defs/ObjectMeta" },
+        "spec": {
+          "type": "object",
+          "description": "Broker specification.",
+          "properties": {
+            "config": {
+              "type": "object",
+              "description": "Optional reference to a ConfigMap configuring the Broker's backing implementation.",
+              "properties": {
+                "apiVersion": {
+                  "type": "string",
+                  "description": "API version of the config resource."
+                },
+                "kind": {
+                  "type": "string",
+                  "description": "Kind of the config resource."
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Name of the config resource."
+                }
+              }
+            },
+            "delivery": { "$ref": "#/$defs/DeliverySpec" }
+          }
+        }
+      }
+    },
+    "Trigger": {
+      "type": "object",
+      "description": "A Knative Trigger that subscribes to events from a Broker with optional attribute filters and routes matching events to a destination.",
+      "required": ["apiVersion", "kind", "metadata", "spec"],
+      "properties": {
+        "apiVersion": {
+          "type": "string",
+          "const": "eventing.knative.dev/v1",
+          "description": "API version for the Trigger."
+        },
+        "kind": {
+          "type": "string",
+          "const": "Trigger",
+          "description": "Resource kind identifier."
+        },
+        "metadata": { "$ref": "#/$defs/ObjectMeta" },
+        "spec": {
+          "type": "object",
+          "description": "Trigger specification.",
+          "required": ["broker", "subscriber"],
+          "properties": {
+            "broker": {
+              "type": "string",
+              "description": "Name of the Broker this Trigger subscribes to."
+            },
+            "filter": {
+              "type": "object",
+              "description": "Filter for selecting events by CloudEvent attribute values.",
+              "properties": {
+                "attributes": {
+                  "type": "object",
+                  "description": "Map of CloudEvent attribute names to exact match values. Events must match all specified attributes.",
+                  "additionalProperties": { "type": "string" }
+                }
+              }
+            },
+            "subscriber": { "$ref": "#/$defs/Destination" },
+            "delivery": { "$ref": "#/$defs/DeliverySpec" }
+          }
+        }
+      }
+    },
+    "Channel": {
+      "type": "object",
+      "description": "A Knative Channel providing a generic pub/sub interface that fans events out to all Subscriptions.",
+      "required": ["apiVersion", "kind", "metadata"],
+      "properties": {
+        "apiVersion": {
+          "type": "string",
+          "const": "messaging.knative.dev/v1",
+          "description": "API version for the Channel."
+        },
+        "kind": {
+          "type": "string",
+          "const": "Channel",
+          "description": "Resource kind identifier."
+        },
+        "metadata": { "$ref": "#/$defs/ObjectMeta" },
+        "spec": {
+          "type": "object",
+          "description": "Channel specification.",
+          "properties": {
+            "channelTemplate": {
+              "type": "object",
+              "description": "Specifies the Channel implementation type to use.",
+              "properties": {
+                "apiVersion": {
+                  "type": "string",
+                  "description": "API version of the channel implementation."
+                },
+                "kind": {
+                  "type": "string",
+                  "description": "Kind of the channel implementation such as InMemoryChannel or KafkaChannel."
+                },
+                "spec": {
+                  "type": "object",
+                  "description": "Implementation-specific channel configuration."
+                }
+              }
+            },
+            "delivery": { "$ref": "#/$defs/DeliverySpec" }
+          }
+        }
+      }
+    },
+    "Subscription": {
+      "type": "object",
+      "description": "A Knative Subscription routing events from a Channel to a subscriber with optional reply forwarding and dead-letter sink.",
+      "required": ["apiVersion", "kind", "metadata", "spec"],
+      "properties": {
+        "apiVersion": {
+          "type": "string",
+          "const": "messaging.knative.dev/v1",
+          "description": "API version for the Subscription."
+        },
+        "kind": {
+          "type": "string",
+          "const": "Subscription",
+          "description": "Resource kind identifier."
+        },
+        "metadata": { "$ref": "#/$defs/ObjectMeta" },
+        "spec": {
+          "type": "object",
+          "description": "Subscription specification.",
+          "required": ["channel"],
+          "properties": {
+            "channel": {
+              "type": "object",
+              "description": "Reference to the Channel to subscribe to.",
+              "required": ["name"],
+              "properties": {
+                "apiVersion": {
+                  "type": "string",
+                  "description": "API version of the Channel resource."
+                },
+                "kind": {
+                  "type": "string",
+                  "description": "Kind of the Channel resource."
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Name of the Channel."
+                }
+              }
+            },
+            "subscriber": { "$ref": "#/$defs/Destination" },
+            "reply": { "$ref": "#/$defs/Destination" },
+            "delivery": { "$ref": "#/$defs/DeliverySpec" }
+          }
+        }
+      }
+    },
+    "ApiServerSource": {
+      "type": "object",
+      "description": "A Knative ApiServerSource that watches Kubernetes API server events for specified resource types and emits them as CloudEvents to a sink.",
+      "required": ["apiVersion", "kind", "metadata", "spec"],
+      "properties": {
+        "apiVersion": {
+          "type": "string",
+          "const": "sources.knative.dev/v1",
+          "description": "API version for the ApiServerSource."
+        },
+        "kind": {
+          "type": "string",
+          "const": "ApiServerSource",
+          "description": "Resource kind identifier."
+        },
+        "metadata": { "$ref": "#/$defs/ObjectMeta" },
+        "spec": {
+          "type": "object",
+          "description": "ApiServerSource specification.",
+          "required": ["resources", "sink"],
+          "properties": {
+            "resources": {
+              "type": "array",
+              "description": "Kubernetes API resource types to watch.",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "required": ["apiVersion", "kind"],
+                "properties": {
+                  "apiVersion": {
+                    "type": "string",
+                    "description": "API version of the resource to watch, such as v1 or apps/v1."
+                  },
+                  "kind": {
+                    "type": "string",
+                    "description": "Kind of the resource to watch, such as Pod, Deployment, or ConfigMap."
+                  },
+                  "selector": {
+                    "type": "object",
+                    "description": "Label selector to filter watched resources.",
+                    "properties": {
+                      "matchLabels": {
+                        "type": "object",
+                        "additionalProperties": { "type": "string" }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "sink": { "$ref": "#/$defs/Destination" },
+            "serviceAccountName": {
+              "type": "string",
+              "description": "Service account with RBAC permissions to watch the listed resource types."
+            },
+            "mode": {
+              "type": "string",
+              "enum": ["Reference", "Resource"],
+              "description": "Reference sends only resource identifiers; Resource sends full resource bodies."
+            }
+          }
+        }
+      }
+    },
+    "PingSource": {
+      "type": "object",
+      "description": "A Knative PingSource that emits CloudEvents on a cron schedule with a configurable payload.",
+      "required": ["apiVersion", "kind", "metadata", "spec"],
+      "properties": {
+        "apiVersion": {
+          "type": "string",
+          "const": "sources.knative.dev/v1",
+          "description": "API version for the PingSource."
+        },
+        "kind": {
+          "type": "string",
+          "const": "PingSource",
+          "description": "Resource kind identifier."
+        },
+        "metadata": { "$ref": "#/$defs/ObjectMeta" },
+        "spec": {
+          "type": "object",
+          "description": "PingSource specification.",
+          "required": ["schedule", "sink"],
+          "properties": {
+            "schedule": {
+              "type": "string",
+              "pattern": "^(\\*|[0-9,-/]+)\\s+(\\*|[0-9,-/]+)\\s+(\\*|[0-9,-/]+)\\s+(\\*|[0-9,-/]+)\\s+(\\*|[0-9,-/]+)$",
+              "description": "Cron schedule expression, for example */5 * * * * fires every five minutes."
+            },
+            "data": {
+              "type": "string",
+              "description": "Event payload data sent with each fired CloudEvent."
+            },
+            "dataContentType": {
+              "type": "string",
+              "default": "application/json",
+              "description": "Content type of the data field."
+            },
+            "timezone": {
+              "type": "string",
+              "description": "IANA timezone name for interpreting the cron schedule, such as America/New_York."
+            },
+            "sink": { "$ref": "#/$defs/Destination" }
+          }
+        }
+      }
+    },
+    "SinkBinding": {
+      "type": "object",
+      "description": "A Knative SinkBinding that injects the sink URI as K_SINK environment variable into a PodSpecable workload.",
+      "required": ["apiVersion", "kind", "metadata", "spec"],
+      "properties": {
+        "apiVersion": {
+          "type": "string",
+          "const": "sources.knative.dev/v1",
+          "description": "API version for the SinkBinding."
+        },
+        "kind": {
+          "type": "string",
+          "const": "SinkBinding",
+          "description": "Resource kind identifier."
+        },
+        "metadata": { "$ref": "#/$defs/ObjectMeta" },
+        "spec": {
+          "type": "object",
+          "description": "SinkBinding specification.",
+          "required": ["subject", "sink"],
+          "properties": {
+            "subject": {
+              "type": "object",
+              "description": "Reference to the PodSpecable workload to augment with K_SINK.",
+              "required": ["apiVersion", "kind", "name"],
+              "properties": {
+                "apiVersion": {
+                  "type": "string",
+                  "description": "API version of the workload, such as apps/v1."
+                },
+                "kind": {
+                  "type": "string",
+                  "description": "Kind of the workload, such as Deployment, StatefulSet, or Job."
+                },
+                "name": {
+                  "type": "string",
+                  "description": "Name of the workload."
+                },
+                "namespace": {
+                  "type": "string",
+                  "description": "Namespace of the workload."
+                }
+              }
+            },
+            "sink": { "$ref": "#/$defs/Destination" },
+            "ceOverrides": {
+              "type": "object",
+              "description": "CloudEvent extension attributes to inject into all events sent by the subject.",
+              "properties": {
+                "extensions": {
+                  "type": "object",
+                  "description": "Extension attribute key-value pairs.",
+                  "additionalProperties": { "type": "string" }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,290 @@
+{
+  "@context": {
+    "@version": 1.1,
+    "knative": "https://knative.dev/vocab#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "rdfs": "http://www.w3.org/2000/01/rdf-schema#",
+    "skos": "http://www.w3.org/2004/02/skos/core#",
+    "k8s": "https://kubernetes.io/docs/reference/",
+    "cloudevents": "https://cloudevents.io/vocab#",
+    "cncf": "https://www.cncf.io/projects/",
+
+    "Service": {
+      "@id": "knative:Service",
+      "@context": {
+        "spec": "knative:serviceSpec",
+        "status": "knative:serviceStatus",
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        },
+        "latestReadyRevisionName": "knative:latestReadyRevisionName",
+        "latestCreatedRevisionName": "knative:latestCreatedRevisionName",
+        "traffic": {
+          "@id": "knative:trafficTargets",
+          "@container": "@set"
+        }
+      },
+      "rdfs:label": "Knative Service",
+      "rdfs:comment": "A Knative Service that manages the full lifecycle of a serverless workload including Routes, Configurations, and Revisions.",
+      "skos:broader": "k8s:custom-resources",
+      "skos:exactMatch": "schema:SoftwareApplication"
+    },
+
+    "Revision": {
+      "@id": "knative:Revision",
+      "@context": {
+        "containerConcurrency": "knative:containerConcurrency",
+        "timeoutSeconds": "knative:timeoutSeconds",
+        "containers": {
+          "@id": "knative:containers",
+          "@container": "@set"
+        }
+      },
+      "rdfs:label": "Knative Revision",
+      "rdfs:comment": "An immutable snapshot of application code and configuration. Revisions are the autoscaled units of execution in Knative Serving.",
+      "skos:broader": "knative:Service",
+      "skos:related": "schema:SoftwareSourceCode"
+    },
+
+    "Route": {
+      "@id": "knative:Route",
+      "@context": {
+        "traffic": {
+          "@id": "knative:trafficTargets",
+          "@container": "@set"
+        },
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        }
+      },
+      "rdfs:label": "Knative Route",
+      "rdfs:comment": "A Knative Route that maps network endpoints to Revisions and manages percentage-based traffic distribution.",
+      "skos:broader": "knative:Service"
+    },
+
+    "Configuration": {
+      "@id": "knative:Configuration",
+      "@context": {
+        "template": "knative:revisionTemplate",
+        "latestReadyRevisionName": "knative:latestReadyRevisionName"
+      },
+      "rdfs:label": "Knative Configuration",
+      "rdfs:comment": "Maintains the desired state for a deployment. Each update to the Configuration creates a new immutable Revision.",
+      "skos:broader": "knative:Service"
+    },
+
+    "DomainMapping": {
+      "@id": "knative:DomainMapping",
+      "@context": {
+        "ref": {
+          "@id": "knative:serviceRef",
+          "@type": "@id"
+        },
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        }
+      },
+      "rdfs:label": "Knative DomainMapping",
+      "rdfs:comment": "Associates a custom domain name with a Knative Service with automatic TLS certificate provisioning.",
+      "skos:broader": "knative:Service"
+    },
+
+    "Broker": {
+      "@id": "knative:Broker",
+      "@context": {
+        "delivery": "knative:deliverySpec",
+        "address": {
+          "@id": "knative:brokerAddress",
+          "@type": "@id"
+        }
+      },
+      "rdfs:label": "Knative Broker",
+      "rdfs:comment": "Collects a pool of CloudEvents and routes them to matching Triggers. Brokers are the central hub in the Knative Eventing Broker-Trigger pattern.",
+      "skos:broader": "cloudevents:EventBroker"
+    },
+
+    "Trigger": {
+      "@id": "knative:Trigger",
+      "@context": {
+        "broker": {
+          "@id": "knative:triggerBroker",
+          "@type": "@id"
+        },
+        "filter": "knative:eventFilter",
+        "subscriber": {
+          "@id": "knative:subscriberDestination",
+          "@type": "@id"
+        },
+        "delivery": "knative:deliverySpec"
+      },
+      "rdfs:label": "Knative Trigger",
+      "rdfs:comment": "Subscribes to events from a Broker with optional CloudEvent attribute filters and routes matching events to a subscriber destination.",
+      "skos:broader": "cloudevents:EventSubscription"
+    },
+
+    "Channel": {
+      "@id": "knative:Channel",
+      "@context": {
+        "channelTemplate": "knative:channelTemplate",
+        "delivery": "knative:deliverySpec",
+        "address": {
+          "@id": "knative:channelAddress",
+          "@type": "@id"
+        }
+      },
+      "rdfs:label": "Knative Channel",
+      "rdfs:comment": "A generic pub/sub channel that fans CloudEvents out to all Subscriptions. Backed by configurable implementations such as InMemoryChannel or KafkaChannel.",
+      "skos:broader": "cloudevents:EventChannel"
+    },
+
+    "Subscription": {
+      "@id": "knative:Subscription",
+      "@context": {
+        "channel": {
+          "@id": "knative:subscribedChannel",
+          "@type": "@id"
+        },
+        "subscriber": {
+          "@id": "knative:subscriberDestination",
+          "@type": "@id"
+        },
+        "reply": {
+          "@id": "knative:replyDestination",
+          "@type": "@id"
+        },
+        "delivery": "knative:deliverySpec"
+      },
+      "rdfs:label": "Knative Subscription",
+      "rdfs:comment": "Routes events from a Channel to a subscriber destination, independently of other Subscriptions to the same Channel.",
+      "skos:broader": "cloudevents:EventSubscription"
+    },
+
+    "ApiServerSource": {
+      "@id": "knative:ApiServerSource",
+      "@context": {
+        "resources": {
+          "@id": "knative:watchedResources",
+          "@container": "@set"
+        },
+        "sink": {
+          "@id": "knative:eventSink",
+          "@type": "@id"
+        },
+        "mode": "knative:sourceMode"
+      },
+      "rdfs:label": "Knative ApiServerSource",
+      "rdfs:comment": "Watches Kubernetes API server events for specified resource types and emits them as CloudEvents to a sink.",
+      "skos:broader": "knative:EventSource",
+      "skos:related": "k8s:events"
+    },
+
+    "PingSource": {
+      "@id": "knative:PingSource",
+      "@context": {
+        "schedule": "schema:repeatFrequency",
+        "sink": {
+          "@id": "knative:eventSink",
+          "@type": "@id"
+        },
+        "data": "schema:text",
+        "timezone": "schema:temporalCoverage"
+      },
+      "rdfs:label": "Knative PingSource",
+      "rdfs:comment": "Emits CloudEvents on a cron schedule with a configurable payload. Used for periodic workflows and scheduled tasks.",
+      "skos:broader": "knative:EventSource"
+    },
+
+    "SinkBinding": {
+      "@id": "knative:SinkBinding",
+      "@context": {
+        "subject": {
+          "@id": "knative:bindingSubject",
+          "@type": "@id"
+        },
+        "sink": {
+          "@id": "knative:eventSink",
+          "@type": "@id"
+        },
+        "ceOverrides": "knative:cloudEventOverrides"
+      },
+      "rdfs:label": "Knative SinkBinding",
+      "rdfs:comment": "Augments a PodSpecable workload by injecting the sink URI as K_SINK, enabling existing workloads to send CloudEvents.",
+      "skos:broader": "knative:EventSource"
+    },
+
+    "TrafficTarget": {
+      "@id": "knative:TrafficTarget",
+      "@context": {
+        "revisionName": "knative:targetRevision",
+        "percent": {
+          "@id": "schema:percentile",
+          "@type": "xsd:integer"
+        },
+        "tag": "dcterms:title",
+        "url": {
+          "@id": "schema:url",
+          "@type": "@id"
+        }
+      },
+      "rdfs:label": "Traffic Target",
+      "rdfs:comment": "A percentage-based traffic routing target pointing to a Knative Revision."
+    },
+
+    "DeliverySpec": {
+      "@id": "knative:DeliverySpec",
+      "@context": {
+        "deadLetterSink": {
+          "@id": "knative:deadLetterSink",
+          "@type": "@id"
+        },
+        "retry": {
+          "@id": "knative:retryCount",
+          "@type": "xsd:integer"
+        },
+        "backoffPolicy": "knative:backoffPolicy",
+        "backoffDelay": "knative:backoffDelay",
+        "timeout": "knative:deliveryTimeout"
+      },
+      "rdfs:label": "Delivery Spec",
+      "rdfs:comment": "Configuration for event delivery retries and dead-letter sinks in Knative Eventing."
+    },
+
+    "apiVersion": {
+      "@id": "k8s:apiVersion",
+      "@type": "xsd:string",
+      "rdfs:comment": "Kubernetes API group and version identifier."
+    },
+    "kind": {
+      "@id": "k8s:resourceKind",
+      "@type": "xsd:string",
+      "rdfs:comment": "Kubernetes resource type identifier."
+    },
+    "metadata": {
+      "@id": "k8s:objectMeta",
+      "rdfs:comment": "Standard Kubernetes object metadata."
+    },
+    "spec": {
+      "@id": "k8s:resourceSpec",
+      "rdfs:comment": "Desired state specification for the Kubernetes resource."
+    },
+    "status": {
+      "@id": "k8s:resourceStatus",
+      "rdfs:comment": "Observed state and conditions of the Kubernetes resource."
+    },
+    "name": "dcterms:title",
+    "description": "dcterms:description",
+    "created": {
+      "@id": "dcterms:created",
+      "@type": "xsd:dateTime"
+    },
+    "modified": {
+      "@id": "dcterms:modified",
+      "@type": "xsd:dateTime"
+    }
+  }
+}

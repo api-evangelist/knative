@@ -1,0 +1,470 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://knative.dev/schemas/serving.json",
+  "title": "Knative Serving Resources",
+  "description": "JSON Schema for Knative Serving custom resources including Service, Route, Configuration, Revision, and DomainMapping. These resources extend the Kubernetes API to enable serverless workloads with automatic scaling and traffic management.",
+  "type": "object",
+  "oneOf": [
+    { "$ref": "#/$defs/Service" },
+    { "$ref": "#/$defs/Route" },
+    { "$ref": "#/$defs/Configuration" },
+    { "$ref": "#/$defs/Revision" },
+    { "$ref": "#/$defs/DomainMapping" }
+  ],
+  "$defs": {
+    "ObjectMeta": {
+      "type": "object",
+      "description": "Standard Kubernetes object metadata.",
+      "required": ["name"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Unique name of the resource within its namespace.",
+          "maxLength": 253,
+          "pattern": "^[a-z0-9][a-z0-9\\-\\.]*[a-z0-9]$"
+        },
+        "namespace": {
+          "type": "string",
+          "description": "Kubernetes namespace containing the resource."
+        },
+        "labels": {
+          "type": "object",
+          "description": "Key-value labels for organizing and selecting resources.",
+          "additionalProperties": { "type": "string" }
+        },
+        "annotations": {
+          "type": "object",
+          "description": "Non-identifying metadata. Knative uses annotations for autoscaling configuration such as autoscaling.knative.dev/minScale and autoscaling.knative.dev/maxScale.",
+          "additionalProperties": { "type": "string" }
+        }
+      }
+    },
+    "RevisionTemplate": {
+      "type": "object",
+      "description": "Template for creating a new Knative Revision. Each change to the template spec creates a new immutable Revision.",
+      "properties": {
+        "metadata": {
+          "type": "object",
+          "description": "Metadata for the Revision template including name and autoscaling annotations.",
+          "properties": {
+            "name": {
+              "type": "string",
+              "description": "Optional explicit Revision name. If omitted, Knative generates a name. Use this for stable named traffic targets."
+            },
+            "annotations": {
+              "type": "object",
+              "description": "Autoscaling annotations. Key annotations include autoscaling.knative.dev/minScale, autoscaling.knative.dev/maxScale, autoscaling.knative.dev/target, and autoscaling.knative.dev/class.",
+              "additionalProperties": { "type": "string" }
+            }
+          }
+        },
+        "spec": {
+          "type": "object",
+          "description": "Revision spec defining containers, volumes, and concurrency settings.",
+          "properties": {
+            "containerConcurrency": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Maximum simultaneous requests per container instance. 0 means unlimited concurrency. Knative uses this to calculate scale-up."
+            },
+            "timeoutSeconds": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 600,
+              "description": "Maximum request processing time in seconds. Requests exceeding this are timed out with 504."
+            },
+            "serviceAccountName": {
+              "type": "string",
+              "description": "Kubernetes service account name for the Revision pod."
+            },
+            "containers": {
+              "type": "array",
+              "description": "Container specifications for the Revision. Knative supports one user container and optional sidecar containers.",
+              "minItems": 1,
+              "items": { "$ref": "#/$defs/Container" }
+            },
+            "volumes": {
+              "type": "array",
+              "description": "Volumes to be mounted into containers.",
+              "items": {
+                "type": "object",
+                "description": "A Kubernetes volume definition.",
+                "required": ["name"],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Volume name referenced by container volumeMounts."
+                  },
+                  "secret": {
+                    "type": "object",
+                    "description": "Secret-backed volume.",
+                    "properties": {
+                      "secretName": {
+                        "type": "string",
+                        "description": "Name of the Kubernetes Secret."
+                      }
+                    }
+                  },
+                  "configMap": {
+                    "type": "object",
+                    "description": "ConfigMap-backed volume.",
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Name of the Kubernetes ConfigMap."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Container": {
+      "type": "object",
+      "description": "Container definition within a Knative Revision.",
+      "required": ["image"],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Container name. The first container is the user container; additional containers are sidecars."
+        },
+        "image": {
+          "type": "string",
+          "description": "OCI container image reference including registry, repository, and tag or digest."
+        },
+        "command": {
+          "type": "array",
+          "description": "Entrypoint override for the container.",
+          "items": { "type": "string" }
+        },
+        "args": {
+          "type": "array",
+          "description": "Arguments to the container entrypoint.",
+          "items": { "type": "string" }
+        },
+        "ports": {
+          "type": "array",
+          "description": "Ports the container listens on. Knative routes traffic to the first port.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "containerPort": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 65535,
+                "description": "Port number the container listens on."
+              },
+              "name": {
+                "type": "string",
+                "enum": ["h2c", "http1"],
+                "description": "Port name. h2c for HTTP/2; http1 for HTTP/1.1."
+              }
+            }
+          }
+        },
+        "env": {
+          "type": "array",
+          "description": "Environment variables for the container.",
+          "items": {
+            "type": "object",
+            "required": ["name"],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name of the environment variable."
+              },
+              "value": {
+                "type": "string",
+                "description": "Literal value for the environment variable."
+              },
+              "valueFrom": {
+                "type": "object",
+                "description": "Source for the environment variable value.",
+                "properties": {
+                  "secretKeyRef": {
+                    "type": "object",
+                    "description": "Reference to a Secret key.",
+                    "required": ["name", "key"],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "Secret name."
+                      },
+                      "key": {
+                        "type": "string",
+                        "description": "Key within the Secret."
+                      }
+                    }
+                  },
+                  "configMapKeyRef": {
+                    "type": "object",
+                    "description": "Reference to a ConfigMap key.",
+                    "required": ["name", "key"],
+                    "properties": {
+                      "name": {
+                        "type": "string",
+                        "description": "ConfigMap name."
+                      },
+                      "key": {
+                        "type": "string",
+                        "description": "Key within the ConfigMap."
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "resources": {
+          "type": "object",
+          "description": "Compute resource requests and limits.",
+          "properties": {
+            "requests": {
+              "type": "object",
+              "description": "Minimum resources required.",
+              "additionalProperties": { "type": "string" }
+            },
+            "limits": {
+              "type": "object",
+              "description": "Maximum resources allowed.",
+              "additionalProperties": { "type": "string" }
+            }
+          }
+        },
+        "volumeMounts": {
+          "type": "array",
+          "description": "Volume mounts for the container.",
+          "items": {
+            "type": "object",
+            "required": ["name", "mountPath"],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Name matching a volume in the spec.volumes list."
+              },
+              "mountPath": {
+                "type": "string",
+                "description": "Absolute path in the container where the volume is mounted."
+              },
+              "readOnly": {
+                "type": "boolean",
+                "description": "Whether the volume mount is read-only."
+              }
+            }
+          }
+        }
+      }
+    },
+    "TrafficTarget": {
+      "type": "object",
+      "description": "A traffic target routing a percentage of requests to a Revision or the latest ready Revision.",
+      "properties": {
+        "revisionName": {
+          "type": "string",
+          "description": "Name of a specific Revision to route traffic to. Mutually exclusive with latestRevision: true."
+        },
+        "latestRevision": {
+          "type": "boolean",
+          "description": "If true, routes to the latest ready Revision of the Service's Configuration."
+        },
+        "percent": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 100,
+          "description": "Percentage of traffic to route to this target. All traffic targets in a Service must sum to 100."
+        },
+        "tag": {
+          "type": "string",
+          "description": "Named tag for this traffic target. Creates a subdomain URL like tag-service.namespace.example.com."
+        }
+      }
+    },
+    "Service": {
+      "type": "object",
+      "description": "A Knative Service that automates the lifecycle of Routes, Configurations, and Revisions for a serverless workload.",
+      "required": ["apiVersion", "kind", "metadata", "spec"],
+      "properties": {
+        "apiVersion": {
+          "type": "string",
+          "const": "serving.knative.dev/v1",
+          "description": "API version for the Knative Service."
+        },
+        "kind": {
+          "type": "string",
+          "const": "Service",
+          "description": "Resource kind identifier."
+        },
+        "metadata": { "$ref": "#/$defs/ObjectMeta" },
+        "spec": {
+          "type": "object",
+          "description": "Specification for the Knative Service.",
+          "required": ["template"],
+          "properties": {
+            "template": { "$ref": "#/$defs/RevisionTemplate" },
+            "traffic": {
+              "type": "array",
+              "description": "Traffic distribution across Revisions. Percentages must sum to 100. If omitted, 100% routes to the latest ready Revision.",
+              "items": { "$ref": "#/$defs/TrafficTarget" }
+            }
+          }
+        }
+      }
+    },
+    "Route": {
+      "type": "object",
+      "description": "A Knative Route that manages the URL and traffic distribution across Revisions.",
+      "required": ["apiVersion", "kind", "metadata", "spec"],
+      "properties": {
+        "apiVersion": {
+          "type": "string",
+          "const": "serving.knative.dev/v1",
+          "description": "API version for the Knative Route."
+        },
+        "kind": {
+          "type": "string",
+          "const": "Route",
+          "description": "Resource kind identifier."
+        },
+        "metadata": { "$ref": "#/$defs/ObjectMeta" },
+        "spec": {
+          "type": "object",
+          "description": "Specification for the Route.",
+          "properties": {
+            "traffic": {
+              "type": "array",
+              "description": "Traffic targets. Percentages must sum to 100.",
+              "items": { "$ref": "#/$defs/TrafficTarget" }
+            }
+          }
+        }
+      }
+    },
+    "Configuration": {
+      "type": "object",
+      "description": "A Knative Configuration that captures the desired state of a workload and creates Revisions on each spec update.",
+      "required": ["apiVersion", "kind", "metadata", "spec"],
+      "properties": {
+        "apiVersion": {
+          "type": "string",
+          "const": "serving.knative.dev/v1",
+          "description": "API version for the Knative Configuration."
+        },
+        "kind": {
+          "type": "string",
+          "const": "Configuration",
+          "description": "Resource kind identifier."
+        },
+        "metadata": { "$ref": "#/$defs/ObjectMeta" },
+        "spec": {
+          "type": "object",
+          "description": "Specification for the Configuration.",
+          "required": ["template"],
+          "properties": {
+            "template": { "$ref": "#/$defs/RevisionTemplate" }
+          }
+        }
+      }
+    },
+    "Revision": {
+      "type": "object",
+      "description": "An immutable Knative Revision created by a Configuration or Service update. Revisions are the autoscaled units of execution.",
+      "required": ["apiVersion", "kind", "metadata"],
+      "properties": {
+        "apiVersion": {
+          "type": "string",
+          "const": "serving.knative.dev/v1",
+          "description": "API version for the Knative Revision."
+        },
+        "kind": {
+          "type": "string",
+          "const": "Revision",
+          "description": "Resource kind identifier."
+        },
+        "metadata": { "$ref": "#/$defs/ObjectMeta" },
+        "spec": {
+          "type": "object",
+          "description": "The immutable revision spec capturing container configuration.",
+          "properties": {
+            "containerConcurrency": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Maximum concurrent requests per container instance."
+            },
+            "timeoutSeconds": {
+              "type": "integer",
+              "description": "Request timeout in seconds."
+            },
+            "containers": {
+              "type": "array",
+              "description": "Containers in the Revision.",
+              "items": { "$ref": "#/$defs/Container" }
+            }
+          }
+        }
+      }
+    },
+    "DomainMapping": {
+      "type": "object",
+      "description": "A Knative DomainMapping associating a custom DNS name with a Knative Service, with automatic TLS provisioning.",
+      "required": ["apiVersion", "kind", "metadata", "spec"],
+      "properties": {
+        "apiVersion": {
+          "type": "string",
+          "const": "serving.knative.dev/v1alpha1",
+          "description": "API version for the DomainMapping resource."
+        },
+        "kind": {
+          "type": "string",
+          "const": "DomainMapping",
+          "description": "Resource kind identifier."
+        },
+        "metadata": {
+          "allOf": [
+            { "$ref": "#/$defs/ObjectMeta" },
+            {
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "format": "hostname",
+                  "description": "The custom domain name, for example myapp.example.com. The metadata.name is the domain itself."
+                }
+              }
+            }
+          ]
+        },
+        "spec": {
+          "type": "object",
+          "description": "Specification for the DomainMapping.",
+          "required": ["ref"],
+          "properties": {
+            "ref": {
+              "type": "object",
+              "description": "Reference to the Knative Service to map to this domain.",
+              "required": ["name", "kind", "apiVersion"],
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "Name of the Knative Service."
+                },
+                "kind": {
+                  "type": "string",
+                  "const": "Service",
+                  "description": "Kind of the target resource."
+                },
+                "apiVersion": {
+                  "type": "string",
+                  "const": "serving.knative.dev/v1",
+                  "description": "API version of the target resource."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

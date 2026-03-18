@@ -17,7 +17,7 @@ tags:
 - Cloud Native
 - Graduated
 created: '2026-03-16'
-modified: '2026-03-16'
+modified: '2026-03-18'
 specificationVersion: '0.19'
 type: Index
 apis:
@@ -33,6 +33,14 @@ apis:
   properties:
   - type: Documentation
     url: https://knative.dev/docs/serving/
+  - type: Reference
+    url: https://knative.dev/docs/serving/reference/serving-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/serving
+  - type: OpenAPI
+    url: openapi/knative-serving-api-openapi.yml
+  - type: JSONSchema
+    url: json-schema/knative-serving-schema.json
   tags:
   - Serverless
   - Auto-Scaling
@@ -49,23 +57,95 @@ apis:
   properties:
   - type: Documentation
     url: https://knative.dev/docs/eventing/
+  - type: Reference
+    url: https://knative.dev/docs/eventing/reference/eventing-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/eventing
+  - type: OpenAPI
+    url: openapi/knative-eventing-api-openapi.yml
+  - type: AsyncAPI
+    url: asyncapi/knative-cloudevents-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/knative-eventing-schema.json
   tags:
   - Events
   - Pub/Sub
   - Event-Driven
+- aid: knative:knative-functions
+  name: Knative Functions
+  description: >-
+    Knative Functions enables developers to create, build, and deploy
+    stateless, event-driven functions as Knative Services using the func CLI
+    or the kn func plugin. Functions can be written in multiple languages and
+    are automatically deployed as auto-scaling Knative Services that respond
+    to HTTP requests or CloudEvents.
+  humanURL: https://knative.dev/docs/functions/
+  properties:
+  - type: Documentation
+    url: https://knative.dev/docs/functions/
+  - type: Getting Started
+    url: https://knative.dev/docs/getting-started/about-knative-functions/
+  - type: GitHubRepository
+    url: https://github.com/knative/func
+  tags:
+  - Serverless
+  - Functions
+  - Event-Driven
+  - CLI
+- aid: knative:knative-cli
+  name: Knative CLI (kn)
+  description: >-
+    The Knative CLI (kn) provides a command-line interface for creating and
+    managing Knative resources including Services, Revisions, Routes, event
+    sources, and Brokers. It simplifies tasks like traffic splitting and
+    autoscaling configuration without requiring direct YAML editing.
+  humanURL: https://knative.dev/docs/client/
+  properties:
+  - type: Documentation
+    url: https://knative.dev/docs/client/
+  - type: GitHubRepository
+    url: https://github.com/knative/client
+  tags:
+  - CLI
+  - Developer Tools
+  - Kubernetes
 common:
+- type: JSON-LD
+  url: json-ld/knative-context.jsonld
+  name: Knative JSON-LD Context
+  description: Linked data context mapping Knative resources to standard vocabularies.
+- type: Website
+  name: Knative Website
+  description: Official Knative project website.
+  url: https://knative.dev/
 - type: Documentation
   name: Knative Documentation
   description: Official Knative documentation.
   url: https://knative.dev/docs/
-- type: GitHubOrg
-  name: Knative GitHub
-  description: Source code repositories.
-  url: https://github.com/knative
+- type: Getting Started
+  name: Knative Getting Started
+  description: Guide for installing and getting started with Knative.
+  url: https://knative.dev/docs/getting-started/
 - type: Blog
   name: Knative Blog
   description: Project blog and announcements.
   url: https://knative.dev/blog/
+- type: Change Log
+  name: Knative Release Notes
+  description: Release notes and changelog for Knative.
+  url: https://knative.dev/docs/reference/relnotes/
+- type: GitHub Organization
+  name: Knative GitHub Organization
+  description: GitHub organization hosting all Knative source code.
+  url: https://github.com/knative
+- type: GitHubRepository
+  name: Knative Docs Repository
+  description: Source repository for Knative documentation.
+  url: https://github.com/knative/docs
+- type: Community
+  name: Knative Community
+  description: Community resources, working groups, and how to get involved.
+  url: https://knative.dev/community/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

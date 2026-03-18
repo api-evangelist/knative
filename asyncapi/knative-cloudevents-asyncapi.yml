@@ -1,0 +1,295 @@
+asyncapi: 2.6.0
+info:
+  title: Knative Eventing CloudEvents
+  description: >-
+    Knative Eventing uses HTTP POST requests conforming to the CloudEvents
+    specification to deliver events between event sources, Brokers, Triggers,
+    Channels, and Subscriptions. Events can carry structured JSON data or
+    binary payloads. This AsyncAPI document describes the CloudEvents message
+    format and event types emitted by built-in Knative sources including
+    ApiServerSource, PingSource, and generic Broker-routed events.
+  version: '1.0'
+  contact:
+    name: Knative Community
+    url: https://knative.dev/community/
+externalDocs:
+  description: Knative Eventing Documentation
+  url: https://knative.dev/docs/eventing/
+servers:
+  broker:
+    url: '{brokerURL}'
+    protocol: http
+    description: >-
+      Knative Broker ingress URL. Events are sent via HTTP POST to the Broker
+      address. The broker URL is available in the Broker resource's
+      status.address.url field.
+    variables:
+      brokerURL:
+        description: The URL of a Knative Broker ingress endpoint.
+    security:
+      - bearerAuth: []
+  channel:
+    url: '{channelURL}'
+    protocol: http
+    description: >-
+      Knative Channel ingress URL. Events sent to this URL are fanned out to
+      all Channel Subscriptions. The channel URL is available in the Channel
+      resource's status.address.url field.
+    variables:
+      channelURL:
+        description: The URL of a Knative Channel ingress endpoint.
+    security:
+      - bearerAuth: []
+channels:
+  /broker:
+    description: >-
+      CloudEvents are sent to Broker ingress via HTTP POST and delivered to
+      all matching Triggers. Events must conform to the CloudEvents 1.0
+      specification in either structured JSON or binary encoding.
+    publish:
+      operationId: sendEventToBroker
+      summary: Send a CloudEvent to a Broker
+      description: >-
+        Publishes a CloudEvent to a Knative Broker. The Broker evaluates all
+        associated Triggers and delivers the event to each Trigger whose
+        attribute filters match the event's CloudEvent attributes.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/KubernetesApiEvent'
+          - $ref: '#/components/messages/PingEvent'
+          - $ref: '#/components/messages/GenericCloudEvent'
+    subscribe:
+      operationId: receiveEventFromBroker
+      summary: Receive a CloudEvent from a Broker via Trigger
+      description: >-
+        A subscriber receives CloudEvents forwarded from a Broker via a Trigger.
+        Events are delivered as HTTP POST requests to the subscriber's address
+        in CloudEvents structured or binary format.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/KubernetesApiEvent'
+          - $ref: '#/components/messages/PingEvent'
+          - $ref: '#/components/messages/GenericCloudEvent'
+  /channel:
+    description: >-
+      CloudEvents are sent to Channel ingress via HTTP POST and fanned out to
+      all Subscriptions. Each Subscription receives the event independently.
+    publish:
+      operationId: sendEventToChannel
+      summary: Send a CloudEvent to a Channel
+      description: >-
+        Publishes a CloudEvent to a Knative Channel. The Channel delivers the
+        event to all associated Subscriptions independently.
+      message:
+        $ref: '#/components/messages/GenericCloudEvent'
+    subscribe:
+      operationId: receiveEventFromChannel
+      summary: Receive a CloudEvent from a Channel via Subscription
+      description: >-
+        A subscriber receives CloudEvents forwarded from a Channel via a
+        Subscription. Events are delivered as HTTP POST requests.
+      message:
+        $ref: '#/components/messages/GenericCloudEvent'
+  /sink:
+    description: >-
+      Event sinks receive CloudEvents from sources like ApiServerSource,
+      PingSource, and SinkBinding via HTTP POST. The sink URL is injected
+      as K_SINK for SinkBinding subjects or specified in source specs.
+    subscribe:
+      operationId: receiveEventFromSource
+      summary: Receive a CloudEvent from an event source
+      description: >-
+        An event sink receives CloudEvents from Knative event sources. Events
+        from ApiServerSource carry Kubernetes API event data; PingSource events
+        carry the configured payload; SinkBinding subjects send custom events.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/KubernetesApiEvent'
+          - $ref: '#/components/messages/PingEvent'
+          - $ref: '#/components/messages/GenericCloudEvent'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >-
+        Kubernetes service account token for authenticating event delivery.
+        Used when OIDC token-based authentication is enabled on Knative Eventing.
+  messages:
+    KubernetesApiEvent:
+      name: KubernetesApiEvent
+      title: Kubernetes API Server Event
+      summary: >-
+        A CloudEvent emitted by ApiServerSource when a Kubernetes resource
+        event occurs (Added, Modified, or Deleted).
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          ce-specversion:
+            type: string
+            const: '1.0'
+            description: CloudEvents specification version.
+          ce-type:
+            type: string
+            enum:
+              - dev.knative.apiserver.resource.add
+              - dev.knative.apiserver.resource.update
+              - dev.knative.apiserver.resource.delete
+              - dev.knative.apiserver.ref.add
+              - dev.knative.apiserver.ref.update
+              - dev.knative.apiserver.ref.delete
+            description: >-
+              CloudEvents type indicating the Kubernetes API event type.
+              Resource modes include the full resource body; ref modes include
+              only the resource reference.
+          ce-source:
+            type: string
+            description: >-
+              URI identifying the ApiServerSource that emitted this event,
+              typically the Kubernetes API server URL.
+          ce-id:
+            type: string
+            description: Unique identifier for this CloudEvent.
+          ce-time:
+            type: string
+            format: date-time
+            description: Timestamp when the event was created.
+          ce-subject:
+            type: string
+            description: >-
+              Subject identifying the Kubernetes resource that triggered the event,
+              typically in the format namespace/name.
+      payload:
+        $ref: '#/components/schemas/KubernetesApiEventPayload'
+    PingEvent:
+      name: PingEvent
+      title: PingSource Scheduled Event
+      summary: >-
+        A CloudEvent emitted by PingSource on a cron schedule with a
+        configurable payload.
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          ce-specversion:
+            type: string
+            const: '1.0'
+            description: CloudEvents specification version.
+          ce-type:
+            type: string
+            const: dev.knative.sources.ping
+            description: CloudEvents type for PingSource events.
+          ce-source:
+            type: string
+            description: >-
+              URI identifying the PingSource, typically in the form
+              /apis/v1/namespaces/{namespace}/pingsources/{name}.
+          ce-id:
+            type: string
+            description: Unique identifier for this CloudEvent.
+          ce-time:
+            type: string
+            format: date-time
+            description: Timestamp when the ping event was fired.
+      payload:
+        $ref: '#/components/schemas/PingEventPayload'
+    GenericCloudEvent:
+      name: GenericCloudEvent
+      title: Generic CloudEvent
+      summary: >-
+        A generic CloudEvent conforming to the CloudEvents 1.0 specification,
+        used for custom event producers including SinkBinding subjects and
+        custom event sources sending events through Brokers or Channels.
+      contentType: application/json
+      headers:
+        type: object
+        required:
+          - ce-specversion
+          - ce-type
+          - ce-source
+          - ce-id
+        properties:
+          ce-specversion:
+            type: string
+            const: '1.0'
+            description: CloudEvents specification version. Must be 1.0.
+          ce-type:
+            type: string
+            description: >-
+              CloudEvents type attribute identifying the kind of event. Should
+              be reverse-DNS formatted, for example com.example.order.created.
+          ce-source:
+            type: string
+            description: >-
+              URI identifying the context in which this event occurred,
+              such as the system or service that produced the event.
+          ce-id:
+            type: string
+            description: >-
+              Unique identifier for this event within the scope of the source.
+              Combined with source, must be globally unique.
+          ce-time:
+            type: string
+            format: date-time
+            description: Timestamp when the event occurred.
+          ce-subject:
+            type: string
+            description: Subject of the event within the context of the source.
+          ce-datacontenttype:
+            type: string
+            description: Content type of the data payload, typically application/json.
+          ce-schemaurl:
+            type: string
+            format: uri
+            description: URI identifying the schema for the event data.
+      payload:
+        type: object
+        description: Arbitrary event payload. Structure depends on the event type.
+  schemas:
+    KubernetesApiEventPayload:
+      type: object
+      description: >-
+        Payload of a Kubernetes API server event emitted by ApiServerSource.
+        In Resource mode, contains the full Kubernetes resource object.
+        In Reference mode, contains a reference to the affected resource.
+      properties:
+        apiVersion:
+          type: string
+          description: API version of the Kubernetes resource that triggered the event.
+        kind:
+          type: string
+          description: Kind of the Kubernetes resource.
+        metadata:
+          type: object
+          description: Kubernetes object metadata for the affected resource.
+          properties:
+            name:
+              type: string
+              description: Name of the resource.
+            namespace:
+              type: string
+              description: Namespace of the resource.
+            uid:
+              type: string
+              description: Unique identifier of the resource.
+            resourceVersion:
+              type: string
+              description: Resource version at the time of the event.
+            creationTimestamp:
+              type: string
+              format: date-time
+              description: Time the resource was created.
+        spec:
+          type: object
+          description: Spec of the Kubernetes resource (Resource mode only).
+        status:
+          type: object
+          description: Status of the Kubernetes resource (Resource mode only).
+    PingEventPayload:
+      type: object
+      description: >-
+        Payload of a PingSource event. The content is the configured data
+        field of the PingSource spec. Can be any valid JSON value.
+      additionalProperties: true
