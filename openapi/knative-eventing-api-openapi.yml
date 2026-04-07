@@ -27,21 +27,11 @@ tags:
       using Triggers. Brokers provide event routing with filtering, guaranteed
       delivery, and dead-letter sink support. The default broker implementation
       uses an in-memory channel.
-  - name: Triggers
-    description: >-
-      Knative Trigger resources define filtered delivery options for events
-      arriving at a Broker. A Trigger selects events by attribute filters and
-      routes matching events to a destination such as a Knative Service.
   - name: Channels
     description: >-
       Knative Channel resources represent a generic pub/sub messaging channel.
       Channels receive events and fan them out to all Subscriptions. The
       default channel implementation uses an in-memory channel.
-  - name: Subscriptions
-    description: >-
-      Knative Subscription resources define a delivery destination for events
-      sent to a Channel. Each Subscription routes events from a Channel to a
-      subscriber destination with optional reply and dead-letter handling.
   - name: EventSources
     description: >-
       Knative event source resources connect external event producers to the
@@ -53,6 +43,16 @@ tags:
       Knative EventType resources maintain a catalog of event types that can
       be consumed from Brokers. EventTypes help consumers discover what events
       are available without inspecting Broker contents directly.
+  - name: Subscriptions
+    description: >-
+      Knative Subscription resources define a delivery destination for events
+      sent to a Channel. Each Subscription routes events from a Channel to a
+      subscriber destination with optional reply and dead-letter handling.
+  - name: Triggers
+    description: >-
+      Knative Trigger resources define filtered delivery options for events
+      arriving at a Broker. A Trigger selects events by attribute filters and
+      routes matching events to a destination such as a Knative Service.
 security:
   - bearerAuth: []
 paths:

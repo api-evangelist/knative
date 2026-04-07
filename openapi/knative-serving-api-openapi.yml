@@ -20,32 +20,26 @@ servers:
   - url: https://kubernetes.default.svc
     description: Kubernetes API Server (in-cluster)
 tags:
-  - name: Services
-    description: >-
-      Knative Service resources are the top-level abstraction for deploying
-      serverless workloads. A Service automatically manages the lifecycle of
-      Routes and Configurations, creating a new Revision on each spec update
-      and managing traffic routing.
-  - name: Routes
-    description: >-
-      Knative Route resources manage the network endpoints and traffic
-      distribution across Revisions. Routes support percentage-based traffic
-      splitting for canary deployments and named route targets.
   - name: Configurations
     description: >-
       Knative Configuration resources maintain the desired state for a
       deployment by capturing container templates. Each update to a
       Configuration creates a new immutable Revision.
-  - name: Revisions
-    description: >-
-      Knative Revision resources are immutable snapshots of application code
-      and configuration at a point in time. Revisions are created by
-      Configuration updates and are the actual units that are scaled.
   - name: DomainMappings
     description: >-
       Knative DomainMapping resources map a custom domain name to a Knative
       Service, enabling services to be served under custom hostnames with
       automatic TLS certificate provisioning.
+  - name: Revisions
+    description: >-
+      Knative Revision resources are immutable snapshots of application code
+      and configuration at a point in time. Revisions are created by
+      Configuration updates and are the actual units that are scaled.
+  - name: Routes
+    description: >-
+      Knative Route resources manage the network endpoints and traffic
+      distribution across Revisions. Routes support percentage-based traffic
+      splitting for canary deployments and named route targets.
 security:
   - bearerAuth: []
 paths:
@@ -57,8 +51,7 @@ paths:
         Returns a list of all Knative Service resources in the specified
         namespace. Services are the primary resource for deploying serverless
         workloads and automatically manage Routes, Configurations, and Revisions.
-      tags:
-        - Services
+      tags: []
       parameters:
         - $ref: '#/components/parameters/namespace'
         - $ref: '#/components/parameters/labelSelector'
@@ -81,8 +74,7 @@ paths:
         create a corresponding Route and Configuration, and will create the
         first Revision from the provided template. The Service begins routing
         traffic to the Revision once it becomes ready.
-      tags:
-        - Services
+      tags: []
       parameters:
         - $ref: '#/components/parameters/namespace'
       requestBody:
@@ -112,8 +104,7 @@ paths:
         Returns the details of a specific Knative Service including its
         template spec, traffic configuration, and status conditions reflecting
         readiness, latestCreatedRevisionName, and latestReadyRevisionName.
-      tags:
-        - Services
+      tags: []
       parameters:
         - $ref: '#/components/parameters/namespace'
         - $ref: '#/components/parameters/name'
@@ -136,8 +127,7 @@ paths:
         Knative to create a new Revision. Traffic routing continues to the
         previous Revision until the new one becomes ready, unless traffic
         configuration specifies otherwise.
-      tags:
-        - Services
+      tags: []
       parameters:
         - $ref: '#/components/parameters/namespace'
         - $ref: '#/components/parameters/name'
@@ -167,8 +157,7 @@ paths:
         Deletes a Knative Service and all its owned resources including Routes,
         Configurations, and Revisions. Pods are terminated and the DNS entries
         are removed.
-      tags:
-        - Services
+      tags: []
       parameters:
         - $ref: '#/components/parameters/namespace'
         - $ref: '#/components/parameters/name'
