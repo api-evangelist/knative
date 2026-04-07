@@ -403,7 +403,7 @@ paths:
   /apis/serving.knative.dev/v1alpha1/namespaces/{namespace}/domainmappings:
     get:
       operationId: listDomainMappings
-      summary: List DomainMappings
+      summary: Knative List DomainMappings
       description: >-
         Returns a list of all DomainMapping resources in the specified
         namespace. DomainMappings associate custom domain names with Knative
@@ -426,7 +426,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createDomainMapping
-      summary: Create a DomainMapping
+      summary: Knative Create a DomainMapping
       description: >-
         Creates a DomainMapping to associate a custom domain name with a
         Knative Service. Knative will handle TLS certificate provisioning
@@ -455,7 +455,7 @@ paths:
   /apis/serving.knative.dev/v1alpha1/namespaces/{namespace}/domainmappings/{name}:
     get:
       operationId: getDomainMapping
-      summary: Get a DomainMapping
+      summary: Knative Get a DomainMapping
       description: >-
         Returns the details of a specific DomainMapping including its reference
         target, URL, and TLS certificate status conditions.
@@ -477,7 +477,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteDomainMapping
-      summary: Delete a DomainMapping
+      summary: Knative Delete a DomainMapping
       description: >-
         Deletes a DomainMapping. The custom domain will no longer route to
         the Knative Service and the TLS certificate will be released.

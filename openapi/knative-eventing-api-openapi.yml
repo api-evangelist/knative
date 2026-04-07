@@ -59,7 +59,7 @@ paths:
   /apis/eventing.knative.dev/v1/namespaces/{namespace}/brokers:
     get:
       operationId: listBrokers
-      summary: List Brokers
+      summary: Knative List Brokers
       description: >-
         Returns a list of all Broker resources in the specified namespace.
         Brokers act as event ingestion points and route events to matching
@@ -82,7 +82,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createBroker
-      summary: Create a Broker
+      summary: Knative Create a Broker
       description: >-
         Creates a new Broker resource. Brokers collect events sent to them and
         deliver events to all Triggers associated with the Broker whose filters
@@ -114,7 +114,7 @@ paths:
   /apis/eventing.knative.dev/v1/namespaces/{namespace}/brokers/{name}:
     get:
       operationId: getBroker
-      summary: Get a Broker
+      summary: Knative Get a Broker
       description: >-
         Returns details of a specific Broker resource including its delivery
         configuration and status conditions reflecting whether it is Ready
@@ -137,7 +137,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteBroker
-      summary: Delete a Broker
+      summary: Knative Delete a Broker
       description: >-
         Deletes a Broker. All associated Triggers must be deleted first or
         they will fail to find their target Broker. In-flight events may be
@@ -161,7 +161,7 @@ paths:
   /apis/eventing.knative.dev/v1/namespaces/{namespace}/triggers:
     get:
       operationId: listTriggers
-      summary: List Triggers
+      summary: Knative List Triggers
       description: >-
         Returns a list of all Trigger resources in the specified namespace.
         Triggers define which events from a Broker should be delivered to
@@ -184,7 +184,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createTrigger
-      summary: Create a Trigger
+      summary: Knative Create a Trigger
       description: >-
         Creates a new Trigger resource. A Trigger subscribes to events from a
         named Broker with optional attribute filters. Matching events are
@@ -216,7 +216,7 @@ paths:
   /apis/eventing.knative.dev/v1/namespaces/{namespace}/triggers/{name}:
     get:
       operationId: getTrigger
-      summary: Get a Trigger
+      summary: Knative Get a Trigger
       description: >-
         Returns details of a specific Trigger including its Broker reference,
         attribute filters, subscriber destination, and status conditions.
@@ -238,7 +238,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteTrigger
-      summary: Delete a Trigger
+      summary: Knative Delete a Trigger
       description: >-
         Deletes a Trigger. The subscriber destination will stop receiving
         events from the associated Broker once the Trigger is deleted.
@@ -261,7 +261,7 @@ paths:
   /apis/messaging.knative.dev/v1/namespaces/{namespace}/channels:
     get:
       operationId: listChannels
-      summary: List Channels
+      summary: Knative List Channels
       description: >-
         Returns a list of all Channel resources in the specified namespace.
         Channels provide a generic pub/sub interface and fan events out to
@@ -284,7 +284,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createChannel
-      summary: Create a Channel
+      summary: Knative Create a Channel
       description: >-
         Creates a new Channel resource. Channels receive events and deliver
         them to all associated Subscriptions independently. The Channel
@@ -315,7 +315,7 @@ paths:
   /apis/messaging.knative.dev/v1/namespaces/{namespace}/channels/{name}:
     get:
       operationId: getChannel
-      summary: Get a Channel
+      summary: Knative Get a Channel
       description: >-
         Returns details of a specific Channel including its channel template,
         delivery configuration, and status conditions.
@@ -337,7 +337,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteChannel
-      summary: Delete a Channel
+      summary: Knative Delete a Channel
       description: >-
         Deletes a Channel and all of its Subscriptions. In-flight events
         may be lost upon deletion.
@@ -360,7 +360,7 @@ paths:
   /apis/messaging.knative.dev/v1/namespaces/{namespace}/subscriptions:
     get:
       operationId: listSubscriptions
-      summary: List Subscriptions
+      summary: Knative List Subscriptions
       description: >-
         Returns a list of all Subscription resources in the specified namespace.
         Subscriptions route events from a Channel to a subscriber destination
@@ -383,7 +383,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createSubscription
-      summary: Create a Subscription
+      summary: Knative Create a Subscription
       description: >-
         Creates a new Subscription to a Channel. Events received by the Channel
         are independently delivered to each Subscription's subscriber destination.
@@ -414,7 +414,7 @@ paths:
   /apis/messaging.knative.dev/v1/namespaces/{namespace}/subscriptions/{name}:
     get:
       operationId: getSubscription
-      summary: Get a Subscription
+      summary: Knative Get a Subscription
       description: >-
         Returns details of a specific Subscription including its Channel
         reference, subscriber destination, reply destination, and dead-letter
@@ -437,7 +437,7 @@ paths:
           $ref: '#/components/responses/NotFound'
     delete:
       operationId: deleteSubscription
-      summary: Delete a Subscription
+      summary: Knative Delete a Subscription
       description: >-
         Deletes a Subscription. The subscriber destination will stop receiving
         events from the associated Channel.
@@ -460,7 +460,7 @@ paths:
   /apis/sources.knative.dev/v1/namespaces/{namespace}/apiserversources:
     get:
       operationId: listApiServerSources
-      summary: List ApiServerSources
+      summary: Knative List ApiServerSources
       description: >-
         Returns a list of all ApiServerSource resources in the specified
         namespace. ApiServerSources watch the Kubernetes API server for events
@@ -483,7 +483,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createApiServerSource
-      summary: Create an ApiServerSource
+      summary: Knative Create an ApiServerSource
       description: >-
         Creates a new ApiServerSource that watches the Kubernetes API server
         for events on specified resource types and forwards them as CloudEvents
@@ -513,7 +513,7 @@ paths:
   /apis/sources.knative.dev/v1/namespaces/{namespace}/pingsources:
     get:
       operationId: listPingSources
-      summary: List PingSources
+      summary: Knative List PingSources
       description: >-
         Returns a list of all PingSource resources in the namespace. PingSources
         emit CloudEvents on a cron-based schedule with a configurable event
@@ -536,7 +536,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createPingSource
-      summary: Create a PingSource
+      summary: Knative Create a PingSource
       description: >-
         Creates a new PingSource that fires CloudEvents on a cron schedule.
         The event payload can be a static JSON data field. PingSources are
@@ -565,7 +565,7 @@ paths:
   /apis/sources.knative.dev/v1/namespaces/{namespace}/sinkbindings:
     get:
       operationId: listSinkBindings
-      summary: List SinkBindings
+      summary: Knative List SinkBindings
       description: >-
         Returns a list of all SinkBinding resources in the namespace. SinkBindings
         augment a PodSpecable workload by injecting the sink URI as the K_SINK
@@ -589,7 +589,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createSinkBinding
-      summary: Create a SinkBinding
+      summary: Knative Create a SinkBinding
       description: >-
         Creates a new SinkBinding that injects K_SINK into a PodSpecable
         subject such as a Deployment, StatefulSet, or CronJob. The sink URI
@@ -618,7 +618,7 @@ paths:
   /apis/eventing.knative.dev/v1beta2/namespaces/{namespace}/eventtypes:
     get:
       operationId: listEventTypes
-      summary: List EventTypes
+      summary: Knative List EventTypes
       description: >-
         Returns a list of all EventType resources in the namespace. EventTypes
         define the catalog of event types that can be consumed from Brokers,
@@ -641,7 +641,7 @@ paths:
           $ref: '#/components/responses/Unauthorized'
     post:
       operationId: createEventType
-      summary: Create an EventType
+      summary: Knative Create an EventType
       description: >-
         Creates a new EventType to register an event type in the catalog.
         EventTypes describe the CloudEvents type, source schema, and broker
