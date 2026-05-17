@@ -83,7 +83,7 @@ apis:
     properties:
       - type: Documentation
         url: https://knative.dev/docs/functions/
-      - type: Getting Started
+      - type: GettingStarted
         url: https://knative.dev/docs/getting-started/about-knative-functions/
       - type: GitHubRepository
         url: https://github.com/knative/func
@@ -110,7 +110,7 @@ apis:
       - Developer Tools
       - Kubernetes
 common:
-  - type: JSON-LD
+  - type: JSONLD
     url: json-ld/knative-context.jsonld
     name: Knative JSON-LD Context
     description: Linked data context mapping Knative resources to standard vocabularies.
@@ -122,7 +122,7 @@ common:
     name: Knative Documentation
     description: Official Knative documentation.
     url: https://knative.dev/docs/
-  - type: Getting Started
+  - type: GettingStarted
     name: Knative Getting Started
     description: Guide for installing and getting started with Knative.
     url: https://knative.dev/docs/getting-started/
@@ -130,11 +130,11 @@ common:
     name: Knative Blog
     description: Project blog and announcements.
     url: https://knative.dev/blog/
-  - type: Change Log
+  - type: ChangeLog
     name: Knative Release Notes
     description: Release notes and changelog for Knative.
     url: https://knative.dev/docs/reference/relnotes/
-  - type: GitHub Organization
+  - type: GitHubOrganization
     name: Knative GitHub Organization
     description: GitHub organization hosting all Knative source code.
     url: https://github.com/knative
