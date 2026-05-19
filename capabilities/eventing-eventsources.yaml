@@ -1,0 +1,239 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Knative Eventing API — EventSources
+  description: 'Knative Eventing API — EventSources. 6 operations. Lead operation: Knative List ApiServerSources. Self-contained
+    Naftiko capability covering one Knative business surface.'
+  tags:
+  - Knative
+  - EventSources
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    KNATIVE_API_KEY: KNATIVE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: eventing-eventsources
+    baseUri: https://kubernetes.default.svc
+    description: Knative Eventing API — EventSources business capability. Self-contained, no shared references.
+    resources:
+    - name: apis-sources.knative.dev-v1-namespaces-namespace-apiserversources
+      path: /apis/sources.knative.dev/v1/namespaces/{namespace}/apiserversources
+      operations:
+      - name: listapiserversources
+        method: GET
+        description: Knative List ApiServerSources
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createapiserversource
+        method: POST
+        description: Knative Create an ApiServerSource
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: apis-sources.knative.dev-v1-namespaces-namespace-pingsources
+      path: /apis/sources.knative.dev/v1/namespaces/{namespace}/pingsources
+      operations:
+      - name: listpingsources
+        method: GET
+        description: Knative List PingSources
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createpingsource
+        method: POST
+        description: Knative Create a PingSource
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: apis-sources.knative.dev-v1-namespaces-namespace-sinkbindings
+      path: /apis/sources.knative.dev/v1/namespaces/{namespace}/sinkbindings
+      operations:
+      - name: listsinkbindings
+        method: GET
+        description: Knative List SinkBindings
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createsinkbinding
+        method: POST
+        description: Knative Create a SinkBinding
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.KNATIVE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: eventing-eventsources-rest
+    port: 8080
+    description: REST adapter for Knative Eventing API — EventSources. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/apis/sources-knative-dev/v1/namespaces/{namespace}/apiserversources
+      name: apis-sources-knative-dev-v1-namespaces-namespace-apiserversources
+      description: REST surface for apis-sources.knative.dev-v1-namespaces-namespace-apiserversources.
+      operations:
+      - method: GET
+        name: listapiserversources
+        description: Knative List ApiServerSources
+        call: eventing-eventsources.listapiserversources
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createapiserversource
+        description: Knative Create an ApiServerSource
+        call: eventing-eventsources.createapiserversource
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apis/sources-knative-dev/v1/namespaces/{namespace}/pingsources
+      name: apis-sources-knative-dev-v1-namespaces-namespace-pingsources
+      description: REST surface for apis-sources.knative.dev-v1-namespaces-namespace-pingsources.
+      operations:
+      - method: GET
+        name: listpingsources
+        description: Knative List PingSources
+        call: eventing-eventsources.listpingsources
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createpingsource
+        description: Knative Create a PingSource
+        call: eventing-eventsources.createpingsource
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apis/sources-knative-dev/v1/namespaces/{namespace}/sinkbindings
+      name: apis-sources-knative-dev-v1-namespaces-namespace-sinkbindings
+      description: REST surface for apis-sources.knative.dev-v1-namespaces-namespace-sinkbindings.
+      operations:
+      - method: GET
+        name: listsinkbindings
+        description: Knative List SinkBindings
+        call: eventing-eventsources.listsinkbindings
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createsinkbinding
+        description: Knative Create a SinkBinding
+        call: eventing-eventsources.createsinkbinding
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: eventing-eventsources-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Knative Eventing API — EventSources. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: knative-list-apiserversources
+      description: Knative List ApiServerSources
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: eventing-eventsources.listapiserversources
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knative-create-apiserversource
+      description: Knative Create an ApiServerSource
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: eventing-eventsources.createapiserversource
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knative-list-pingsources
+      description: Knative List PingSources
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: eventing-eventsources.listpingsources
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knative-create-pingsource
+      description: Knative Create a PingSource
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: eventing-eventsources.createpingsource
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knative-list-sinkbindings
+      description: Knative List SinkBindings
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: eventing-eventsources.listsinkbindings
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knative-create-sinkbinding
+      description: Knative Create a SinkBinding
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: eventing-eventsources.createsinkbinding
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

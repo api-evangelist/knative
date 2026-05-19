@@ -1,0 +1,162 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Knative Eventing API — Brokers
+  description: 'Knative Eventing API — Brokers. 4 operations. Lead operation: Knative List Brokers. Self-contained Naftiko
+    capability covering one Knative business surface.'
+  tags:
+  - Knative
+  - Brokers
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    KNATIVE_API_KEY: KNATIVE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: eventing-brokers
+    baseUri: https://kubernetes.default.svc
+    description: Knative Eventing API — Brokers business capability. Self-contained, no shared references.
+    resources:
+    - name: apis-eventing.knative.dev-v1-namespaces-namespace-brokers
+      path: /apis/eventing.knative.dev/v1/namespaces/{namespace}/brokers
+      operations:
+      - name: listbrokers
+        method: GET
+        description: Knative List Brokers
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createbroker
+        method: POST
+        description: Knative Create a Broker
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: apis-eventing.knative.dev-v1-namespaces-namespace-brokers-name
+      path: /apis/eventing.knative.dev/v1/namespaces/{namespace}/brokers/{name}
+      operations:
+      - name: getbroker
+        method: GET
+        description: Knative Get a Broker
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletebroker
+        method: DELETE
+        description: Knative Delete a Broker
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.KNATIVE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: eventing-brokers-rest
+    port: 8080
+    description: REST adapter for Knative Eventing API — Brokers. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/apis/eventing-knative-dev/v1/namespaces/{namespace}/brokers
+      name: apis-eventing-knative-dev-v1-namespaces-namespace-brokers
+      description: REST surface for apis-eventing.knative.dev-v1-namespaces-namespace-brokers.
+      operations:
+      - method: GET
+        name: listbrokers
+        description: Knative List Brokers
+        call: eventing-brokers.listbrokers
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createbroker
+        description: Knative Create a Broker
+        call: eventing-brokers.createbroker
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apis/eventing-knative-dev/v1/namespaces/{namespace}/brokers/{name}
+      name: apis-eventing-knative-dev-v1-namespaces-namespace-brokers-name
+      description: REST surface for apis-eventing.knative.dev-v1-namespaces-namespace-brokers-name.
+      operations:
+      - method: GET
+        name: getbroker
+        description: Knative Get a Broker
+        call: eventing-brokers.getbroker
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletebroker
+        description: Knative Delete a Broker
+        call: eventing-brokers.deletebroker
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: eventing-brokers-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Knative Eventing API — Brokers. One tool per consumed operation, routed inline through this
+      capability's consumes block.
+    tools:
+    - name: knative-list-brokers
+      description: Knative List Brokers
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: eventing-brokers.listbrokers
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knative-create-broker
+      description: Knative Create a Broker
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: eventing-brokers.createbroker
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knative-get-broker
+      description: Knative Get a Broker
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: eventing-brokers.getbroker
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knative-delete-broker
+      description: Knative Delete a Broker
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: eventing-brokers.deletebroker
+      outputParameters:
+      - type: object
+        mapping: $.

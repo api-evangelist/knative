@@ -1,0 +1,162 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: Knative Serving API — DomainMappings
+  description: 'Knative Serving API — DomainMappings. 4 operations. Lead operation: Knative List DomainMappings. Self-contained
+    Naftiko capability covering one Knative business surface.'
+  tags:
+  - Knative
+  - DomainMappings
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    KNATIVE_API_KEY: KNATIVE_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: serving-domainmappings
+    baseUri: https://kubernetes.default.svc
+    description: Knative Serving API — DomainMappings business capability. Self-contained, no shared references.
+    resources:
+    - name: apis-serving.knative.dev-v1alpha1-namespaces-namespace-domainmappings
+      path: /apis/serving.knative.dev/v1alpha1/namespaces/{namespace}/domainmappings
+      operations:
+      - name: listdomainmappings
+        method: GET
+        description: Knative List DomainMappings
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: createdomainmapping
+        method: POST
+        description: Knative Create a DomainMapping
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    - name: apis-serving.knative.dev-v1alpha1-namespaces-namespace-domainmappings-name
+      path: /apis/serving.knative.dev/v1alpha1/namespaces/{namespace}/domainmappings/{name}
+      operations:
+      - name: getdomainmapping
+        method: GET
+        description: Knative Get a DomainMapping
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: deletedomainmapping
+        method: DELETE
+        description: Knative Delete a DomainMapping
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    authentication:
+      type: bearer
+      token: '{{env.KNATIVE_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: serving-domainmappings-rest
+    port: 8080
+    description: REST adapter for Knative Serving API — DomainMappings. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/apis/serving-knative-dev/v1alpha1/namespaces/{namespace}/domainmappings
+      name: apis-serving-knative-dev-v1alpha1-namespaces-namespace-domainmappings
+      description: REST surface for apis-serving.knative.dev-v1alpha1-namespaces-namespace-domainmappings.
+      operations:
+      - method: GET
+        name: listdomainmappings
+        description: Knative List DomainMappings
+        call: serving-domainmappings.listdomainmappings
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createdomainmapping
+        description: Knative Create a DomainMapping
+        call: serving-domainmappings.createdomainmapping
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/apis/serving-knative-dev/v1alpha1/namespaces/{namespace}/domainmappings/{name}
+      name: apis-serving-knative-dev-v1alpha1-namespaces-namespace-domainmappings-name
+      description: REST surface for apis-serving.knative.dev-v1alpha1-namespaces-namespace-domainmappings-name.
+      operations:
+      - method: GET
+        name: getdomainmapping
+        description: Knative Get a DomainMapping
+        call: serving-domainmappings.getdomainmapping
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: DELETE
+        name: deletedomainmapping
+        description: Knative Delete a DomainMapping
+        call: serving-domainmappings.deletedomainmapping
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: serving-domainmappings-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for Knative Serving API — DomainMappings. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: knative-list-domainmappings
+      description: Knative List DomainMappings
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: serving-domainmappings.listdomainmappings
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knative-create-domainmapping
+      description: Knative Create a DomainMapping
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: serving-domainmappings.createdomainmapping
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knative-get-domainmapping
+      description: Knative Get a DomainMapping
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: serving-domainmappings.getdomainmapping
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: knative-delete-domainmapping
+      description: Knative Delete a DomainMapping
+      hints:
+        readOnly: false
+        destructive: true
+        idempotent: true
+      call: serving-domainmappings.deletedomainmapping
+      outputParameters:
+      - type: object
+        mapping: $.
