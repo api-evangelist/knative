@@ -1,0 +1,744 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knative Eventing API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Brokers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Knative List Brokers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/eventing.knative.dev/v1/namespaces/:namespace/brokers",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "Selector to filter resources by label key-value pairs."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token returned by a previous list call."
+              }
+            ]
+          },
+          "docs": "Returns a list of all Broker resources in the specified namespace. Brokers act as event ingestion points and route events to matching Triggers based on CloudEvent attribute filters."
+        },
+        {
+          "info": {
+            "name": "Knative Create a Broker",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kubernetes.default.svc/apis/eventing.knative.dev/v1/namespaces/:namespace/brokers",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new Broker resource. Brokers collect events sent to them and deliver events to all Triggers associated with the Broker whose filters match the event. Optionally configure delivery settings for dead-letter sinks and retry policies."
+        },
+        {
+          "info": {
+            "name": "Knative Get a Broker",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/eventing.knative.dev/v1/namespaces/:namespace/brokers/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Knative resource."
+              }
+            ]
+          },
+          "docs": "Returns details of a specific Broker resource including its delivery configuration and status conditions reflecting whether it is Ready and its ingress address."
+        },
+        {
+          "info": {
+            "name": "Knative Delete a Broker",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kubernetes.default.svc/apis/eventing.knative.dev/v1/namespaces/:namespace/brokers/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Knative resource."
+              }
+            ]
+          },
+          "docs": "Deletes a Broker. All associated Triggers must be deleted first or they will fail to find their target Broker. In-flight events may be lost upon deletion."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Triggers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Knative List Triggers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/eventing.knative.dev/v1/namespaces/:namespace/triggers",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "Selector to filter resources by label key-value pairs."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token returned by a previous list call."
+              }
+            ]
+          },
+          "docs": "Returns a list of all Trigger resources in the specified namespace. Triggers define which events from a Broker should be delivered to a specific subscriber destination."
+        },
+        {
+          "info": {
+            "name": "Knative Create a Trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kubernetes.default.svc/apis/eventing.knative.dev/v1/namespaces/:namespace/triggers",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new Trigger resource. A Trigger subscribes to events from a named Broker with optional attribute filters. Matching events are delivered to the specified subscriber destination via HTTP POST in CloudEvents format."
+        },
+        {
+          "info": {
+            "name": "Knative Get a Trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/eventing.knative.dev/v1/namespaces/:namespace/triggers/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Knative resource."
+              }
+            ]
+          },
+          "docs": "Returns details of a specific Trigger including its Broker reference, attribute filters, subscriber destination, and status conditions."
+        },
+        {
+          "info": {
+            "name": "Knative Delete a Trigger",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kubernetes.default.svc/apis/eventing.knative.dev/v1/namespaces/:namespace/triggers/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Knative resource."
+              }
+            ]
+          },
+          "docs": "Deletes a Trigger. The subscriber destination will stop receiving events from the associated Broker once the Trigger is deleted."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Channels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Knative List Channels",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/messaging.knative.dev/v1/namespaces/:namespace/channels",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "Selector to filter resources by label key-value pairs."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token returned by a previous list call."
+              }
+            ]
+          },
+          "docs": "Returns a list of all Channel resources in the specified namespace. Channels provide a generic pub/sub interface and fan events out to all Subscriptions."
+        },
+        {
+          "info": {
+            "name": "Knative Create a Channel",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kubernetes.default.svc/apis/messaging.knative.dev/v1/namespaces/:namespace/channels",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new Channel resource. Channels receive events and deliver them to all associated Subscriptions independently. The Channel implementation type is specified via channelTemplate."
+        },
+        {
+          "info": {
+            "name": "Knative Get a Channel",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/messaging.knative.dev/v1/namespaces/:namespace/channels/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Knative resource."
+              }
+            ]
+          },
+          "docs": "Returns details of a specific Channel including its channel template, delivery configuration, and status conditions."
+        },
+        {
+          "info": {
+            "name": "Knative Delete a Channel",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kubernetes.default.svc/apis/messaging.knative.dev/v1/namespaces/:namespace/channels/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Knative resource."
+              }
+            ]
+          },
+          "docs": "Deletes a Channel and all of its Subscriptions. In-flight events may be lost upon deletion."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Subscriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Knative List Subscriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/messaging.knative.dev/v1/namespaces/:namespace/subscriptions",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "Selector to filter resources by label key-value pairs."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token returned by a previous list call."
+              }
+            ]
+          },
+          "docs": "Returns a list of all Subscription resources in the specified namespace. Subscriptions route events from a Channel to a subscriber destination with optional reply and dead-letter sink configuration."
+        },
+        {
+          "info": {
+            "name": "Knative Create a Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kubernetes.default.svc/apis/messaging.knative.dev/v1/namespaces/:namespace/subscriptions",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new Subscription to a Channel. Events received by the Channel are independently delivered to each Subscription's subscriber destination. Reply events from the subscriber can be forwarded to another destination."
+        },
+        {
+          "info": {
+            "name": "Knative Get a Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/messaging.knative.dev/v1/namespaces/:namespace/subscriptions/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Knative resource."
+              }
+            ]
+          },
+          "docs": "Returns details of a specific Subscription including its Channel reference, subscriber destination, reply destination, and dead-letter sink configuration."
+        },
+        {
+          "info": {
+            "name": "Knative Delete a Subscription",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kubernetes.default.svc/apis/messaging.knative.dev/v1/namespaces/:namespace/subscriptions/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Knative resource."
+              }
+            ]
+          },
+          "docs": "Deletes a Subscription. The subscriber destination will stop receiving events from the associated Channel."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "EventSources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Knative List ApiServerSources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/sources.knative.dev/v1/namespaces/:namespace/apiserversources",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "Selector to filter resources by label key-value pairs."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token returned by a previous list call."
+              }
+            ]
+          },
+          "docs": "Returns a list of all ApiServerSource resources in the specified namespace. ApiServerSources watch the Kubernetes API server for events on specified resource types and forward them as CloudEvents to a sink."
+        },
+        {
+          "info": {
+            "name": "Knative Create an ApiServerSource",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kubernetes.default.svc/apis/sources.knative.dev/v1/namespaces/:namespace/apiserversources",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new ApiServerSource that watches the Kubernetes API server for events on specified resource types and forwards them as CloudEvents to the configured sink. Requires a service account with appropriate RBAC permissions to watch the specified resources."
+        },
+        {
+          "info": {
+            "name": "Knative List PingSources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/sources.knative.dev/v1/namespaces/:namespace/pingsources",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "Selector to filter resources by label key-value pairs."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token returned by a previous list call."
+              }
+            ]
+          },
+          "docs": "Returns a list of all PingSource resources in the namespace. PingSources emit CloudEvents on a cron-based schedule with a configurable event payload."
+        },
+        {
+          "info": {
+            "name": "Knative Create a PingSource",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kubernetes.default.svc/apis/sources.knative.dev/v1/namespaces/:namespace/pingsources",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new PingSource that fires CloudEvents on a cron schedule. The event payload can be a static JSON data field. PingSources are useful for triggering periodic workflows and scheduled tasks."
+        },
+        {
+          "info": {
+            "name": "Knative List SinkBindings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/sources.knative.dev/v1/namespaces/:namespace/sinkbindings",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "Selector to filter resources by label key-value pairs."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token returned by a previous list call."
+              }
+            ]
+          },
+          "docs": "Returns a list of all SinkBinding resources in the namespace. SinkBindings augment a PodSpecable workload by injecting the sink URI as the K_SINK environment variable, enabling the workload to send CloudEvents to the configured sink."
+        },
+        {
+          "info": {
+            "name": "Knative Create a SinkBinding",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kubernetes.default.svc/apis/sources.knative.dev/v1/namespaces/:namespace/sinkbindings",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new SinkBinding that injects K_SINK into a PodSpecable subject such as a Deployment, StatefulSet, or CronJob. The sink URI is automatically updated if the sink address changes."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "EventTypes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Knative List EventTypes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/eventing.knative.dev/v1beta2/namespaces/:namespace/eventtypes",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "Selector to filter resources by label key-value pairs."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token returned by a previous list call."
+              }
+            ]
+          },
+          "docs": "Returns a list of all EventType resources in the namespace. EventTypes define the catalog of event types that can be consumed from Brokers, enabling event consumers to discover available events."
+        },
+        {
+          "info": {
+            "name": "Knative Create an EventType",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kubernetes.default.svc/apis/eventing.knative.dev/v1beta2/namespaces/:namespace/eventtypes",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new EventType to register an event type in the catalog. EventTypes describe the CloudEvents type, source schema, and broker association so consumers can discover and validate events."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

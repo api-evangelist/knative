@@ -1,0 +1,564 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knative Serving API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Default",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Knative Services",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/serving.knative.dev/v1/namespaces/:namespace/services",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "Selector to filter resources by label key-value pairs."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token returned by a previous list call."
+              }
+            ]
+          },
+          "docs": "Returns a list of all Knative Service resources in the specified namespace. Services are the primary resource for deploying serverless workloads and automatically manage Routes, Configurations, and Revisions."
+        },
+        {
+          "info": {
+            "name": "Create a Knative Service",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kubernetes.default.svc/apis/serving.knative.dev/v1/namespaces/:namespace/services",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new Knative Service resource. Knative will automatically create a corresponding Route and Configuration, and will create the first Revision from the provided template. The Service begins routing traffic to the Revision once it becomes ready."
+        },
+        {
+          "info": {
+            "name": "Get a Knative Service",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/serving.knative.dev/v1/namespaces/:namespace/services/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Knative resource."
+              }
+            ]
+          },
+          "docs": "Returns the details of a specific Knative Service including its template spec, traffic configuration, and status conditions reflecting readiness, latestCreatedRevisionName, and latestReadyRevisionName."
+        },
+        {
+          "info": {
+            "name": "Replace a Knative Service",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://kubernetes.default.svc/apis/serving.knative.dev/v1/namespaces/:namespace/services/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Knative resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Replaces a Knative Service. Any change to the spec.template causes Knative to create a new Revision. Traffic routing continues to the previous Revision until the new one becomes ready, unless traffic configuration specifies otherwise."
+        },
+        {
+          "info": {
+            "name": "Delete a Knative Service",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kubernetes.default.svc/apis/serving.knative.dev/v1/namespaces/:namespace/services/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Knative resource."
+              }
+            ]
+          },
+          "docs": "Deletes a Knative Service and all its owned resources including Routes, Configurations, and Revisions. Pods are terminated and the DNS entries are removed."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Routes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Knative Routes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/serving.knative.dev/v1/namespaces/:namespace/routes",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "Selector to filter resources by label key-value pairs."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token returned by a previous list call."
+              }
+            ]
+          },
+          "docs": "Returns a list of all Knative Route resources in the specified namespace. Routes map network endpoints to Revisions and manage percentage-based traffic distribution."
+        },
+        {
+          "info": {
+            "name": "Create a Knative Route",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kubernetes.default.svc/apis/serving.knative.dev/v1/namespaces/:namespace/routes",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new Knative Route resource. Routes can distribute traffic across multiple Revisions using percentage-based splitting. Traffic percentages across all targets must sum to 100."
+        },
+        {
+          "info": {
+            "name": "Get a Knative Route",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/serving.knative.dev/v1/namespaces/:namespace/routes/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Knative resource."
+              }
+            ]
+          },
+          "docs": "Returns the details of a specific Knative Route including its traffic targets, URLs for named routes, and status conditions."
+        },
+        {
+          "info": {
+            "name": "Delete a Knative Route",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kubernetes.default.svc/apis/serving.knative.dev/v1/namespaces/:namespace/routes/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Knative resource."
+              }
+            ]
+          },
+          "docs": "Deletes a Knative Route. Traffic to the associated URL will cease. Note that Routes owned by a Service are automatically deleted when the Service is deleted."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Configurations",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Knative Configurations",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/serving.knative.dev/v1/namespaces/:namespace/configurations",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "Selector to filter resources by label key-value pairs."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token returned by a previous list call."
+              }
+            ]
+          },
+          "docs": "Returns a list of all Knative Configuration resources in the specified namespace. Configurations hold the desired state template and track the latest created and ready Revisions."
+        },
+        {
+          "info": {
+            "name": "Get a Knative Configuration",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/serving.knative.dev/v1/namespaces/:namespace/configurations/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Knative resource."
+              }
+            ]
+          },
+          "docs": "Returns details of a specific Knative Configuration including its revision template, latestCreatedRevisionName, and latestReadyRevisionName in the status."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Revisions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List Knative Revisions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/serving.knative.dev/v1/namespaces/:namespace/revisions",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "Selector to filter resources by label key-value pairs."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token returned by a previous list call."
+              }
+            ]
+          },
+          "docs": "Returns a list of all Knative Revision resources in the specified namespace. Revisions are immutable snapshots created by Configuration updates and are the actual units that are autoscaled to handle traffic."
+        },
+        {
+          "info": {
+            "name": "Get a Knative Revision",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/serving.knative.dev/v1/namespaces/:namespace/revisions/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Knative resource."
+              }
+            ]
+          },
+          "docs": "Returns the details of a specific Knative Revision including its container spec, autoscaling annotations, and status conditions reflecting whether it is Ready and Active."
+        },
+        {
+          "info": {
+            "name": "Delete a Knative Revision",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kubernetes.default.svc/apis/serving.knative.dev/v1/namespaces/:namespace/revisions/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Knative resource."
+              }
+            ]
+          },
+          "docs": "Deletes a specific Knative Revision. Only Revisions that are not receiving traffic can be deleted. Revisions owned by a Service may have a retain policy; check the Service's revisionHistoryLimit."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "DomainMappings",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Knative List DomainMappings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/serving.knative.dev/v1alpha1/namespaces/:namespace/domainmappings",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "Selector to filter resources by label key-value pairs."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token returned by a previous list call."
+              }
+            ]
+          },
+          "docs": "Returns a list of all DomainMapping resources in the specified namespace. DomainMappings associate custom domain names with Knative Services and manage TLS certificate provisioning."
+        },
+        {
+          "info": {
+            "name": "Knative Create a DomainMapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kubernetes.default.svc/apis/serving.knative.dev/v1alpha1/namespaces/:namespace/domainmappings",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a DomainMapping to associate a custom domain name with a Knative Service. Knative will handle TLS certificate provisioning via cert-manager or another configured certificate provider."
+        },
+        {
+          "info": {
+            "name": "Knative Get a DomainMapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/serving.knative.dev/v1alpha1/namespaces/:namespace/domainmappings/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Knative resource."
+              }
+            ]
+          },
+          "docs": "Returns the details of a specific DomainMapping including its reference target, URL, and TLS certificate status conditions."
+        },
+        {
+          "info": {
+            "name": "Knative Delete a DomainMapping",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://kubernetes.default.svc/apis/serving.knative.dev/v1alpha1/namespaces/:namespace/domainmappings/:name",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "path",
+                "description": "Name of the Knative resource."
+              }
+            ]
+          },
+          "docs": "Deletes a DomainMapping. The custom domain will no longer route to the Knative Service and the TLS certificate will be released."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
