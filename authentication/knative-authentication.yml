@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/knative-eventing-api-openapi.yml, openapi/knative-serving-api-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: Kubernetes service account token or user bearer token. RBAC policies control
+    access to Knative Eventing resources.
+  sources:
+  - openapi/knative-eventing-api-openapi.yml
+  - openapi/knative-serving-api-openapi.yml

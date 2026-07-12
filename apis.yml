@@ -103,6 +103,10 @@ apis:
       - Developer Tools
       - Kubernetes
 common:
+  - type: DomainSecurity
+    url: security/knative-domain-security.yml
+  - type: Authentication
+    url: authentication/knative-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/knative
   - type: JSONLD
