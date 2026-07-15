@@ -103,6 +103,8 @@ apis:
       - Developer Tools
       - Kubernetes
 common:
+  - type: AgenticAccess
+    url: agentic-access/knative-agentic-access.yml
   - type: DomainSecurity
     url: security/knative-domain-security.yml
   - type: Authentication
