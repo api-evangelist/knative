@@ -1,0 +1,401 @@
+openapi: 3.1.0
+info:
+  title: Knative Eventing Apis Triggers API
+  description: 'The Knative Eventing API extends Kubernetes with custom resources for building event-driven architectures. It provides two main patterns: Broker and Trigger for cloud-native event routing with filtering, and Channel and Subscription for pub/sub messaging. Event sources such as ApiServerSource, PingSource, and SinkBinding connect external event producers to the eventing mesh. All events conform to the CloudEvents specification. Resources are served through the Kubernetes API server under the eventing.knative.dev and messaging.knative.dev API groups.'
+  version: '1.0'
+  contact:
+    name: Knative Community
+    url: https://knative.dev/community/
+servers:
+- url: https://kubernetes.default.svc
+  description: Kubernetes API Server (in-cluster)
+security:
+- bearerAuth: []
+tags:
+- name: Triggers
+  description: Knative Trigger resources define filtered delivery options for events arriving at a Broker. A Trigger selects events by attribute filters and routes matching events to a destination such as a Knative Service.
+paths:
+  /apis/eventing.knative.dev/v1/namespaces/{namespace}/triggers:
+    get:
+      operationId: listTriggers
+      summary: Knative List Triggers
+      description: Returns a list of all Trigger resources in the specified namespace. Triggers define which events from a Broker should be delivered to a specific subscriber destination.
+      tags:
+      - Triggers
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/labelSelector'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed Triggers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriggerList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createTrigger
+      summary: Knative Create a Trigger
+      description: Creates a new Trigger resource. A Trigger subscribes to events from a named Broker with optional attribute filters. Matching events are delivered to the specified subscriber destination via HTTP POST in CloudEvents format.
+      tags:
+      - Triggers
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Trigger'
+      responses:
+        '201':
+          description: Trigger successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trigger'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /apis/eventing.knative.dev/v1/namespaces/{namespace}/triggers/{name}:
+    get:
+      operationId: getTrigger
+      summary: Knative Get a Trigger
+      description: Returns details of a specific Trigger including its Broker reference, attribute filters, subscriber destination, and status conditions.
+      tags:
+      - Triggers
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Successfully retrieved the Trigger.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Trigger'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteTrigger
+      summary: Knative Delete a Trigger
+      description: Deletes a Trigger. The subscriber destination will stop receiving events from the associated Broker once the Trigger is deleted.
+      tags:
+      - Triggers
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Trigger deletion initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  responses:
+    Conflict:
+      description: A resource with this name already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    BadRequest:
+      description: The request was malformed or failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+  schemas:
+    Destination:
+      type: object
+      description: A destination for delivering CloudEvents. Can reference a Kubernetes service, a Knative Service, a Broker, or a Channel via ref, or specify a direct URI.
+      properties:
+        ref:
+          type: object
+          description: Reference to a Kubernetes resource that is a destination.
+          required:
+          - apiVersion
+          - kind
+          - name
+          properties:
+            apiVersion:
+              type: string
+              description: API version of the destination resource.
+            kind:
+              type: string
+              description: Kind of the destination resource.
+            name:
+              type: string
+              description: Name of the destination resource.
+            namespace:
+              type: string
+              description: Namespace of the destination resource.
+        uri:
+          type: string
+          format: uri
+          description: Direct URI to deliver events to. Mutually exclusive with ref.
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Unique name of the resource within its namespace.
+        namespace:
+          type: string
+          description: Namespace the resource belongs to.
+        labels:
+          type: object
+          description: Key-value labels for organizing and selecting resources.
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: Non-identifying metadata for the resource.
+          additionalProperties:
+            type: string
+        resourceVersion:
+          type: string
+          description: Opaque string identifying the resource version.
+        uid:
+          type: string
+          description: Unique identifier assigned by the API server.
+        generation:
+          type: integer
+          description: Sequence number incremented on each spec change.
+        creationTimestamp:
+          type: string
+          format: date-time
+          description: Time the resource was created.
+    TriggerList:
+      type: object
+      description: A list of Trigger resources.
+      required:
+      - apiVersion
+      - kind
+      - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list.
+        kind:
+          type: string
+          const: TriggerList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of Trigger resources.
+          items:
+            $ref: '#/components/schemas/Trigger'
+    Condition:
+      type: object
+      description: A status condition on a Knative resource.
+      required:
+      - type
+      - status
+      properties:
+        type:
+          type: string
+          description: Type of condition such as Ready or Addressable.
+        status:
+          type: string
+          enum:
+          - 'True'
+          - 'False'
+          - Unknown
+          description: Status of the condition.
+        reason:
+          type: string
+          description: Machine-readable reason for the last transition.
+        message:
+          type: string
+          description: Human-readable message for the condition.
+        lastTransitionTime:
+          type: string
+          format: date-time
+          description: Time of the last condition transition.
+    TriggerFilter:
+      type: object
+      description: A filter for selecting CloudEvents based on CloudEvent attributes. Only events matching all specified attribute values will be delivered.
+      properties:
+        attributes:
+          type: object
+          description: Map of CloudEvent attribute names to exact match values. Common attributes include type, source, subject, and any extension attributes.
+          additionalProperties:
+            type: string
+    Trigger:
+      type: object
+      description: A Knative Trigger that subscribes to events from a Broker and routes matching events to a subscriber destination. Triggers support filtering by CloudEvent attributes to select only relevant events.
+      required:
+      - apiVersion
+      - kind
+      - metadata
+      - spec
+      properties:
+        apiVersion:
+          type: string
+          const: eventing.knative.dev/v1
+          description: API version for the Trigger.
+        kind:
+          type: string
+          const: Trigger
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Specification for the Trigger.
+          required:
+          - broker
+          - subscriber
+          properties:
+            broker:
+              type: string
+              description: Name of the Broker to subscribe to.
+            filter:
+              $ref: '#/components/schemas/TriggerFilter'
+            subscriber:
+              $ref: '#/components/schemas/Destination'
+            delivery:
+              $ref: '#/components/schemas/DeliverySpec'
+        status:
+          type: object
+          description: Status of the Trigger.
+          properties:
+            subscriberUri:
+              type: string
+              format: uri
+              description: Resolved URI of the subscriber destination.
+            conditions:
+              type: array
+              description: Status conditions for the Trigger.
+              items:
+                $ref: '#/components/schemas/Condition'
+    Status:
+      type: object
+      description: Kubernetes API Status response.
+      properties:
+        apiVersion:
+          type: string
+          description: API version of the Status object.
+        kind:
+          type: string
+          const: Status
+          description: Always Status.
+        status:
+          type: string
+          description: Success or Failure.
+        message:
+          type: string
+          description: Human-readable description.
+        reason:
+          type: string
+          description: Machine-readable reason.
+        code:
+          type: integer
+          description: HTTP status code.
+    DeliverySpec:
+      type: object
+      description: Delivery configuration for event sources and Brokers.
+      properties:
+        deadLetterSink:
+          $ref: '#/components/schemas/Destination'
+          description: Destination for events that cannot be delivered after retries.
+        retry:
+          type: integer
+          minimum: 0
+          description: Minimum number of retries before sending to the dead-letter sink.
+        backoffPolicy:
+          type: string
+          enum:
+          - linear
+          - exponential
+          description: Backoff policy for retries.
+        backoffDelay:
+          type: string
+          description: Delay between retries in ISO 8601 duration format, for example PT2S.
+        timeout:
+          type: string
+          description: Timeout per delivery attempt in ISO 8601 duration format.
+  parameters:
+    name:
+      name: name
+      in: path
+      required: true
+      description: Name of the Knative resource.
+      schema:
+        type: string
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Pagination token returned by a previous list call.
+      schema:
+        type: string
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: Kubernetes namespace containing the resource.
+      schema:
+        type: string
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: Selector to filter resources by label key-value pairs.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return in a single response.
+      schema:
+        type: integer
+        minimum: 1
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Kubernetes service account token or user bearer token. RBAC policies control access to Knative Eventing resources.
+externalDocs:
+  description: Knative Eventing API Reference
+  url: https://knative.dev/docs/eventing/reference/eventing-api/

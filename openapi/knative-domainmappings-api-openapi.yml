@@ -1,0 +1,369 @@
+openapi: 3.1.0
+info:
+  title: Knative Eventing Apis DomainMappings API
+  description: 'The Knative Eventing API extends Kubernetes with custom resources for building event-driven architectures. It provides two main patterns: Broker and Trigger for cloud-native event routing with filtering, and Channel and Subscription for pub/sub messaging. Event sources such as ApiServerSource, PingSource, and SinkBinding connect external event producers to the eventing mesh. All events conform to the CloudEvents specification. Resources are served through the Kubernetes API server under the eventing.knative.dev and messaging.knative.dev API groups.'
+  version: '1.0'
+  contact:
+    name: Knative Community
+    url: https://knative.dev/community/
+servers:
+- url: https://kubernetes.default.svc
+  description: Kubernetes API Server (in-cluster)
+security:
+- bearerAuth: []
+tags:
+- name: DomainMappings
+  description: Knative DomainMapping resources map a custom domain name to a Knative Service, enabling services to be served under custom hostnames with automatic TLS certificate provisioning.
+paths:
+  /apis/serving.knative.dev/v1alpha1/namespaces/{namespace}/domainmappings:
+    get:
+      operationId: listDomainMappings
+      summary: Knative List DomainMappings
+      description: Returns a list of all DomainMapping resources in the specified namespace. DomainMappings associate custom domain names with Knative Services and manage TLS certificate provisioning.
+      tags:
+      - DomainMappings
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/labelSelector'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed DomainMappings.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomainMappingList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createDomainMapping
+      summary: Knative Create a DomainMapping
+      description: Creates a DomainMapping to associate a custom domain name with a Knative Service. Knative will handle TLS certificate provisioning via cert-manager or another configured certificate provider.
+      tags:
+      - DomainMappings
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DomainMapping'
+      responses:
+        '201':
+          description: DomainMapping successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomainMapping'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /apis/serving.knative.dev/v1alpha1/namespaces/{namespace}/domainmappings/{name}:
+    get:
+      operationId: getDomainMapping
+      summary: Knative Get a DomainMapping
+      description: Returns the details of a specific DomainMapping including its reference target, URL, and TLS certificate status conditions.
+      tags:
+      - DomainMappings
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Successfully retrieved the DomainMapping.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DomainMapping'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteDomainMapping
+      summary: Knative Delete a DomainMapping
+      description: Deletes a DomainMapping. The custom domain will no longer route to the Knative Service and the TLS certificate will be released.
+      tags:
+      - DomainMappings
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: DomainMapping deletion initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    DomainMappingList:
+      type: object
+      description: A list of DomainMapping resources.
+      required:
+      - apiVersion
+      - kind
+      - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list.
+        kind:
+          type: string
+          const: DomainMappingList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of DomainMapping resources.
+          items:
+            $ref: '#/components/schemas/DomainMapping'
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Unique name of the resource within its namespace.
+        namespace:
+          type: string
+          description: Namespace the resource belongs to.
+        labels:
+          type: object
+          description: Key-value labels for organizing and selecting resources.
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: Non-identifying metadata, including autoscaling configuration annotations.
+          additionalProperties:
+            type: string
+        resourceVersion:
+          type: string
+          description: Opaque string identifying the resource version for optimistic concurrency.
+        uid:
+          type: string
+          description: Unique identifier assigned by the API server.
+        generation:
+          type: integer
+          description: Sequence number incremented on each spec change.
+        creationTimestamp:
+          type: string
+          format: date-time
+          description: Time the resource was created.
+        deletionTimestamp:
+          type: string
+          format: date-time
+          description: Time after which the resource will be deleted.
+        ownerReferences:
+          type: array
+          description: References to objects that own this resource.
+          items:
+            type: object
+            properties:
+              apiVersion:
+                type: string
+                description: API version of the owner.
+              kind:
+                type: string
+                description: Kind of the owner.
+              name:
+                type: string
+                description: Name of the owner.
+              uid:
+                type: string
+                description: UID of the owner.
+    Condition:
+      type: object
+      description: A status condition on a Knative resource.
+      required:
+      - type
+      - status
+      properties:
+        type:
+          type: string
+          description: Type of condition such as Ready or Active.
+        status:
+          type: string
+          enum:
+          - 'True'
+          - 'False'
+          - Unknown
+          description: Status of the condition.
+        reason:
+          type: string
+          description: Machine-readable reason for the last condition transition.
+        message:
+          type: string
+          description: Human-readable message explaining the current condition.
+        lastTransitionTime:
+          type: string
+          format: date-time
+          description: Time of the last condition transition.
+    DomainMapping:
+      type: object
+      description: A Knative DomainMapping that maps a custom domain name to a Knative Service, enabling services to be reached at custom hostnames with automatic TLS certificate provisioning.
+      required:
+      - apiVersion
+      - kind
+      - metadata
+      - spec
+      properties:
+        apiVersion:
+          type: string
+          const: serving.knative.dev/v1alpha1
+          description: API version for the DomainMapping resource.
+        kind:
+          type: string
+          const: DomainMapping
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Specification for the DomainMapping.
+          required:
+          - ref
+          properties:
+            ref:
+              type: object
+              description: Reference to the Knative Service to map the domain to.
+              required:
+              - name
+              - kind
+              - apiVersion
+              properties:
+                name:
+                  type: string
+                  description: Name of the referenced Service.
+                kind:
+                  type: string
+                  description: Kind of the referenced resource, typically Service.
+                apiVersion:
+                  type: string
+                  description: API version of the referenced resource.
+            tls:
+              type: object
+              description: TLS configuration for the domain mapping.
+              properties:
+                secretName:
+                  type: string
+                  description: Name of the Kubernetes secret containing the TLS certificate.
+        status:
+          type: object
+          description: Status of the DomainMapping.
+          properties:
+            url:
+              type: string
+              format: uri
+              description: The custom URL for this domain mapping.
+            conditions:
+              type: array
+              description: Status conditions including CertificateProvisioned and Ready.
+              items:
+                $ref: '#/components/schemas/Condition'
+    Status:
+      type: object
+      description: Kubernetes API Status response for errors and operation results.
+      properties:
+        apiVersion:
+          type: string
+          description: API version of the Status object.
+        kind:
+          type: string
+          const: Status
+          description: Always Status.
+        status:
+          type: string
+          description: Success or Failure.
+        message:
+          type: string
+          description: Human-readable description of the status.
+        reason:
+          type: string
+          description: Machine-readable reason, such as NotFound or AlreadyExists.
+        code:
+          type: integer
+          description: HTTP status code.
+  parameters:
+    name:
+      name: name
+      in: path
+      required: true
+      description: Name of the Knative resource.
+      schema:
+        type: string
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: Kubernetes namespace containing the resource.
+      schema:
+        type: string
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Pagination token returned by a previous list call.
+      schema:
+        type: string
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: Selector to filter resources by label key-value pairs.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return in a single response.
+      schema:
+        type: integer
+        minimum: 1
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    BadRequest:
+      description: The request was malformed or failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Kubernetes service account token or user bearer token. RBAC policies control access to Knative Eventing resources.
+externalDocs:
+  description: Knative Eventing API Reference
+  url: https://knative.dev/docs/eventing/reference/eventing-api/

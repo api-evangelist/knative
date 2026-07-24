@@ -1,0 +1,246 @@
+openapi: 3.1.0
+info:
+  title: Knative Eventing Apis EventTypes API
+  description: 'The Knative Eventing API extends Kubernetes with custom resources for building event-driven architectures. It provides two main patterns: Broker and Trigger for cloud-native event routing with filtering, and Channel and Subscription for pub/sub messaging. Event sources such as ApiServerSource, PingSource, and SinkBinding connect external event producers to the eventing mesh. All events conform to the CloudEvents specification. Resources are served through the Kubernetes API server under the eventing.knative.dev and messaging.knative.dev API groups.'
+  version: '1.0'
+  contact:
+    name: Knative Community
+    url: https://knative.dev/community/
+servers:
+- url: https://kubernetes.default.svc
+  description: Kubernetes API Server (in-cluster)
+security:
+- bearerAuth: []
+tags:
+- name: EventTypes
+  description: Knative EventType resources maintain a catalog of event types that can be consumed from Brokers. EventTypes help consumers discover what events are available without inspecting Broker contents directly.
+paths:
+  /apis/eventing.knative.dev/v1beta2/namespaces/{namespace}/eventtypes:
+    get:
+      operationId: listEventTypes
+      summary: Knative List EventTypes
+      description: Returns a list of all EventType resources in the namespace. EventTypes define the catalog of event types that can be consumed from Brokers, enabling event consumers to discover available events.
+      tags:
+      - EventTypes
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/labelSelector'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed EventTypes.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventTypeList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createEventType
+      summary: Knative Create an EventType
+      description: Creates a new EventType to register an event type in the catalog. EventTypes describe the CloudEvents type, source schema, and broker association so consumers can discover and validate events.
+      tags:
+      - EventTypes
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventType'
+      responses:
+        '201':
+          description: EventType successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventType'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    EventType:
+      type: object
+      description: A Knative EventType that catalogs an event type available from a Broker. EventTypes help consumers discover which events are available without having to inspect Broker or Trigger configuration directly.
+      required:
+      - apiVersion
+      - kind
+      - metadata
+      properties:
+        apiVersion:
+          type: string
+          const: eventing.knative.dev/v1beta2
+          description: API version for the EventType.
+        kind:
+          type: string
+          const: EventType
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Specification for the EventType.
+          properties:
+            type:
+              type: string
+              description: CloudEvents type attribute value for this event type.
+            source:
+              type: string
+              description: CloudEvents source attribute value for this event type.
+            schema:
+              type: string
+              format: uri
+              description: URI to the event schema, such as a JSON Schema or AsyncAPI definition.
+            schemaURL:
+              type: string
+              format: uri
+              description: Deprecated alias for schema.
+            description:
+              type: string
+              description: Human-readable description of what this event type represents.
+            broker:
+              type: string
+              description: Name of the Broker that produces this event type.
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Unique name of the resource within its namespace.
+        namespace:
+          type: string
+          description: Namespace the resource belongs to.
+        labels:
+          type: object
+          description: Key-value labels for organizing and selecting resources.
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: Non-identifying metadata for the resource.
+          additionalProperties:
+            type: string
+        resourceVersion:
+          type: string
+          description: Opaque string identifying the resource version.
+        uid:
+          type: string
+          description: Unique identifier assigned by the API server.
+        generation:
+          type: integer
+          description: Sequence number incremented on each spec change.
+        creationTimestamp:
+          type: string
+          format: date-time
+          description: Time the resource was created.
+    EventTypeList:
+      type: object
+      description: A list of EventType resources.
+      required:
+      - apiVersion
+      - kind
+      - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list.
+        kind:
+          type: string
+          const: EventTypeList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of EventType resources.
+          items:
+            $ref: '#/components/schemas/EventType'
+    Status:
+      type: object
+      description: Kubernetes API Status response.
+      properties:
+        apiVersion:
+          type: string
+          description: API version of the Status object.
+        kind:
+          type: string
+          const: Status
+          description: Always Status.
+        status:
+          type: string
+          description: Success or Failure.
+        message:
+          type: string
+          description: Human-readable description.
+        reason:
+          type: string
+          description: Machine-readable reason.
+        code:
+          type: integer
+          description: HTTP status code.
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    BadRequest:
+      description: The request was malformed or failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+  parameters:
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: Kubernetes namespace containing the resource.
+      schema:
+        type: string
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Pagination token returned by a previous list call.
+      schema:
+        type: string
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: Selector to filter resources by label key-value pairs.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return in a single response.
+      schema:
+        type: integer
+        minimum: 1
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Kubernetes service account token or user bearer token. RBAC policies control access to Knative Eventing resources.
+externalDocs:
+  description: Knative Eventing API Reference
+  url: https://knative.dev/docs/eventing/reference/eventing-api/

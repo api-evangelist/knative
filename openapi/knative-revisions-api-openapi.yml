@@ -1,0 +1,401 @@
+openapi: 3.1.0
+info:
+  title: Knative Eventing Apis Revisions API
+  description: 'The Knative Eventing API extends Kubernetes with custom resources for building event-driven architectures. It provides two main patterns: Broker and Trigger for cloud-native event routing with filtering, and Channel and Subscription for pub/sub messaging. Event sources such as ApiServerSource, PingSource, and SinkBinding connect external event producers to the eventing mesh. All events conform to the CloudEvents specification. Resources are served through the Kubernetes API server under the eventing.knative.dev and messaging.knative.dev API groups.'
+  version: '1.0'
+  contact:
+    name: Knative Community
+    url: https://knative.dev/community/
+servers:
+- url: https://kubernetes.default.svc
+  description: Kubernetes API Server (in-cluster)
+security:
+- bearerAuth: []
+tags:
+- name: Revisions
+  description: Knative Revision resources are immutable snapshots of application code and configuration at a point in time. Revisions are created by Configuration updates and are the actual units that are scaled.
+paths:
+  /apis/serving.knative.dev/v1/namespaces/{namespace}/revisions:
+    get:
+      operationId: listRevisions
+      summary: List Knative Revisions
+      description: Returns a list of all Knative Revision resources in the specified namespace. Revisions are immutable snapshots created by Configuration updates and are the actual units that are autoscaled to handle traffic.
+      tags:
+      - Revisions
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/labelSelector'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed Revisions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RevisionList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /apis/serving.knative.dev/v1/namespaces/{namespace}/revisions/{name}:
+    get:
+      operationId: getRevision
+      summary: Get a Knative Revision
+      description: Returns the details of a specific Knative Revision including its container spec, autoscaling annotations, and status conditions reflecting whether it is Ready and Active.
+      tags:
+      - Revisions
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Successfully retrieved the Revision.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Revision'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      operationId: deleteRevision
+      summary: Delete a Knative Revision
+      description: Deletes a specific Knative Revision. Only Revisions that are not receiving traffic can be deleted. Revisions owned by a Service may have a retain policy; check the Service's revisionHistoryLimit.
+      tags:
+      - Revisions
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/name'
+      responses:
+        '200':
+          description: Revision deletion initiated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Status'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+components:
+  schemas:
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Unique name of the resource within its namespace.
+        namespace:
+          type: string
+          description: Namespace the resource belongs to.
+        labels:
+          type: object
+          description: Key-value labels for organizing and selecting resources.
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: Non-identifying metadata, including autoscaling configuration annotations.
+          additionalProperties:
+            type: string
+        resourceVersion:
+          type: string
+          description: Opaque string identifying the resource version for optimistic concurrency.
+        uid:
+          type: string
+          description: Unique identifier assigned by the API server.
+        generation:
+          type: integer
+          description: Sequence number incremented on each spec change.
+        creationTimestamp:
+          type: string
+          format: date-time
+          description: Time the resource was created.
+        deletionTimestamp:
+          type: string
+          format: date-time
+          description: Time after which the resource will be deleted.
+        ownerReferences:
+          type: array
+          description: References to objects that own this resource.
+          items:
+            type: object
+            properties:
+              apiVersion:
+                type: string
+                description: API version of the owner.
+              kind:
+                type: string
+                description: Kind of the owner.
+              name:
+                type: string
+                description: Name of the owner.
+              uid:
+                type: string
+                description: UID of the owner.
+    Condition:
+      type: object
+      description: A status condition on a Knative resource.
+      required:
+      - type
+      - status
+      properties:
+        type:
+          type: string
+          description: Type of condition such as Ready or Active.
+        status:
+          type: string
+          enum:
+          - 'True'
+          - 'False'
+          - Unknown
+          description: Status of the condition.
+        reason:
+          type: string
+          description: Machine-readable reason for the last condition transition.
+        message:
+          type: string
+          description: Human-readable message explaining the current condition.
+        lastTransitionTime:
+          type: string
+          format: date-time
+          description: Time of the last condition transition.
+    RevisionList:
+      type: object
+      description: A list of Knative Revision resources.
+      required:
+      - apiVersion
+      - kind
+      - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list.
+        kind:
+          type: string
+          const: RevisionList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of Revision resources.
+          items:
+            $ref: '#/components/schemas/Revision'
+    Container:
+      type: object
+      description: A container definition for a Knative Revision.
+      required:
+      - image
+      properties:
+        name:
+          type: string
+          description: Name of the container. Defaults to the first container name.
+        image:
+          type: string
+          description: OCI image reference for the container.
+        ports:
+          type: array
+          description: Ports exposed by the container. Knative uses the first container port for routing.
+          items:
+            type: object
+            properties:
+              containerPort:
+                type: integer
+                description: Port number exposed by the container.
+              name:
+                type: string
+                description: Port name, typically h2c for HTTP/2 or http1 for HTTP/1.1.
+              protocol:
+                type: string
+                description: Protocol for the port, usually TCP.
+        env:
+          type: array
+          description: Environment variables set in the container.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Environment variable name.
+              value:
+                type: string
+                description: Literal value for the environment variable.
+              valueFrom:
+                type: object
+                description: Source for the environment variable value from a ConfigMap or Secret.
+        resources:
+          type: object
+          description: Compute resource requests and limits for the container.
+          properties:
+            requests:
+              type: object
+              description: Minimum resources requested.
+              additionalProperties:
+                type: string
+            limits:
+              type: object
+              description: Maximum resources allowed.
+              additionalProperties:
+                type: string
+        readinessProbe:
+          type: object
+          description: Probe to determine when the container is ready to accept traffic.
+        livenessProbe:
+          type: object
+          description: Probe to determine if the container is still running.
+        volumeMounts:
+          type: array
+          description: Volume mounts for the container.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Name of the volume to mount.
+              mountPath:
+                type: string
+                description: Path within the container to mount the volume.
+    Status:
+      type: object
+      description: Kubernetes API Status response for errors and operation results.
+      properties:
+        apiVersion:
+          type: string
+          description: API version of the Status object.
+        kind:
+          type: string
+          const: Status
+          description: Always Status.
+        status:
+          type: string
+          description: Success or Failure.
+        message:
+          type: string
+          description: Human-readable description of the status.
+        reason:
+          type: string
+          description: Machine-readable reason, such as NotFound or AlreadyExists.
+        code:
+          type: integer
+          description: HTTP status code.
+    Revision:
+      type: object
+      description: A Knative Revision, an immutable snapshot of application code and configuration at a point in time. Revisions are created automatically when a Configuration is updated and are the units that Knative scales up and down to handle traffic.
+      required:
+      - apiVersion
+      - kind
+      - metadata
+      properties:
+        apiVersion:
+          type: string
+          const: serving.knative.dev/v1
+          description: API version for the Knative Revision.
+        kind:
+          type: string
+          const: Revision
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: The immutable spec of the Revision.
+          properties:
+            containerConcurrency:
+              type: integer
+              description: Maximum concurrent requests per container instance.
+            timeoutSeconds:
+              type: integer
+              description: Request timeout in seconds.
+            serviceAccountName:
+              type: string
+              description: Service account used by the Revision pods.
+            containers:
+              type: array
+              description: Containers in the Revision pod.
+              items:
+                $ref: '#/components/schemas/Container'
+        status:
+          type: object
+          description: Status of the Revision.
+          properties:
+            serviceName:
+              type: string
+              description: Name of the Service that owns this Revision.
+            logUrl:
+              type: string
+              description: URL to the log output for this Revision.
+            conditions:
+              type: array
+              description: Status conditions for the Revision.
+              items:
+                $ref: '#/components/schemas/Condition'
+  parameters:
+    name:
+      name: name
+      in: path
+      required: true
+      description: Name of the Knative resource.
+      schema:
+        type: string
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: Kubernetes namespace containing the resource.
+      schema:
+        type: string
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Pagination token returned by a previous list call.
+      schema:
+        type: string
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: Selector to filter resources by label key-value pairs.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return in a single response.
+      schema:
+        type: integer
+        minimum: 1
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Kubernetes service account token or user bearer token. RBAC policies control access to Knative Eventing resources.
+externalDocs:
+  description: Knative Eventing API Reference
+  url: https://knative.dev/docs/eventing/reference/eventing-api/

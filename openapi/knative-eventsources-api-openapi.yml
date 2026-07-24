@@ -1,0 +1,603 @@
+openapi: 3.1.0
+info:
+  title: Knative Eventing Apis EventSources API
+  description: 'The Knative Eventing API extends Kubernetes with custom resources for building event-driven architectures. It provides two main patterns: Broker and Trigger for cloud-native event routing with filtering, and Channel and Subscription for pub/sub messaging. Event sources such as ApiServerSource, PingSource, and SinkBinding connect external event producers to the eventing mesh. All events conform to the CloudEvents specification. Resources are served through the Kubernetes API server under the eventing.knative.dev and messaging.knative.dev API groups.'
+  version: '1.0'
+  contact:
+    name: Knative Community
+    url: https://knative.dev/community/
+servers:
+- url: https://kubernetes.default.svc
+  description: Kubernetes API Server (in-cluster)
+security:
+- bearerAuth: []
+tags:
+- name: EventSources
+  description: Knative event source resources connect external event producers to the eventing mesh. Built-in sources include ApiServerSource for Kubernetes API events, PingSource for scheduled events, and SinkBinding for injecting sink URIs into workloads.
+paths:
+  /apis/sources.knative.dev/v1/namespaces/{namespace}/apiserversources:
+    get:
+      operationId: listApiServerSources
+      summary: Knative List ApiServerSources
+      description: Returns a list of all ApiServerSource resources in the specified namespace. ApiServerSources watch the Kubernetes API server for events on specified resource types and forward them as CloudEvents to a sink.
+      tags:
+      - EventSources
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/labelSelector'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed ApiServerSources.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerSourceList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createApiServerSource
+      summary: Knative Create an ApiServerSource
+      description: Creates a new ApiServerSource that watches the Kubernetes API server for events on specified resource types and forwards them as CloudEvents to the configured sink. Requires a service account with appropriate RBAC permissions to watch the specified resources.
+      tags:
+      - EventSources
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApiServerSource'
+      responses:
+        '201':
+          description: ApiServerSource successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiServerSource'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /apis/sources.knative.dev/v1/namespaces/{namespace}/pingsources:
+    get:
+      operationId: listPingSources
+      summary: Knative List PingSources
+      description: Returns a list of all PingSource resources in the namespace. PingSources emit CloudEvents on a cron-based schedule with a configurable event payload.
+      tags:
+      - EventSources
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/labelSelector'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed PingSources.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PingSourceList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createPingSource
+      summary: Knative Create a PingSource
+      description: Creates a new PingSource that fires CloudEvents on a cron schedule. The event payload can be a static JSON data field. PingSources are useful for triggering periodic workflows and scheduled tasks.
+      tags:
+      - EventSources
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PingSource'
+      responses:
+        '201':
+          description: PingSource successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PingSource'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /apis/sources.knative.dev/v1/namespaces/{namespace}/sinkbindings:
+    get:
+      operationId: listSinkBindings
+      summary: Knative List SinkBindings
+      description: Returns a list of all SinkBinding resources in the namespace. SinkBindings augment a PodSpecable workload by injecting the sink URI as the K_SINK environment variable, enabling the workload to send CloudEvents to the configured sink.
+      tags:
+      - EventSources
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      - $ref: '#/components/parameters/labelSelector'
+      - $ref: '#/components/parameters/limit'
+      - $ref: '#/components/parameters/continueToken'
+      responses:
+        '200':
+          description: Successfully listed SinkBindings.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SinkBindingList'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: createSinkBinding
+      summary: Knative Create a SinkBinding
+      description: Creates a new SinkBinding that injects K_SINK into a PodSpecable subject such as a Deployment, StatefulSet, or CronJob. The sink URI is automatically updated if the sink address changes.
+      tags:
+      - EventSources
+      parameters:
+      - $ref: '#/components/parameters/namespace'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SinkBinding'
+      responses:
+        '201':
+          description: SinkBinding successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SinkBinding'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    Destination:
+      type: object
+      description: A destination for delivering CloudEvents. Can reference a Kubernetes service, a Knative Service, a Broker, or a Channel via ref, or specify a direct URI.
+      properties:
+        ref:
+          type: object
+          description: Reference to a Kubernetes resource that is a destination.
+          required:
+          - apiVersion
+          - kind
+          - name
+          properties:
+            apiVersion:
+              type: string
+              description: API version of the destination resource.
+            kind:
+              type: string
+              description: Kind of the destination resource.
+            name:
+              type: string
+              description: Name of the destination resource.
+            namespace:
+              type: string
+              description: Namespace of the destination resource.
+        uri:
+          type: string
+          format: uri
+          description: Direct URI to deliver events to. Mutually exclusive with ref.
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Unique name of the resource within its namespace.
+        namespace:
+          type: string
+          description: Namespace the resource belongs to.
+        labels:
+          type: object
+          description: Key-value labels for organizing and selecting resources.
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: Non-identifying metadata for the resource.
+          additionalProperties:
+            type: string
+        resourceVersion:
+          type: string
+          description: Opaque string identifying the resource version.
+        uid:
+          type: string
+          description: Unique identifier assigned by the API server.
+        generation:
+          type: integer
+          description: Sequence number incremented on each spec change.
+        creationTimestamp:
+          type: string
+          format: date-time
+          description: Time the resource was created.
+    PingSourceList:
+      type: object
+      description: A list of PingSource resources.
+      required:
+      - apiVersion
+      - kind
+      - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list.
+        kind:
+          type: string
+          const: PingSourceList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of PingSource resources.
+          items:
+            $ref: '#/components/schemas/PingSource'
+    SinkBinding:
+      type: object
+      description: A Knative SinkBinding that augments a PodSpecable workload by injecting the sink's URI as the K_SINK environment variable. This enables existing workloads to send CloudEvents without being rewritten as Knative-native event sources.
+      required:
+      - apiVersion
+      - kind
+      - metadata
+      - spec
+      properties:
+        apiVersion:
+          type: string
+          const: sources.knative.dev/v1
+          description: API version for the SinkBinding.
+        kind:
+          type: string
+          const: SinkBinding
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Specification for the SinkBinding.
+          required:
+          - subject
+          - sink
+          properties:
+            subject:
+              type: object
+              description: Reference to the PodSpecable workload to bind to.
+              required:
+              - apiVersion
+              - kind
+              - name
+              properties:
+                apiVersion:
+                  type: string
+                  description: API version of the subject resource.
+                kind:
+                  type: string
+                  description: Kind of the subject resource, such as Deployment or StatefulSet.
+                name:
+                  type: string
+                  description: Name of the subject resource.
+                namespace:
+                  type: string
+                  description: Namespace of the subject resource.
+            sink:
+              $ref: '#/components/schemas/Destination'
+            ceOverrides:
+              type: object
+              description: CloudEvent overrides to merge into all events sent by the subject.
+              properties:
+                extensions:
+                  type: object
+                  description: CloudEvent extension attributes to set on all events.
+                  additionalProperties:
+                    type: string
+        status:
+          type: object
+          description: Status of the SinkBinding.
+          properties:
+            sinkUri:
+              type: string
+              format: uri
+              description: Resolved URI of the sink injected as K_SINK.
+            conditions:
+              type: array
+              description: Status conditions for the SinkBinding.
+              items:
+                $ref: '#/components/schemas/Condition'
+    Condition:
+      type: object
+      description: A status condition on a Knative resource.
+      required:
+      - type
+      - status
+      properties:
+        type:
+          type: string
+          description: Type of condition such as Ready or Addressable.
+        status:
+          type: string
+          enum:
+          - 'True'
+          - 'False'
+          - Unknown
+          description: Status of the condition.
+        reason:
+          type: string
+          description: Machine-readable reason for the last transition.
+        message:
+          type: string
+          description: Human-readable message for the condition.
+        lastTransitionTime:
+          type: string
+          format: date-time
+          description: Time of the last condition transition.
+    PingSource:
+      type: object
+      description: A Knative PingSource that fires CloudEvents on a cron-based schedule. PingSources are used for periodic triggering of event-driven workflows and scheduled tasks.
+      required:
+      - apiVersion
+      - kind
+      - metadata
+      - spec
+      properties:
+        apiVersion:
+          type: string
+          const: sources.knative.dev/v1
+          description: API version for the PingSource.
+        kind:
+          type: string
+          const: PingSource
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Specification for the PingSource.
+          required:
+          - schedule
+          - sink
+          properties:
+            schedule:
+              type: string
+              description: Cron expression specifying when to fire events, for example "*/2 * * * *" fires every two minutes.
+            data:
+              type: string
+              description: Event payload body sent with each fired event.
+            dataContentType:
+              type: string
+              description: Content type of the event data, typically application/json.
+            sink:
+              $ref: '#/components/schemas/Destination'
+            timezone:
+              type: string
+              description: Timezone for interpreting the cron schedule, for example America/New_York. Defaults to UTC.
+        status:
+          type: object
+          description: Status of the PingSource.
+          properties:
+            sinkUri:
+              type: string
+              format: uri
+              description: Resolved URI of the sink destination.
+            conditions:
+              type: array
+              description: Status conditions for the PingSource.
+              items:
+                $ref: '#/components/schemas/Condition'
+    ApiServerSource:
+      type: object
+      description: A Knative ApiServerSource that watches Kubernetes API server events for specified resource types and forwards them as CloudEvents to a sink. Requires a service account with RBAC permissions to watch the specified resources.
+      required:
+      - apiVersion
+      - kind
+      - metadata
+      - spec
+      properties:
+        apiVersion:
+          type: string
+          const: sources.knative.dev/v1
+          description: API version for the ApiServerSource.
+        kind:
+          type: string
+          const: ApiServerSource
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Specification for the ApiServerSource.
+          required:
+          - resources
+          - sink
+          properties:
+            resources:
+              type: array
+              description: List of API server resource types to watch.
+              items:
+                type: object
+                required:
+                - apiVersion
+                - kind
+                properties:
+                  apiVersion:
+                    type: string
+                    description: API version of the resource to watch.
+                  kind:
+                    type: string
+                    description: Kind of the resource to watch.
+                  selector:
+                    type: object
+                    description: Optional label selector to filter watched resources.
+            sink:
+              $ref: '#/components/schemas/Destination'
+            serviceAccountName:
+              type: string
+              description: Service account with RBAC permissions to watch the listed resources.
+            mode:
+              type: string
+              enum:
+              - Reference
+              - Resource
+              description: Event mode. Reference sends a reference to the resource; Resource sends the full resource body.
+            namespaceSelector:
+              type: object
+              description: Selector for namespaces to watch. If empty, watches the source's namespace.
+        status:
+          type: object
+          description: Status of the ApiServerSource.
+          properties:
+            sinkUri:
+              type: string
+              format: uri
+              description: Resolved URI of the sink destination.
+            conditions:
+              type: array
+              description: Status conditions for the ApiServerSource.
+              items:
+                $ref: '#/components/schemas/Condition'
+    ApiServerSourceList:
+      type: object
+      description: A list of ApiServerSource resources.
+      required:
+      - apiVersion
+      - kind
+      - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list.
+        kind:
+          type: string
+          const: ApiServerSourceList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of ApiServerSource resources.
+          items:
+            $ref: '#/components/schemas/ApiServerSource'
+    SinkBindingList:
+      type: object
+      description: A list of SinkBinding resources.
+      required:
+      - apiVersion
+      - kind
+      - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list.
+        kind:
+          type: string
+          const: SinkBindingList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of SinkBinding resources.
+          items:
+            $ref: '#/components/schemas/SinkBinding'
+    Status:
+      type: object
+      description: Kubernetes API Status response.
+      properties:
+        apiVersion:
+          type: string
+          description: API version of the Status object.
+        kind:
+          type: string
+          const: Status
+          description: Always Status.
+        status:
+          type: string
+          description: Success or Failure.
+        message:
+          type: string
+          description: Human-readable description.
+        reason:
+          type: string
+          description: Machine-readable reason.
+        code:
+          type: integer
+          description: HTTP status code.
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    BadRequest:
+      description: The request was malformed or failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+  parameters:
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Pagination token returned by a previous list call.
+      schema:
+        type: string
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: Kubernetes namespace containing the resource.
+      schema:
+        type: string
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: Selector to filter resources by label key-value pairs.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return in a single response.
+      schema:
+        type: integer
+        minimum: 1
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Kubernetes service account token or user bearer token. RBAC policies control access to Knative Eventing resources.
+externalDocs:
+  description: Knative Eventing API Reference
+  url: https://knative.dev/docs/eventing/reference/eventing-api/
