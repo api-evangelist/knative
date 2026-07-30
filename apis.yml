@@ -6,7 +6,20 @@ description: >-
   event-driven architectures with declarative event routing and delivery. Knative abstracts away infrastructure
   complexity so developers can focus on writing code.
 url: https://knative.dev
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: self-serve
+  trial: false
+  try_now: true
+  public: false
+  label: Freemium · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/knative.png
 tags:
   - Auto-Scaling
   - Cloud Native
@@ -19,90 +32,365 @@ modified: '2026-05-19'
 specificationVersion: '0.19'
 type: Index
 apis:
-  - aid: knative:knative-serving-api
-    name: Knative Serving API
-    description: >-
-      Knative Serving extends the Kubernetes API with custom resources for deploying serverless workloads. The Service,
-      Route, Configuration, and Revision resources enable automatic scaling including scale-to-zero, traffic splitting
-      between revisions, and progressive rollouts. Serving handles container lifecycle, networking, and autoscaling
-      automatically.
-    humanURL: https://knative.dev/docs/serving/
-    properties:
-      - type: Documentation
-        url: https://knative.dev/docs/serving/
-      - type: Reference
-        url: https://knative.dev/docs/serving/reference/serving-api/
-      - type: GitHubRepository
-        url: https://github.com/knative/serving
-      - type: OpenAPI
-        url: openapi/knative-serving-api-openapi.yml
-      - type: JSONSchema
-        url: json-schema/knative-serving-schema.json
-    tags:
-      - Auto-Scaling
-      - Serverless
-      - Serving
-  - aid: knative:knative-eventing-api
-    name: Knative Eventing API
-    description: >-
-      Knative Eventing provides a set of Kubernetes custom resources for building event-driven architectures. It
-      includes Broker and Trigger resources for event routing, Channel and Subscription for pub/sub messaging, and
-      source resources for connecting external event producers to the eventing mesh. Events conform to the CloudEvents
-      specification.
-    humanURL: https://knative.dev/docs/eventing/
-    properties:
-      - type: Documentation
-        url: https://knative.dev/docs/eventing/
-      - type: Reference
-        url: https://knative.dev/docs/eventing/reference/eventing-api/
-      - type: GitHubRepository
-        url: https://github.com/knative/eventing
-      - type: OpenAPI
-        url: openapi/knative-eventing-api-openapi.yml
-      - type: AsyncAPI
-        url: asyncapi/knative-cloudevents-asyncapi.yml
-      - type: JSONSchema
-        url: json-schema/knative-eventing-schema.json
-    tags:
-      - Event-Driven
-      - Events
-      - Pub/Sub
-  - aid: knative:knative-functions
-    name: Knative Functions
-    description: >-
-      Knative Functions enables developers to create, build, and deploy stateless, event-driven functions as Knative
-      Services using the func CLI or the kn func plugin. Functions can be written in multiple languages and are
-      automatically deployed as auto-scaling Knative Services that respond to HTTP requests or CloudEvents.
-    humanURL: https://knative.dev/docs/functions/
-    properties:
-      - type: Documentation
-        url: https://knative.dev/docs/functions/
-      - type: GettingStarted
-        url: https://knative.dev/docs/getting-started/about-knative-functions/
-      - type: GitHubRepository
-        url: https://github.com/knative/func
-    tags:
-      - CLI
-      - Event-Driven
-      - Functions
-      - Serverless
-  - aid: knative:knative-cli
-    name: Knative CLI (kn)
-    description: >-
-      The Knative CLI (kn) provides a command-line interface for creating and managing Knative resources including
-      Services, Revisions, Routes, event sources, and Brokers. It simplifies tasks like traffic splitting and
-      autoscaling configuration without requiring direct YAML editing.
-    humanURL: https://knative.dev/docs/client/
-    properties:
-      - type: Documentation
-        url: https://knative.dev/docs/client/
-      - type: GitHubRepository
-        url: https://github.com/knative/client
-    tags:
-      - CLI
-      - Developer Tools
-      - Kubernetes
+- aid: knative:knative-functions
+  name: Knative Functions
+  description: >-
+    Knative Functions enables developers to create, build, and deploy stateless, event-driven functions
+    as Knative Services using the func CLI or the kn func plugin. Functions can be written in multiple
+    languages and are automatically deployed as auto-scaling Knative Services that respond to HTTP requests
+    or CloudEvents.
+  humanURL: https://knative.dev/docs/functions/
+  properties:
+  - type: Documentation
+    url: https://knative.dev/docs/functions/
+  - type: GettingStarted
+    url: https://knative.dev/docs/getting-started/about-knative-functions/
+  - type: GitHubRepository
+    url: https://github.com/knative/func
+  tags:
+  - CLI
+  - Event-Driven
+  - Functions
+  - Serverless
+- aid: knative:knative-cli
+  name: Knative CLI (kn)
+  description: >-
+    The Knative CLI (kn) provides a command-line interface for creating and managing Knative resources
+    including Services, Revisions, Routes, event sources, and Brokers. It simplifies tasks like traffic
+    splitting and autoscaling configuration without requiring direct YAML editing.
+  humanURL: https://knative.dev/docs/client/
+  properties:
+  - type: Documentation
+    url: https://knative.dev/docs/client/
+  - type: GitHubRepository
+    url: https://github.com/knative/client
+  tags:
+  - CLI
+  - Developer Tools
+  - Kubernetes
+- aid: knative:knative-apis-api
+  name: Knative Apis API
+  description: The Apis API from Knative — 2 operation(s) for apis.
+  humanURL: https://knative.dev/docs/serving/
+  tags:
+  - Apis
+  properties:
+  - type: OpenAPI
+    url: openapi/knative-apis-api-openapi.yml
+  - type: Documentation
+    url: https://knative.dev/docs/serving/
+  - type: Reference
+    url: https://knative.dev/docs/serving/reference/serving-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/serving
+  - type: JSONSchema
+    url: json-schema/knative-serving-schema.json
+  - type: Documentation
+    url: https://knative.dev/docs/eventing/
+  - type: Reference
+    url: https://knative.dev/docs/eventing/reference/eventing-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/eventing
+  - type: AsyncAPI
+    url: asyncapi/knative-cloudevents-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/knative-eventing-schema.json
+- aid: knative:knative-brokers-api
+  name: Knative Brokers API
+  description: >-
+    Knative Broker resources collect pools of events that can be consumed using Triggers. Brokers provide
+    event routing with filtering, guaranteed delivery, and dead-letter sink support. The default broker
+    implementation uses an in-memory channel.
+  humanURL: https://knative.dev/docs/serving/
+  tags:
+  - Brokers
+  properties:
+  - type: OpenAPI
+    url: openapi/knative-brokers-api-openapi.yml
+  - type: Documentation
+    url: https://knative.dev/docs/serving/
+  - type: Reference
+    url: https://knative.dev/docs/serving/reference/serving-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/serving
+  - type: JSONSchema
+    url: json-schema/knative-serving-schema.json
+  - type: Documentation
+    url: https://knative.dev/docs/eventing/
+  - type: Reference
+    url: https://knative.dev/docs/eventing/reference/eventing-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/eventing
+  - type: AsyncAPI
+    url: asyncapi/knative-cloudevents-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/knative-eventing-schema.json
+- aid: knative:knative-channels-api
+  name: Knative Channels API
+  description: >-
+    Knative Channel resources represent a generic pub/sub messaging channel. Channels receive events and
+    fan them out to all Subscriptions. The default channel implementation uses an in-memory channel.
+  humanURL: https://knative.dev/docs/serving/
+  tags:
+  - Channels
+  properties:
+  - type: OpenAPI
+    url: openapi/knative-channels-api-openapi.yml
+  - type: Documentation
+    url: https://knative.dev/docs/serving/
+  - type: Reference
+    url: https://knative.dev/docs/serving/reference/serving-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/serving
+  - type: JSONSchema
+    url: json-schema/knative-serving-schema.json
+  - type: Documentation
+    url: https://knative.dev/docs/eventing/
+  - type: Reference
+    url: https://knative.dev/docs/eventing/reference/eventing-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/eventing
+  - type: AsyncAPI
+    url: asyncapi/knative-cloudevents-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/knative-eventing-schema.json
+- aid: knative:knative-configurations-api
+  name: Knative Configurations API
+  description: >-
+    Knative Configuration resources maintain the desired state for a deployment by capturing container
+    templates. Each update to a Configuration creates a new immutable Revision.
+  humanURL: https://knative.dev/docs/serving/
+  tags:
+  - Configurations
+  properties:
+  - type: OpenAPI
+    url: openapi/knative-configurations-api-openapi.yml
+  - type: Documentation
+    url: https://knative.dev/docs/serving/
+  - type: Reference
+    url: https://knative.dev/docs/serving/reference/serving-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/serving
+  - type: JSONSchema
+    url: json-schema/knative-serving-schema.json
+  - type: Documentation
+    url: https://knative.dev/docs/eventing/
+  - type: Reference
+    url: https://knative.dev/docs/eventing/reference/eventing-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/eventing
+  - type: AsyncAPI
+    url: asyncapi/knative-cloudevents-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/knative-eventing-schema.json
+- aid: knative:knative-domainmappings-api
+  name: Knative DomainMappings API
+  description: >-
+    Knative DomainMapping resources map a custom domain name to a Knative Service, enabling services to
+    be served under custom hostnames with automatic TLS certificate provisioning.
+  humanURL: https://knative.dev/docs/serving/
+  tags:
+  - DomainMappings
+  properties:
+  - type: OpenAPI
+    url: openapi/knative-domainmappings-api-openapi.yml
+  - type: Documentation
+    url: https://knative.dev/docs/serving/
+  - type: Reference
+    url: https://knative.dev/docs/serving/reference/serving-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/serving
+  - type: JSONSchema
+    url: json-schema/knative-serving-schema.json
+  - type: Documentation
+    url: https://knative.dev/docs/eventing/
+  - type: Reference
+    url: https://knative.dev/docs/eventing/reference/eventing-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/eventing
+  - type: AsyncAPI
+    url: asyncapi/knative-cloudevents-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/knative-eventing-schema.json
+- aid: knative:knative-eventsources-api
+  name: Knative EventSources API
+  description: >-
+    Knative event source resources connect external event producers to the eventing mesh. Built-in sources
+    include ApiServerSource for Kubernetes API events, PingSource for scheduled events, and SinkBinding
+    for injecting sink URIs into workloads.
+  humanURL: https://knative.dev/docs/serving/
+  tags:
+  - EventSources
+  properties:
+  - type: OpenAPI
+    url: openapi/knative-eventsources-api-openapi.yml
+  - type: Documentation
+    url: https://knative.dev/docs/serving/
+  - type: Reference
+    url: https://knative.dev/docs/serving/reference/serving-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/serving
+  - type: JSONSchema
+    url: json-schema/knative-serving-schema.json
+  - type: Documentation
+    url: https://knative.dev/docs/eventing/
+  - type: Reference
+    url: https://knative.dev/docs/eventing/reference/eventing-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/eventing
+  - type: AsyncAPI
+    url: asyncapi/knative-cloudevents-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/knative-eventing-schema.json
+- aid: knative:knative-eventtypes-api
+  name: Knative EventTypes API
+  description: >-
+    Knative EventType resources maintain a catalog of event types that can be consumed from Brokers. EventTypes
+    help consumers discover what events are available without inspecting Broker contents directly.
+  humanURL: https://knative.dev/docs/serving/
+  tags:
+  - EventTypes
+  properties:
+  - type: OpenAPI
+    url: openapi/knative-eventtypes-api-openapi.yml
+  - type: Documentation
+    url: https://knative.dev/docs/serving/
+  - type: Reference
+    url: https://knative.dev/docs/serving/reference/serving-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/serving
+  - type: JSONSchema
+    url: json-schema/knative-serving-schema.json
+  - type: Documentation
+    url: https://knative.dev/docs/eventing/
+  - type: Reference
+    url: https://knative.dev/docs/eventing/reference/eventing-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/eventing
+  - type: AsyncAPI
+    url: asyncapi/knative-cloudevents-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/knative-eventing-schema.json
+- aid: knative:knative-revisions-api
+  name: Knative Revisions API
+  description: >-
+    Knative Revision resources are immutable snapshots of application code and configuration at a point
+    in time. Revisions are created by Configuration updates and are the actual units that are scaled.
+  humanURL: https://knative.dev/docs/serving/
+  tags:
+  - Revisions
+  properties:
+  - type: OpenAPI
+    url: openapi/knative-revisions-api-openapi.yml
+  - type: Documentation
+    url: https://knative.dev/docs/serving/
+  - type: Reference
+    url: https://knative.dev/docs/serving/reference/serving-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/serving
+  - type: JSONSchema
+    url: json-schema/knative-serving-schema.json
+  - type: Documentation
+    url: https://knative.dev/docs/eventing/
+  - type: Reference
+    url: https://knative.dev/docs/eventing/reference/eventing-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/eventing
+  - type: AsyncAPI
+    url: asyncapi/knative-cloudevents-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/knative-eventing-schema.json
+- aid: knative:knative-routes-api
+  name: Knative Routes API
+  description: >-
+    Knative Route resources manage the network endpoints and traffic distribution across Revisions. Routes
+    support percentage-based traffic splitting for canary deployments and named route targets.
+  humanURL: https://knative.dev/docs/serving/
+  tags:
+  - Routes
+  properties:
+  - type: OpenAPI
+    url: openapi/knative-routes-api-openapi.yml
+  - type: Documentation
+    url: https://knative.dev/docs/serving/
+  - type: Reference
+    url: https://knative.dev/docs/serving/reference/serving-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/serving
+  - type: JSONSchema
+    url: json-schema/knative-serving-schema.json
+  - type: Documentation
+    url: https://knative.dev/docs/eventing/
+  - type: Reference
+    url: https://knative.dev/docs/eventing/reference/eventing-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/eventing
+  - type: AsyncAPI
+    url: asyncapi/knative-cloudevents-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/knative-eventing-schema.json
+- aid: knative:knative-subscriptions-api
+  name: Knative Subscriptions API
+  description: >-
+    Knative Subscription resources define a delivery destination for events sent to a Channel. Each Subscription
+    routes events from a Channel to a subscriber destination with optional reply and dead-letter handling.
+  humanURL: https://knative.dev/docs/serving/
+  tags:
+  - Subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/knative-subscriptions-api-openapi.yml
+  - type: Documentation
+    url: https://knative.dev/docs/serving/
+  - type: Reference
+    url: https://knative.dev/docs/serving/reference/serving-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/serving
+  - type: JSONSchema
+    url: json-schema/knative-serving-schema.json
+  - type: Documentation
+    url: https://knative.dev/docs/eventing/
+  - type: Reference
+    url: https://knative.dev/docs/eventing/reference/eventing-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/eventing
+  - type: AsyncAPI
+    url: asyncapi/knative-cloudevents-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/knative-eventing-schema.json
+- aid: knative:knative-triggers-api
+  name: Knative Triggers API
+  description: >-
+    Knative Trigger resources define filtered delivery options for events arriving at a Broker. A Trigger
+    selects events by attribute filters and routes matching events to a destination such as a Knative
+    Service.
+  humanURL: https://knative.dev/docs/serving/
+  tags:
+  - Triggers
+  properties:
+  - type: OpenAPI
+    url: openapi/knative-triggers-api-openapi.yml
+  - type: Documentation
+    url: https://knative.dev/docs/serving/
+  - type: Reference
+    url: https://knative.dev/docs/serving/reference/serving-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/serving
+  - type: JSONSchema
+    url: json-schema/knative-serving-schema.json
+  - type: Documentation
+    url: https://knative.dev/docs/eventing/
+  - type: Reference
+    url: https://knative.dev/docs/eventing/reference/eventing-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/eventing
+  - type: AsyncAPI
+    url: asyncapi/knative-cloudevents-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/knative-eventing-schema.json
 common:
+  - type: PostmanWorkspace
+    url: https://www.postman.com/kinlaneapi/knative/overview
   - type: AgenticAccess
     url: agentic-access/knative-agentic-access.yml
   - type: DomainSecurity
