@@ -1,0 +1,1467 @@
+{
+  "info": {
+    "_postman_id": "64c44187-e7b5-42a3-a270-7c65fc11c204",
+    "name": "Knative Eventing Apis EventSources API",
+    "description": "The Knative Eventing API extends Kubernetes with custom resources for building event-driven architectures. It provides two main patterns: Broker and Trigger for cloud-native event routing with filtering, and Channel and Subscription for pub/sub messaging. Event sources such as ApiServerSource, PingSource, and SinkBinding connect external event producers to the eventing mesh. All events conform to the CloudEvents specification. Resources are served through the Kubernetes API server under the eventing.knative.dev and messaging.knative.dev API groups.\n\nContact Support:\n Name: Knative Community",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:00:39.000Z",
+    "updatedAt": "2026-07-28T02:00:39.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-64c44187-e7b5-42a3-a270-7c65fc11c204"
+  },
+  "item": [
+    {
+      "name": "apis",
+      "item": [
+        {
+          "name": "sources.knative.dev",
+          "item": [
+            {
+              "name": "v1",
+              "item": [
+                {
+                  "name": "namespaces",
+                  "item": [
+                    {
+                      "name": "{namespace}",
+                      "item": [
+                        {
+                          "name": "apiserversources",
+                          "item": [
+                            {
+                              "name": "Knative List ApiServerSources",
+                              "id": "bf7639b7-283f-4ca4-b582-b39a294b6485",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/sources.knative.dev/v1/namespaces/:namespace/apiserversources?labelSelector=<string>&limit=<integer>&continue=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "sources.knative.dev",
+                                    "v1",
+                                    "namespaces",
+                                    ":namespace",
+                                    "apiserversources"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Selector to filter resources by label key-value pairs.",
+                                      "key": "labelSelector",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "Maximum number of items to return in a single response.",
+                                      "key": "limit",
+                                      "value": "<integer>"
+                                    },
+                                    {
+                                      "description": "Pagination token returned by a previous list call.",
+                                      "key": "continue",
+                                      "value": "<string>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "c4d14b7e-33a6-44a9-8c7c-7b469c58c94b",
+                                      "key": "namespace",
+                                      "value": "<string>",
+                                      "description": "(Required) Kubernetes namespace containing the resource."
+                                    }
+                                  ]
+                                },
+                                "description": "Returns a list of all ApiServerSource resources in the specified namespace. ApiServerSources watch the Kubernetes API server for events on specified resource types and forward them as CloudEvents to a sink."
+                              },
+                              "response": [
+                                {
+                                  "id": "a3d59914-61da-44a9-9e0e-290990e42f87",
+                                  "name": "Successfully listed ApiServerSources.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/sources.knative.dev/v1/namespaces/:namespace/apiserversources?labelSelector=<string>&limit=<integer>&continue=<string>",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "sources.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "apiserversources"
+                                      ],
+                                      "query": [
+                                        {
+                                          "description": "Selector to filter resources by label key-value pairs.",
+                                          "key": "labelSelector",
+                                          "value": "<string>"
+                                        },
+                                        {
+                                          "description": "Maximum number of items to return in a single response.",
+                                          "key": "limit",
+                                          "value": "<integer>"
+                                        },
+                                        {
+                                          "description": "Pagination token returned by a previous list call.",
+                                          "key": "continue",
+                                          "value": "<string>"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"items\": [\n    {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"metadata\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\",\n        \"labels\": {\n          \"Ut_b6\": \"<string>\"\n        },\n        \"annotations\": {\n          \"sede1\": \"<string>\"\n        },\n        \"resourceVersion\": \"<string>\",\n        \"uid\": \"<string>\",\n        \"generation\": \"<integer>\",\n        \"creationTimestamp\": \"<dateTime>\"\n      },\n      \"spec\": {\n        \"resources\": [\n          {\n            \"apiVersion\": \"<string>\",\n            \"kind\": \"<string>\",\n            \"selector\": {}\n          },\n          {\n            \"apiVersion\": \"<string>\",\n            \"kind\": \"<string>\",\n            \"selector\": {}\n          }\n        ],\n        \"sink\": {\n          \"ref\": {\n            \"apiVersion\": \"<string>\",\n            \"kind\": \"<string>\",\n            \"name\": \"<string>\",\n            \"namespace\": \"<string>\"\n          },\n          \"uri\": \"<uri>\"\n        },\n        \"serviceAccountName\": \"<string>\",\n        \"mode\": \"Reference\",\n        \"namespaceSelector\": {}\n      },\n      \"status\": {\n        \"sinkUri\": \"<uri>\",\n        \"conditions\": [\n          {\n            \"type\": \"<string>\",\n            \"status\": \"False\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"status\": \"True\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          }\n        ]\n      }\n    },\n    {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"metadata\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\",\n        \"labels\": {\n          \"tempor_85\": \"<string>\"\n        },\n        \"annotations\": {\n          \"qui_885\": \"<string>\"\n        },\n        \"resourceVersion\": \"<string>\",\n        \"uid\": \"<string>\",\n        \"generation\": \"<integer>\",\n        \"creationTimestamp\": \"<dateTime>\"\n      },\n      \"spec\": {\n        \"resources\": [\n          {\n            \"apiVersion\": \"<string>\",\n            \"kind\": \"<string>\",\n            \"selector\": {}\n          },\n          {\n            \"apiVersion\": \"<string>\",\n            \"kind\": \"<string>\",\n            \"selector\": {}\n          }\n        ],\n        \"sink\": {\n          \"ref\": {\n            \"apiVersion\": \"<string>\",\n            \"kind\": \"<string>\",\n            \"name\": \"<string>\",\n            \"namespace\": \"<string>\"\n          },\n          \"uri\": \"<uri>\"\n        },\n        \"serviceAccountName\": \"<string>\",\n        \"mode\": \"Resource\",\n        \"namespaceSelector\": {}\n      },\n      \"status\": {\n        \"sinkUri\": \"<uri>\",\n        \"conditions\": [\n          {\n            \"type\": \"<string>\",\n            \"status\": \"Unknown\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"status\": \"Unknown\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          }\n        ]\n      }\n    }\n  ],\n  \"metadata\": {\n    \"resourceVersion\": \"<string>\",\n    \"continue\": \"<string>\"\n  }\n}",
+                                  "createdAt": "2026-07-28T02:00:39.000Z",
+                                  "updatedAt": "2026-07-28T02:00:39.000Z",
+                                  "uid": "35240-a3d59914-61da-44a9-9e0e-290990e42f87"
+                                },
+                                {
+                                  "id": "993261a6-8732-45cf-917e-782dd44a280f",
+                                  "name": "Authentication credentials are missing or invalid.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/sources.knative.dev/v1/namespaces/:namespace/apiserversources?labelSelector=<string>&limit=<integer>&continue=<string>",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "sources.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "apiserversources"
+                                      ],
+                                      "query": [
+                                        {
+                                          "description": "Selector to filter resources by label key-value pairs.",
+                                          "key": "labelSelector",
+                                          "value": "<string>"
+                                        },
+                                        {
+                                          "description": "Maximum number of items to return in a single response.",
+                                          "key": "limit",
+                                          "value": "<integer>"
+                                        },
+                                        {
+                                          "description": "Pagination token returned by a previous list call.",
+                                          "key": "continue",
+                                          "value": "<string>"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Unauthorized",
+                                  "code": 401,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                  "createdAt": "2026-07-28T02:00:39.000Z",
+                                  "updatedAt": "2026-07-28T02:00:39.000Z",
+                                  "uid": "35240-993261a6-8732-45cf-917e-782dd44a280f"
+                                }
+                              ],
+                              "createdAt": "2026-07-28T02:00:39.000Z",
+                              "updatedAt": "2026-07-28T02:00:39.000Z",
+                              "uid": "35240-bf7639b7-283f-4ca4-b582-b39a294b6485"
+                            },
+                            {
+                              "name": "Knative Create an ApiServerSource",
+                              "id": "b487f1b6-c660-4909-a97e-560348b0a8b1",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"eiusmod109\": \"<string>\",\n      \"sint33\": \"<string>\",\n      \"ipsum_6\": \"<string>\"\n    },\n    \"annotations\": {\n      \"eu0\": \"<string>\",\n      \"commodo_5\": \"<string>\",\n      \"sit__\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"resources\": [\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"selector\": {}\n      },\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"selector\": {}\n      }\n    ],\n    \"sink\": {\n      \"ref\": {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"uri\": \"<uri>\"\n    },\n    \"serviceAccountName\": \"<string>\",\n    \"mode\": \"Reference\",\n    \"namespaceSelector\": {}\n  },\n  \"status\": {\n    \"sinkUri\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/sources.knative.dev/v1/namespaces/:namespace/apiserversources",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "sources.knative.dev",
+                                    "v1",
+                                    "namespaces",
+                                    ":namespace",
+                                    "apiserversources"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "a2c4cb2c-3acd-4651-a69c-d42371f831db",
+                                      "key": "namespace",
+                                      "value": "<string>",
+                                      "description": "(Required) Kubernetes namespace containing the resource."
+                                    }
+                                  ]
+                                },
+                                "description": "Creates a new ApiServerSource that watches the Kubernetes API server for events on specified resource types and forwards them as CloudEvents to the configured sink. Requires a service account with appropriate RBAC permissions to watch the specified resources."
+                              },
+                              "response": [
+                                {
+                                  "id": "2b39b263-8ded-49d0-ba00-90abfb58dc48",
+                                  "name": "ApiServerSource successfully created.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"eiusmod109\": \"<string>\",\n      \"sint33\": \"<string>\",\n      \"ipsum_6\": \"<string>\"\n    },\n    \"annotations\": {\n      \"eu0\": \"<string>\",\n      \"commodo_5\": \"<string>\",\n      \"sit__\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"resources\": [\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"selector\": {}\n      },\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"selector\": {}\n      }\n    ],\n    \"sink\": {\n      \"ref\": {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"uri\": \"<uri>\"\n    },\n    \"serviceAccountName\": \"<string>\",\n    \"mode\": \"Reference\",\n    \"namespaceSelector\": {}\n  },\n  \"status\": {\n    \"sinkUri\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/sources.knative.dev/v1/namespaces/:namespace/apiserversources",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "sources.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "apiserversources"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Created",
+                                  "code": 201,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"eiusmod109\": \"<string>\",\n      \"sint33\": \"<string>\",\n      \"ipsum_6\": \"<string>\"\n    },\n    \"annotations\": {\n      \"eu0\": \"<string>\",\n      \"commodo_5\": \"<string>\",\n      \"sit__\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"resources\": [\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"selector\": {}\n      },\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"selector\": {}\n      }\n    ],\n    \"sink\": {\n      \"ref\": {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"uri\": \"<uri>\"\n    },\n    \"serviceAccountName\": \"<string>\",\n    \"mode\": \"Reference\",\n    \"namespaceSelector\": {}\n  },\n  \"status\": {\n    \"sinkUri\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                  "createdAt": "2026-07-28T02:00:39.000Z",
+                                  "updatedAt": "2026-07-28T02:00:39.000Z",
+                                  "uid": "35240-2b39b263-8ded-49d0-ba00-90abfb58dc48"
+                                },
+                                {
+                                  "id": "0bbb3768-51b4-49be-9616-bc74351edb7f",
+                                  "name": "The request was malformed or failed validation.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"eiusmod109\": \"<string>\",\n      \"sint33\": \"<string>\",\n      \"ipsum_6\": \"<string>\"\n    },\n    \"annotations\": {\n      \"eu0\": \"<string>\",\n      \"commodo_5\": \"<string>\",\n      \"sit__\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"resources\": [\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"selector\": {}\n      },\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"selector\": {}\n      }\n    ],\n    \"sink\": {\n      \"ref\": {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"uri\": \"<uri>\"\n    },\n    \"serviceAccountName\": \"<string>\",\n    \"mode\": \"Reference\",\n    \"namespaceSelector\": {}\n  },\n  \"status\": {\n    \"sinkUri\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/sources.knative.dev/v1/namespaces/:namespace/apiserversources",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "sources.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "apiserversources"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Bad Request",
+                                  "code": 400,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                  "createdAt": "2026-07-28T02:00:39.000Z",
+                                  "updatedAt": "2026-07-28T02:00:39.000Z",
+                                  "uid": "35240-0bbb3768-51b4-49be-9616-bc74351edb7f"
+                                },
+                                {
+                                  "id": "de8b2ca8-0139-40af-ad93-ff8d86233c23",
+                                  "name": "Authentication credentials are missing or invalid.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"eiusmod109\": \"<string>\",\n      \"sint33\": \"<string>\",\n      \"ipsum_6\": \"<string>\"\n    },\n    \"annotations\": {\n      \"eu0\": \"<string>\",\n      \"commodo_5\": \"<string>\",\n      \"sit__\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"resources\": [\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"selector\": {}\n      },\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"selector\": {}\n      }\n    ],\n    \"sink\": {\n      \"ref\": {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"uri\": \"<uri>\"\n    },\n    \"serviceAccountName\": \"<string>\",\n    \"mode\": \"Reference\",\n    \"namespaceSelector\": {}\n  },\n  \"status\": {\n    \"sinkUri\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/sources.knative.dev/v1/namespaces/:namespace/apiserversources",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "sources.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "apiserversources"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Unauthorized",
+                                  "code": 401,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                  "createdAt": "2026-07-28T02:00:39.000Z",
+                                  "updatedAt": "2026-07-28T02:00:39.000Z",
+                                  "uid": "35240-de8b2ca8-0139-40af-ad93-ff8d86233c23"
+                                }
+                              ],
+                              "createdAt": "2026-07-28T02:00:39.000Z",
+                              "updatedAt": "2026-07-28T02:00:39.000Z",
+                              "uid": "35240-b487f1b6-c660-4909-a97e-560348b0a8b1"
+                            }
+                          ],
+                          "id": "c15c0c25-46c6-4ce5-81eb-ba14a199a319",
+                          "createdAt": "2026-07-28T02:00:39.000Z",
+                          "updatedAt": "2026-07-28T02:00:39.000Z",
+                          "uid": "35240-c15c0c25-46c6-4ce5-81eb-ba14a199a319"
+                        },
+                        {
+                          "name": "pingsources",
+                          "item": [
+                            {
+                              "name": "Knative List PingSources",
+                              "id": "2b90aeb2-d001-4bd8-8695-9bd397d00036",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/sources.knative.dev/v1/namespaces/:namespace/pingsources?labelSelector=<string>&limit=<integer>&continue=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "sources.knative.dev",
+                                    "v1",
+                                    "namespaces",
+                                    ":namespace",
+                                    "pingsources"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Selector to filter resources by label key-value pairs.",
+                                      "key": "labelSelector",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "Maximum number of items to return in a single response.",
+                                      "key": "limit",
+                                      "value": "<integer>"
+                                    },
+                                    {
+                                      "description": "Pagination token returned by a previous list call.",
+                                      "key": "continue",
+                                      "value": "<string>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "12af2b32-fbf4-4492-b5a0-e03c302b721b",
+                                      "key": "namespace",
+                                      "value": "<string>",
+                                      "description": "(Required) Kubernetes namespace containing the resource."
+                                    }
+                                  ]
+                                },
+                                "description": "Returns a list of all PingSource resources in the namespace. PingSources emit CloudEvents on a cron-based schedule with a configurable event payload."
+                              },
+                              "response": [
+                                {
+                                  "id": "cc78319e-d195-4512-a185-c3ace10b4359",
+                                  "name": "Successfully listed PingSources.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/sources.knative.dev/v1/namespaces/:namespace/pingsources?labelSelector=<string>&limit=<integer>&continue=<string>",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "sources.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "pingsources"
+                                      ],
+                                      "query": [
+                                        {
+                                          "description": "Selector to filter resources by label key-value pairs.",
+                                          "key": "labelSelector",
+                                          "value": "<string>"
+                                        },
+                                        {
+                                          "description": "Maximum number of items to return in a single response.",
+                                          "key": "limit",
+                                          "value": "<integer>"
+                                        },
+                                        {
+                                          "description": "Pagination token returned by a previous list call.",
+                                          "key": "continue",
+                                          "value": "<string>"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"items\": [\n    {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"metadata\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\",\n        \"labels\": {\n          \"in_6\": \"<string>\"\n        },\n        \"annotations\": {\n          \"nisi42\": \"<string>\",\n          \"dolor_65\": \"<string>\"\n        },\n        \"resourceVersion\": \"<string>\",\n        \"uid\": \"<string>\",\n        \"generation\": \"<integer>\",\n        \"creationTimestamp\": \"<dateTime>\"\n      },\n      \"spec\": {\n        \"schedule\": \"<string>\",\n        \"sink\": {\n          \"ref\": {\n            \"apiVersion\": \"<string>\",\n            \"kind\": \"<string>\",\n            \"name\": \"<string>\",\n            \"namespace\": \"<string>\"\n          },\n          \"uri\": \"<uri>\"\n        },\n        \"data\": \"<string>\",\n        \"dataContentType\": \"<string>\",\n        \"timezone\": \"<string>\"\n      },\n      \"status\": {\n        \"sinkUri\": \"<uri>\",\n        \"conditions\": [\n          {\n            \"type\": \"<string>\",\n            \"status\": \"True\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"status\": \"False\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          }\n        ]\n      }\n    },\n    {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"metadata\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\",\n        \"labels\": {\n          \"ea_24c\": \"<string>\"\n        },\n        \"annotations\": {\n          \"nostrud10b\": \"<string>\"\n        },\n        \"resourceVersion\": \"<string>\",\n        \"uid\": \"<string>\",\n        \"generation\": \"<integer>\",\n        \"creationTimestamp\": \"<dateTime>\"\n      },\n      \"spec\": {\n        \"schedule\": \"<string>\",\n        \"sink\": {\n          \"ref\": {\n            \"apiVersion\": \"<string>\",\n            \"kind\": \"<string>\",\n            \"name\": \"<string>\",\n            \"namespace\": \"<string>\"\n          },\n          \"uri\": \"<uri>\"\n        },\n        \"data\": \"<string>\",\n        \"dataContentType\": \"<string>\",\n        \"timezone\": \"<string>\"\n      },\n      \"status\": {\n        \"sinkUri\": \"<uri>\",\n        \"conditions\": [\n          {\n            \"type\": \"<string>\",\n            \"status\": \"Unknown\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"status\": \"False\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          }\n        ]\n      }\n    }\n  ],\n  \"metadata\": {\n    \"resourceVersion\": \"<string>\",\n    \"continue\": \"<string>\"\n  }\n}",
+                                  "createdAt": "2026-07-28T02:00:39.000Z",
+                                  "updatedAt": "2026-07-28T02:00:39.000Z",
+                                  "uid": "35240-cc78319e-d195-4512-a185-c3ace10b4359"
+                                },
+                                {
+                                  "id": "1b7f6b15-2af3-49b6-bd3e-b75299875046",
+                                  "name": "Authentication credentials are missing or invalid.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/sources.knative.dev/v1/namespaces/:namespace/pingsources?labelSelector=<string>&limit=<integer>&continue=<string>",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "sources.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "pingsources"
+                                      ],
+                                      "query": [
+                                        {
+                                          "description": "Selector to filter resources by label key-value pairs.",
+                                          "key": "labelSelector",
+                                          "value": "<string>"
+                                        },
+                                        {
+                                          "description": "Maximum number of items to return in a single response.",
+                                          "key": "limit",
+                                          "value": "<integer>"
+                                        },
+                                        {
+                                          "description": "Pagination token returned by a previous list call.",
+                                          "key": "continue",
+                                          "value": "<string>"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Unauthorized",
+                                  "code": 401,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                  "createdAt": "2026-07-28T02:00:39.000Z",
+                                  "updatedAt": "2026-07-28T02:00:39.000Z",
+                                  "uid": "35240-1b7f6b15-2af3-49b6-bd3e-b75299875046"
+                                }
+                              ],
+                              "createdAt": "2026-07-28T02:00:39.000Z",
+                              "updatedAt": "2026-07-28T02:00:39.000Z",
+                              "uid": "35240-2b90aeb2-d001-4bd8-8695-9bd397d00036"
+                            },
+                            {
+                              "name": "Knative Create a PingSource",
+                              "id": "e9f4f8bc-a19e-4b1b-b9df-770f28a9b755",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"elitbc\": \"<string>\"\n    },\n    \"annotations\": {\n      \"commodo_f\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"schedule\": \"<string>\",\n    \"sink\": {\n      \"ref\": {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"uri\": \"<uri>\"\n    },\n    \"data\": \"<string>\",\n    \"dataContentType\": \"<string>\",\n    \"timezone\": \"<string>\"\n  },\n  \"status\": {\n    \"sinkUri\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"True\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/sources.knative.dev/v1/namespaces/:namespace/pingsources",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "sources.knative.dev",
+                                    "v1",
+                                    "namespaces",
+                                    ":namespace",
+                                    "pingsources"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "568ef7b8-8476-44a3-be8b-0f2ee54c17cd",
+                                      "key": "namespace",
+                                      "value": "<string>",
+                                      "description": "(Required) Kubernetes namespace containing the resource."
+                                    }
+                                  ]
+                                },
+                                "description": "Creates a new PingSource that fires CloudEvents on a cron schedule. The event payload can be a static JSON data field. PingSources are useful for triggering periodic workflows and scheduled tasks."
+                              },
+                              "response": [
+                                {
+                                  "id": "e4d7d3ad-bb7b-4536-ad2b-9f4b4e12f56b",
+                                  "name": "PingSource successfully created.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"elitbc\": \"<string>\"\n    },\n    \"annotations\": {\n      \"commodo_f\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"schedule\": \"<string>\",\n    \"sink\": {\n      \"ref\": {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"uri\": \"<uri>\"\n    },\n    \"data\": \"<string>\",\n    \"dataContentType\": \"<string>\",\n    \"timezone\": \"<string>\"\n  },\n  \"status\": {\n    \"sinkUri\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"True\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/sources.knative.dev/v1/namespaces/:namespace/pingsources",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "sources.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "pingsources"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Created",
+                                  "code": 201,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"elitbc\": \"<string>\"\n    },\n    \"annotations\": {\n      \"commodo_f\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"schedule\": \"<string>\",\n    \"sink\": {\n      \"ref\": {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"uri\": \"<uri>\"\n    },\n    \"data\": \"<string>\",\n    \"dataContentType\": \"<string>\",\n    \"timezone\": \"<string>\"\n  },\n  \"status\": {\n    \"sinkUri\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"True\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                  "createdAt": "2026-07-28T02:00:39.000Z",
+                                  "updatedAt": "2026-07-28T02:00:39.000Z",
+                                  "uid": "35240-e4d7d3ad-bb7b-4536-ad2b-9f4b4e12f56b"
+                                },
+                                {
+                                  "id": "be4dee0d-2d1a-402e-a623-6d31ee870a9a",
+                                  "name": "The request was malformed or failed validation.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"elitbc\": \"<string>\"\n    },\n    \"annotations\": {\n      \"commodo_f\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"schedule\": \"<string>\",\n    \"sink\": {\n      \"ref\": {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"uri\": \"<uri>\"\n    },\n    \"data\": \"<string>\",\n    \"dataContentType\": \"<string>\",\n    \"timezone\": \"<string>\"\n  },\n  \"status\": {\n    \"sinkUri\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"True\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/sources.knative.dev/v1/namespaces/:namespace/pingsources",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "sources.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "pingsources"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Bad Request",
+                                  "code": 400,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                  "createdAt": "2026-07-28T02:00:39.000Z",
+                                  "updatedAt": "2026-07-28T02:00:39.000Z",
+                                  "uid": "35240-be4dee0d-2d1a-402e-a623-6d31ee870a9a"
+                                },
+                                {
+                                  "id": "67f478b3-142c-4e36-bf44-e1123eae8423",
+                                  "name": "Authentication credentials are missing or invalid.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"elitbc\": \"<string>\"\n    },\n    \"annotations\": {\n      \"commodo_f\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"schedule\": \"<string>\",\n    \"sink\": {\n      \"ref\": {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"uri\": \"<uri>\"\n    },\n    \"data\": \"<string>\",\n    \"dataContentType\": \"<string>\",\n    \"timezone\": \"<string>\"\n  },\n  \"status\": {\n    \"sinkUri\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"True\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/sources.knative.dev/v1/namespaces/:namespace/pingsources",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "sources.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "pingsources"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Unauthorized",
+                                  "code": 401,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                  "createdAt": "2026-07-28T02:00:39.000Z",
+                                  "updatedAt": "2026-07-28T02:00:39.000Z",
+                                  "uid": "35240-67f478b3-142c-4e36-bf44-e1123eae8423"
+                                }
+                              ],
+                              "createdAt": "2026-07-28T02:00:39.000Z",
+                              "updatedAt": "2026-07-28T02:00:39.000Z",
+                              "uid": "35240-e9f4f8bc-a19e-4b1b-b9df-770f28a9b755"
+                            }
+                          ],
+                          "id": "342b383e-0420-4f83-8a1b-948d2ddec111",
+                          "createdAt": "2026-07-28T02:00:39.000Z",
+                          "updatedAt": "2026-07-28T02:00:39.000Z",
+                          "uid": "35240-342b383e-0420-4f83-8a1b-948d2ddec111"
+                        },
+                        {
+                          "name": "sinkbindings",
+                          "item": [
+                            {
+                              "name": "Knative List SinkBindings",
+                              "id": "7f8b151d-0c38-4deb-9daf-2fba58da3246",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/sources.knative.dev/v1/namespaces/:namespace/sinkbindings?labelSelector=<string>&limit=<integer>&continue=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "sources.knative.dev",
+                                    "v1",
+                                    "namespaces",
+                                    ":namespace",
+                                    "sinkbindings"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Selector to filter resources by label key-value pairs.",
+                                      "key": "labelSelector",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "Maximum number of items to return in a single response.",
+                                      "key": "limit",
+                                      "value": "<integer>"
+                                    },
+                                    {
+                                      "description": "Pagination token returned by a previous list call.",
+                                      "key": "continue",
+                                      "value": "<string>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "2c4ef775-bc31-432d-b836-d4371673a91d",
+                                      "key": "namespace",
+                                      "value": "<string>",
+                                      "description": "(Required) Kubernetes namespace containing the resource."
+                                    }
+                                  ]
+                                },
+                                "description": "Returns a list of all SinkBinding resources in the namespace. SinkBindings augment a PodSpecable workload by injecting the sink URI as the K_SINK environment variable, enabling the workload to send CloudEvents to the configured sink."
+                              },
+                              "response": [
+                                {
+                                  "id": "55887538-ce32-4726-9f4f-e1cfe2663156",
+                                  "name": "Successfully listed SinkBindings.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/sources.knative.dev/v1/namespaces/:namespace/sinkbindings?labelSelector=<string>&limit=<integer>&continue=<string>",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "sources.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "sinkbindings"
+                                      ],
+                                      "query": [
+                                        {
+                                          "description": "Selector to filter resources by label key-value pairs.",
+                                          "key": "labelSelector",
+                                          "value": "<string>"
+                                        },
+                                        {
+                                          "description": "Maximum number of items to return in a single response.",
+                                          "key": "limit",
+                                          "value": "<integer>"
+                                        },
+                                        {
+                                          "description": "Pagination token returned by a previous list call.",
+                                          "key": "continue",
+                                          "value": "<string>"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"items\": [\n    {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"metadata\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\",\n        \"labels\": {\n          \"velit_4\": \"<string>\",\n          \"idb\": \"<string>\"\n        },\n        \"annotations\": {\n          \"aute429\": \"<string>\",\n          \"enim4\": \"<string>\"\n        },\n        \"resourceVersion\": \"<string>\",\n        \"uid\": \"<string>\",\n        \"generation\": \"<integer>\",\n        \"creationTimestamp\": \"<dateTime>\"\n      },\n      \"spec\": {\n        \"subject\": {\n          \"apiVersion\": \"<string>\",\n          \"kind\": \"<string>\",\n          \"name\": \"<string>\",\n          \"namespace\": \"<string>\"\n        },\n        \"sink\": {\n          \"ref\": {\n            \"apiVersion\": \"<string>\",\n            \"kind\": \"<string>\",\n            \"name\": \"<string>\",\n            \"namespace\": \"<string>\"\n          },\n          \"uri\": \"<uri>\"\n        },\n        \"ceOverrides\": {\n          \"extensions\": {\n            \"incididunt_6\": \"<string>\",\n            \"velit9d\": \"<string>\"\n          }\n        }\n      },\n      \"status\": {\n        \"sinkUri\": \"<uri>\",\n        \"conditions\": [\n          {\n            \"type\": \"<string>\",\n            \"status\": \"False\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"status\": \"True\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          }\n        ]\n      }\n    },\n    {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"metadata\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\",\n        \"labels\": {\n          \"esse3\": \"<string>\"\n        },\n        \"annotations\": {\n          \"Excepteur_2bd\": \"<string>\"\n        },\n        \"resourceVersion\": \"<string>\",\n        \"uid\": \"<string>\",\n        \"generation\": \"<integer>\",\n        \"creationTimestamp\": \"<dateTime>\"\n      },\n      \"spec\": {\n        \"subject\": {\n          \"apiVersion\": \"<string>\",\n          \"kind\": \"<string>\",\n          \"name\": \"<string>\",\n          \"namespace\": \"<string>\"\n        },\n        \"sink\": {\n          \"ref\": {\n            \"apiVersion\": \"<string>\",\n            \"kind\": \"<string>\",\n            \"name\": \"<string>\",\n            \"namespace\": \"<string>\"\n          },\n          \"uri\": \"<uri>\"\n        },\n        \"ceOverrides\": {\n          \"extensions\": {\n            \"adc48\": \"<string>\",\n            \"non_d8\": \"<string>\"\n          }\n        }\n      },\n      \"status\": {\n        \"sinkUri\": \"<uri>\",\n        \"conditions\": [\n          {\n            \"type\": \"<string>\",\n            \"status\": \"False\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"status\": \"False\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          }\n        ]\n      }\n    }\n  ],\n  \"metadata\": {\n    \"resourceVersion\": \"<string>\",\n    \"continue\": \"<string>\"\n  }\n}",
+                                  "createdAt": "2026-07-28T02:00:39.000Z",
+                                  "updatedAt": "2026-07-28T02:00:39.000Z",
+                                  "uid": "35240-55887538-ce32-4726-9f4f-e1cfe2663156"
+                                },
+                                {
+                                  "id": "41fe45f0-fcd3-43c7-9703-6ee34e6fa89b",
+                                  "name": "Authentication credentials are missing or invalid.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/sources.knative.dev/v1/namespaces/:namespace/sinkbindings?labelSelector=<string>&limit=<integer>&continue=<string>",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "sources.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "sinkbindings"
+                                      ],
+                                      "query": [
+                                        {
+                                          "description": "Selector to filter resources by label key-value pairs.",
+                                          "key": "labelSelector",
+                                          "value": "<string>"
+                                        },
+                                        {
+                                          "description": "Maximum number of items to return in a single response.",
+                                          "key": "limit",
+                                          "value": "<integer>"
+                                        },
+                                        {
+                                          "description": "Pagination token returned by a previous list call.",
+                                          "key": "continue",
+                                          "value": "<string>"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Unauthorized",
+                                  "code": 401,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                  "createdAt": "2026-07-28T02:00:39.000Z",
+                                  "updatedAt": "2026-07-28T02:00:39.000Z",
+                                  "uid": "35240-41fe45f0-fcd3-43c7-9703-6ee34e6fa89b"
+                                }
+                              ],
+                              "createdAt": "2026-07-28T02:00:39.000Z",
+                              "updatedAt": "2026-07-28T02:00:39.000Z",
+                              "uid": "35240-7f8b151d-0c38-4deb-9daf-2fba58da3246"
+                            },
+                            {
+                              "name": "Knative Create a SinkBinding",
+                              "id": "d78ea65f-e730-4652-b535-543b063b6e3a",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"irure4\": \"<string>\",\n      \"ipsum8\": \"<string>\"\n    },\n    \"annotations\": {\n      \"nostrud_9_a\": \"<string>\",\n      \"sunt_9e8\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"subject\": {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"name\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"sink\": {\n      \"ref\": {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"uri\": \"<uri>\"\n    },\n    \"ceOverrides\": {\n      \"extensions\": {\n        \"magna_74\": \"<string>\"\n      }\n    }\n  },\n  \"status\": {\n    \"sinkUri\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/sources.knative.dev/v1/namespaces/:namespace/sinkbindings",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "sources.knative.dev",
+                                    "v1",
+                                    "namespaces",
+                                    ":namespace",
+                                    "sinkbindings"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "15732bc1-94c7-4f46-9c82-4392e5547026",
+                                      "key": "namespace",
+                                      "value": "<string>",
+                                      "description": "(Required) Kubernetes namespace containing the resource."
+                                    }
+                                  ]
+                                },
+                                "description": "Creates a new SinkBinding that injects K_SINK into a PodSpecable subject such as a Deployment, StatefulSet, or CronJob. The sink URI is automatically updated if the sink address changes."
+                              },
+                              "response": [
+                                {
+                                  "id": "dd705391-17d4-42dd-9487-3680d65d219d",
+                                  "name": "SinkBinding successfully created.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"irure4\": \"<string>\",\n      \"ipsum8\": \"<string>\"\n    },\n    \"annotations\": {\n      \"nostrud_9_a\": \"<string>\",\n      \"sunt_9e8\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"subject\": {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"name\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"sink\": {\n      \"ref\": {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"uri\": \"<uri>\"\n    },\n    \"ceOverrides\": {\n      \"extensions\": {\n        \"magna_74\": \"<string>\"\n      }\n    }\n  },\n  \"status\": {\n    \"sinkUri\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/sources.knative.dev/v1/namespaces/:namespace/sinkbindings",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "sources.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "sinkbindings"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Created",
+                                  "code": 201,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"irure4\": \"<string>\",\n      \"ipsum8\": \"<string>\"\n    },\n    \"annotations\": {\n      \"nostrud_9_a\": \"<string>\",\n      \"sunt_9e8\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"subject\": {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"name\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"sink\": {\n      \"ref\": {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"uri\": \"<uri>\"\n    },\n    \"ceOverrides\": {\n      \"extensions\": {\n        \"magna_74\": \"<string>\"\n      }\n    }\n  },\n  \"status\": {\n    \"sinkUri\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                  "createdAt": "2026-07-28T02:00:39.000Z",
+                                  "updatedAt": "2026-07-28T02:00:39.000Z",
+                                  "uid": "35240-dd705391-17d4-42dd-9487-3680d65d219d"
+                                },
+                                {
+                                  "id": "7ce2ebd3-0aa5-4e15-9fb2-e886b7fc893f",
+                                  "name": "The request was malformed or failed validation.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"irure4\": \"<string>\",\n      \"ipsum8\": \"<string>\"\n    },\n    \"annotations\": {\n      \"nostrud_9_a\": \"<string>\",\n      \"sunt_9e8\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"subject\": {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"name\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"sink\": {\n      \"ref\": {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"uri\": \"<uri>\"\n    },\n    \"ceOverrides\": {\n      \"extensions\": {\n        \"magna_74\": \"<string>\"\n      }\n    }\n  },\n  \"status\": {\n    \"sinkUri\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/sources.knative.dev/v1/namespaces/:namespace/sinkbindings",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "sources.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "sinkbindings"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Bad Request",
+                                  "code": 400,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                  "createdAt": "2026-07-28T02:00:39.000Z",
+                                  "updatedAt": "2026-07-28T02:00:39.000Z",
+                                  "uid": "35240-7ce2ebd3-0aa5-4e15-9fb2-e886b7fc893f"
+                                },
+                                {
+                                  "id": "d3f4c574-980b-4a34-a5ee-e7844c63ec6c",
+                                  "name": "Authentication credentials are missing or invalid.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"irure4\": \"<string>\",\n      \"ipsum8\": \"<string>\"\n    },\n    \"annotations\": {\n      \"nostrud_9_a\": \"<string>\",\n      \"sunt_9e8\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"subject\": {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"name\": \"<string>\",\n      \"namespace\": \"<string>\"\n    },\n    \"sink\": {\n      \"ref\": {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"uri\": \"<uri>\"\n    },\n    \"ceOverrides\": {\n      \"extensions\": {\n        \"magna_74\": \"<string>\"\n      }\n    }\n  },\n  \"status\": {\n    \"sinkUri\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"Unknown\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/sources.knative.dev/v1/namespaces/:namespace/sinkbindings",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "sources.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "sinkbindings"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Unauthorized",
+                                  "code": 401,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                  "createdAt": "2026-07-28T02:00:39.000Z",
+                                  "updatedAt": "2026-07-28T02:00:39.000Z",
+                                  "uid": "35240-d3f4c574-980b-4a34-a5ee-e7844c63ec6c"
+                                }
+                              ],
+                              "createdAt": "2026-07-28T02:00:39.000Z",
+                              "updatedAt": "2026-07-28T02:00:39.000Z",
+                              "uid": "35240-d78ea65f-e730-4652-b535-543b063b6e3a"
+                            }
+                          ],
+                          "id": "b7159453-43c6-47dd-93e5-a1f33240e9f4",
+                          "createdAt": "2026-07-28T02:00:39.000Z",
+                          "updatedAt": "2026-07-28T02:00:39.000Z",
+                          "uid": "35240-b7159453-43c6-47dd-93e5-a1f33240e9f4"
+                        }
+                      ],
+                      "id": "fb473c78-0e69-4a95-8897-906eef6dd79f",
+                      "createdAt": "2026-07-28T02:00:39.000Z",
+                      "updatedAt": "2026-07-28T02:00:39.000Z",
+                      "uid": "35240-fb473c78-0e69-4a95-8897-906eef6dd79f"
+                    }
+                  ],
+                  "id": "9a4481fd-83c6-4550-a2c7-b1ff31dcb698",
+                  "createdAt": "2026-07-28T02:00:39.000Z",
+                  "updatedAt": "2026-07-28T02:00:39.000Z",
+                  "uid": "35240-9a4481fd-83c6-4550-a2c7-b1ff31dcb698"
+                }
+              ],
+              "id": "4900974c-67b9-4595-bf9f-26c8cd7068ab",
+              "createdAt": "2026-07-28T02:00:39.000Z",
+              "updatedAt": "2026-07-28T02:00:39.000Z",
+              "uid": "35240-4900974c-67b9-4595-bf9f-26c8cd7068ab"
+            }
+          ],
+          "id": "3a4de6d8-9ef3-4cb2-a22a-8b715378f19a",
+          "createdAt": "2026-07-28T02:00:39.000Z",
+          "updatedAt": "2026-07-28T02:00:39.000Z",
+          "uid": "35240-3a4de6d8-9ef3-4cb2-a22a-8b715378f19a"
+        }
+      ],
+      "id": "a4257ece-b1bb-4730-b0f3-4575540f15fa",
+      "createdAt": "2026-07-28T02:00:39.000Z",
+      "updatedAt": "2026-07-28T02:00:39.000Z",
+      "uid": "35240-a4257ece-b1bb-4730-b0f3-4575540f15fa"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://kubernetes.default.svc"
+    }
+  ]
+}

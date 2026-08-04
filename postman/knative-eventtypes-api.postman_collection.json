@@ -1,0 +1,539 @@
+{
+  "info": {
+    "_postman_id": "a7cd8a32-2330-420b-97b4-2e2530a96406",
+    "name": "Knative Eventing Apis EventTypes API",
+    "description": "The Knative Eventing API extends Kubernetes with custom resources for building event-driven architectures. It provides two main patterns: Broker and Trigger for cloud-native event routing with filtering, and Channel and Subscription for pub/sub messaging. Event sources such as ApiServerSource, PingSource, and SinkBinding connect external event producers to the eventing mesh. All events conform to the CloudEvents specification. Resources are served through the Kubernetes API server under the eventing.knative.dev and messaging.knative.dev API groups.\n\nContact Support:\n Name: Knative Community",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:00:40.000Z",
+    "updatedAt": "2026-07-28T02:00:40.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-a7cd8a32-2330-420b-97b4-2e2530a96406"
+  },
+  "item": [
+    {
+      "name": "apis",
+      "item": [
+        {
+          "name": "eventing.knative.dev",
+          "item": [
+            {
+              "name": "v1beta2",
+              "item": [
+                {
+                  "name": "namespaces",
+                  "item": [
+                    {
+                      "name": "{namespace}",
+                      "item": [
+                        {
+                          "name": "eventtypes",
+                          "item": [
+                            {
+                              "name": "Knative List EventTypes",
+                              "id": "11d7d007-c0d2-4cdd-807c-a26a9d0c5930",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/eventing.knative.dev/v1beta2/namespaces/:namespace/eventtypes?labelSelector=<string>&limit=<integer>&continue=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "eventing.knative.dev",
+                                    "v1beta2",
+                                    "namespaces",
+                                    ":namespace",
+                                    "eventtypes"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Selector to filter resources by label key-value pairs.",
+                                      "key": "labelSelector",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "Maximum number of items to return in a single response.",
+                                      "key": "limit",
+                                      "value": "<integer>"
+                                    },
+                                    {
+                                      "description": "Pagination token returned by a previous list call.",
+                                      "key": "continue",
+                                      "value": "<string>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "4a75e801-3f5e-4494-8b6c-2ff05a38a84b",
+                                      "key": "namespace",
+                                      "value": "<string>",
+                                      "description": "(Required) Kubernetes namespace containing the resource."
+                                    }
+                                  ]
+                                },
+                                "description": "Returns a list of all EventType resources in the namespace. EventTypes define the catalog of event types that can be consumed from Brokers, enabling event consumers to discover available events."
+                              },
+                              "response": [
+                                {
+                                  "id": "d052d4b6-bd69-4184-97c7-99cd8fd4ec09",
+                                  "name": "Successfully listed EventTypes.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/eventing.knative.dev/v1beta2/namespaces/:namespace/eventtypes?labelSelector=<string>&limit=<integer>&continue=<string>",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "eventing.knative.dev",
+                                        "v1beta2",
+                                        "namespaces",
+                                        ":namespace",
+                                        "eventtypes"
+                                      ],
+                                      "query": [
+                                        {
+                                          "description": "Selector to filter resources by label key-value pairs.",
+                                          "key": "labelSelector",
+                                          "value": "<string>"
+                                        },
+                                        {
+                                          "description": "Maximum number of items to return in a single response.",
+                                          "key": "limit",
+                                          "value": "<integer>"
+                                        },
+                                        {
+                                          "description": "Pagination token returned by a previous list call.",
+                                          "key": "continue",
+                                          "value": "<string>"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"items\": [\n    {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"metadata\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\",\n        \"labels\": {\n          \"sit7d\": \"<string>\"\n        },\n        \"annotations\": {\n          \"ad__8\": \"<string>\"\n        },\n        \"resourceVersion\": \"<string>\",\n        \"uid\": \"<string>\",\n        \"generation\": \"<integer>\",\n        \"creationTimestamp\": \"<dateTime>\"\n      },\n      \"spec\": {\n        \"type\": \"<string>\",\n        \"source\": \"<string>\",\n        \"schema\": \"<uri>\",\n        \"schemaURL\": \"<uri>\",\n        \"description\": \"<string>\",\n        \"broker\": \"<string>\"\n      }\n    },\n    {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"metadata\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\",\n        \"labels\": {\n          \"aliquipf\": \"<string>\",\n          \"cupidatat_062\": \"<string>\"\n        },\n        \"annotations\": {\n          \"do1\": \"<string>\"\n        },\n        \"resourceVersion\": \"<string>\",\n        \"uid\": \"<string>\",\n        \"generation\": \"<integer>\",\n        \"creationTimestamp\": \"<dateTime>\"\n      },\n      \"spec\": {\n        \"type\": \"<string>\",\n        \"source\": \"<string>\",\n        \"schema\": \"<uri>\",\n        \"schemaURL\": \"<uri>\",\n        \"description\": \"<string>\",\n        \"broker\": \"<string>\"\n      }\n    }\n  ],\n  \"metadata\": {\n    \"resourceVersion\": \"<string>\",\n    \"continue\": \"<string>\"\n  }\n}",
+                                  "createdAt": "2026-07-28T02:00:40.000Z",
+                                  "updatedAt": "2026-07-28T02:00:40.000Z",
+                                  "uid": "35240-d052d4b6-bd69-4184-97c7-99cd8fd4ec09"
+                                },
+                                {
+                                  "id": "aea65ea9-78ae-4484-89a7-a00c6a0a0456",
+                                  "name": "Authentication credentials are missing or invalid.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/eventing.knative.dev/v1beta2/namespaces/:namespace/eventtypes?labelSelector=<string>&limit=<integer>&continue=<string>",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "eventing.knative.dev",
+                                        "v1beta2",
+                                        "namespaces",
+                                        ":namespace",
+                                        "eventtypes"
+                                      ],
+                                      "query": [
+                                        {
+                                          "description": "Selector to filter resources by label key-value pairs.",
+                                          "key": "labelSelector",
+                                          "value": "<string>"
+                                        },
+                                        {
+                                          "description": "Maximum number of items to return in a single response.",
+                                          "key": "limit",
+                                          "value": "<integer>"
+                                        },
+                                        {
+                                          "description": "Pagination token returned by a previous list call.",
+                                          "key": "continue",
+                                          "value": "<string>"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Unauthorized",
+                                  "code": 401,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                  "createdAt": "2026-07-28T02:00:40.000Z",
+                                  "updatedAt": "2026-07-28T02:00:40.000Z",
+                                  "uid": "35240-aea65ea9-78ae-4484-89a7-a00c6a0a0456"
+                                }
+                              ],
+                              "createdAt": "2026-07-28T02:00:40.000Z",
+                              "updatedAt": "2026-07-28T02:00:40.000Z",
+                              "uid": "35240-11d7d007-c0d2-4cdd-807c-a26a9d0c5930"
+                            },
+                            {
+                              "name": "Knative Create an EventType",
+                              "id": "a40d209b-6da5-451b-ba26-86ff553e98c2",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"ad51\": \"<string>\",\n      \"commodo_00\": \"<string>\"\n    },\n    \"annotations\": {\n      \"voluptate_7cc\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"type\": \"<string>\",\n    \"source\": \"<string>\",\n    \"schema\": \"<uri>\",\n    \"schemaURL\": \"<uri>\",\n    \"description\": \"<string>\",\n    \"broker\": \"<string>\"\n  }\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/eventing.knative.dev/v1beta2/namespaces/:namespace/eventtypes",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "eventing.knative.dev",
+                                    "v1beta2",
+                                    "namespaces",
+                                    ":namespace",
+                                    "eventtypes"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "f76106ce-b3c2-4fc0-98ce-62a272b17948",
+                                      "key": "namespace",
+                                      "value": "<string>",
+                                      "description": "(Required) Kubernetes namespace containing the resource."
+                                    }
+                                  ]
+                                },
+                                "description": "Creates a new EventType to register an event type in the catalog. EventTypes describe the CloudEvents type, source schema, and broker association so consumers can discover and validate events."
+                              },
+                              "response": [
+                                {
+                                  "id": "ae02c8ce-4de6-4c88-875a-c74c7f6b077e",
+                                  "name": "EventType successfully created.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"ad51\": \"<string>\",\n      \"commodo_00\": \"<string>\"\n    },\n    \"annotations\": {\n      \"voluptate_7cc\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"type\": \"<string>\",\n    \"source\": \"<string>\",\n    \"schema\": \"<uri>\",\n    \"schemaURL\": \"<uri>\",\n    \"description\": \"<string>\",\n    \"broker\": \"<string>\"\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/eventing.knative.dev/v1beta2/namespaces/:namespace/eventtypes",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "eventing.knative.dev",
+                                        "v1beta2",
+                                        "namespaces",
+                                        ":namespace",
+                                        "eventtypes"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Created",
+                                  "code": 201,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"ad51\": \"<string>\",\n      \"commodo_00\": \"<string>\"\n    },\n    \"annotations\": {\n      \"voluptate_7cc\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"type\": \"<string>\",\n    \"source\": \"<string>\",\n    \"schema\": \"<uri>\",\n    \"schemaURL\": \"<uri>\",\n    \"description\": \"<string>\",\n    \"broker\": \"<string>\"\n  }\n}",
+                                  "createdAt": "2026-07-28T02:00:40.000Z",
+                                  "updatedAt": "2026-07-28T02:00:40.000Z",
+                                  "uid": "35240-ae02c8ce-4de6-4c88-875a-c74c7f6b077e"
+                                },
+                                {
+                                  "id": "4f6a0db0-652a-4f54-a6b3-afd662d6df32",
+                                  "name": "The request was malformed or failed validation.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"ad51\": \"<string>\",\n      \"commodo_00\": \"<string>\"\n    },\n    \"annotations\": {\n      \"voluptate_7cc\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"type\": \"<string>\",\n    \"source\": \"<string>\",\n    \"schema\": \"<uri>\",\n    \"schemaURL\": \"<uri>\",\n    \"description\": \"<string>\",\n    \"broker\": \"<string>\"\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/eventing.knative.dev/v1beta2/namespaces/:namespace/eventtypes",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "eventing.knative.dev",
+                                        "v1beta2",
+                                        "namespaces",
+                                        ":namespace",
+                                        "eventtypes"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Bad Request",
+                                  "code": 400,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                  "createdAt": "2026-07-28T02:00:40.000Z",
+                                  "updatedAt": "2026-07-28T02:00:40.000Z",
+                                  "uid": "35240-4f6a0db0-652a-4f54-a6b3-afd662d6df32"
+                                },
+                                {
+                                  "id": "41e7a639-7ea7-438f-9f95-ab08e0344f27",
+                                  "name": "Authentication credentials are missing or invalid.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"ad51\": \"<string>\",\n      \"commodo_00\": \"<string>\"\n    },\n    \"annotations\": {\n      \"voluptate_7cc\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"type\": \"<string>\",\n    \"source\": \"<string>\",\n    \"schema\": \"<uri>\",\n    \"schemaURL\": \"<uri>\",\n    \"description\": \"<string>\",\n    \"broker\": \"<string>\"\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/eventing.knative.dev/v1beta2/namespaces/:namespace/eventtypes",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "eventing.knative.dev",
+                                        "v1beta2",
+                                        "namespaces",
+                                        ":namespace",
+                                        "eventtypes"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Unauthorized",
+                                  "code": 401,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                  "createdAt": "2026-07-28T02:00:40.000Z",
+                                  "updatedAt": "2026-07-28T02:00:40.000Z",
+                                  "uid": "35240-41e7a639-7ea7-438f-9f95-ab08e0344f27"
+                                }
+                              ],
+                              "createdAt": "2026-07-28T02:00:40.000Z",
+                              "updatedAt": "2026-07-28T02:00:40.000Z",
+                              "uid": "35240-a40d209b-6da5-451b-ba26-86ff553e98c2"
+                            }
+                          ],
+                          "id": "3c7c4a25-ff4b-4565-9e6e-5099ebc5fbbf",
+                          "createdAt": "2026-07-28T02:00:40.000Z",
+                          "updatedAt": "2026-07-28T02:00:40.000Z",
+                          "uid": "35240-3c7c4a25-ff4b-4565-9e6e-5099ebc5fbbf"
+                        }
+                      ],
+                      "id": "a3313acc-cc3e-4076-8e24-1f97caffcd90",
+                      "createdAt": "2026-07-28T02:00:40.000Z",
+                      "updatedAt": "2026-07-28T02:00:40.000Z",
+                      "uid": "35240-a3313acc-cc3e-4076-8e24-1f97caffcd90"
+                    }
+                  ],
+                  "id": "fc7043cb-28c5-452d-9750-727624da4862",
+                  "createdAt": "2026-07-28T02:00:40.000Z",
+                  "updatedAt": "2026-07-28T02:00:40.000Z",
+                  "uid": "35240-fc7043cb-28c5-452d-9750-727624da4862"
+                }
+              ],
+              "id": "16c85458-7609-45f3-88db-550dbc8f25d1",
+              "createdAt": "2026-07-28T02:00:40.000Z",
+              "updatedAt": "2026-07-28T02:00:40.000Z",
+              "uid": "35240-16c85458-7609-45f3-88db-550dbc8f25d1"
+            }
+          ],
+          "id": "f62aa694-2cc9-43e5-8c6c-9fcbdd5b7541",
+          "createdAt": "2026-07-28T02:00:40.000Z",
+          "updatedAt": "2026-07-28T02:00:40.000Z",
+          "uid": "35240-f62aa694-2cc9-43e5-8c6c-9fcbdd5b7541"
+        }
+      ],
+      "id": "d9b25fa0-314d-40cf-8f48-314c416e116c",
+      "createdAt": "2026-07-28T02:00:40.000Z",
+      "updatedAt": "2026-07-28T02:00:40.000Z",
+      "uid": "35240-d9b25fa0-314d-40cf-8f48-314c416e116c"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://kubernetes.default.svc"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "provider": "knative",
+  "sources": [
+    "knative-apis-api-openapi.yml",
+    "knative-brokers-api-openapi.yml",
+    "knative-channels-api-openapi.yml",
+    "knative-configurations-api-openapi.yml",
+    "knative-domainmappings-api-openapi.yml",
+    "knative-eventsources-api-openapi.yml",
+    "knative-eventtypes-api-openapi.yml",
+    "knative-revisions-api-openapi.yml",
+    "knative-routes-api-openapi.yml",
+    "knative-subscriptions-api-openapi.yml",
+    "knative-triggers-api-openapi.yml"
+  ],
+  "outputs": [
+    "knative-apis-api-openapi.yml",
+    "knative-brokers-api-openapi.yml",
+    "knative-channels-api-openapi.yml",
+    "knative-configurations-api-openapi.yml",
+    "knative-domainmappings-api-openapi.yml",
+    "knative-eventsources-api-openapi.yml",
+    "knative-eventtypes-api-openapi.yml",
+    "knative-revisions-api-openapi.yml",
+    "knative-routes-api-openapi.yml",
+    "knative-subscriptions-api-openapi.yml",
+    "knative-triggers-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

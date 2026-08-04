@@ -1,0 +1,1052 @@
+{
+  "info": {
+    "_postman_id": "d08ae312-ccae-4f1c-a753-a3d7b4cd3aa7",
+    "name": "Knative Eventing Apis Triggers API",
+    "description": "The Knative Eventing API extends Kubernetes with custom resources for building event-driven architectures. It provides two main patterns: Broker and Trigger for cloud-native event routing with filtering, and Channel and Subscription for pub/sub messaging. Event sources such as ApiServerSource, PingSource, and SinkBinding connect external event producers to the eventing mesh. All events conform to the CloudEvents specification. Resources are served through the Kubernetes API server under the eventing.knative.dev and messaging.knative.dev API groups.\n\nContact Support:\n Name: Knative Community",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:00:45.000Z",
+    "updatedAt": "2026-07-28T02:00:45.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-d08ae312-ccae-4f1c-a753-a3d7b4cd3aa7"
+  },
+  "item": [
+    {
+      "name": "apis",
+      "item": [
+        {
+          "name": "eventing.knative.dev",
+          "item": [
+            {
+              "name": "v1",
+              "item": [
+                {
+                  "name": "namespaces",
+                  "item": [
+                    {
+                      "name": "{namespace}",
+                      "item": [
+                        {
+                          "name": "triggers",
+                          "item": [
+                            {
+                              "name": "{name}",
+                              "item": [
+                                {
+                                  "name": "Knative Get a Trigger",
+                                  "id": "e430c99f-4190-48e5-87e4-ea7637e4cb38",
+                                  "protocolProfileBehavior": {
+                                    "disableBodyPruning": true
+                                  },
+                                  "request": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/eventing.knative.dev/v1/namespaces/:namespace/triggers/:name",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "eventing.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "triggers",
+                                        ":name"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "id": "a52c7f88-9d25-401d-97cd-0cc98c2b0ed0",
+                                          "key": "namespace",
+                                          "value": "<string>",
+                                          "description": "(Required) Kubernetes namespace containing the resource."
+                                        },
+                                        {
+                                          "id": "c06a3014-86c1-4ead-ae6d-859727d53c14",
+                                          "key": "name",
+                                          "value": "<string>",
+                                          "description": "(Required) Name of the Knative resource."
+                                        }
+                                      ]
+                                    },
+                                    "description": "Returns details of a specific Trigger including its Broker reference, attribute filters, subscriber destination, and status conditions."
+                                  },
+                                  "response": [
+                                    {
+                                      "id": "caa9fbb2-82f4-4bce-a391-9ce36e6e4553",
+                                      "name": "Successfully retrieved the Trigger.",
+                                      "originalRequest": {
+                                        "method": "GET",
+                                        "header": [
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: bearer",
+                                            "key": "Authorization",
+                                            "value": "Bearer <token>"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/apis/eventing.knative.dev/v1/namespaces/:namespace/triggers/:name",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "apis",
+                                            "eventing.knative.dev",
+                                            "v1",
+                                            "namespaces",
+                                            ":namespace",
+                                            "triggers",
+                                            ":name"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "namespace"
+                                            },
+                                            {
+                                              "key": "name"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "OK",
+                                      "code": 200,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"tempor_1d\": \"<string>\"\n    },\n    \"annotations\": {\n      \"anim_66\": \"<string>\",\n      \"consequat_8b\": \"<string>\",\n      \"tempor_b4\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"broker\": \"<string>\",\n    \"subscriber\": {\n      \"ref\": {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"uri\": \"<uri>\"\n    },\n    \"filter\": {\n      \"attributes\": {\n        \"voluptate_f\": \"<string>\"\n      }\n    },\n    \"delivery\": {\n      \"deadLetterSink\": {\n        \"ref\": {\n          \"apiVersion\": \"<string>\",\n          \"kind\": \"<string>\",\n          \"name\": \"<string>\",\n          \"namespace\": \"<string>\"\n        },\n        \"uri\": \"<uri>\"\n      },\n      \"retry\": \"<integer>\",\n      \"backoffPolicy\": \"linear\",\n      \"backoffDelay\": \"<string>\",\n      \"timeout\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"subscriberUri\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                      "createdAt": "2026-07-28T02:00:46.000Z",
+                                      "updatedAt": "2026-07-28T02:00:46.000Z",
+                                      "uid": "35240-caa9fbb2-82f4-4bce-a391-9ce36e6e4553"
+                                    },
+                                    {
+                                      "id": "1454707a-1a90-45ff-b698-8ba2e7c9fb0a",
+                                      "name": "Authentication credentials are missing or invalid.",
+                                      "originalRequest": {
+                                        "method": "GET",
+                                        "header": [
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: bearer",
+                                            "key": "Authorization",
+                                            "value": "Bearer <token>"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/apis/eventing.knative.dev/v1/namespaces/:namespace/triggers/:name",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "apis",
+                                            "eventing.knative.dev",
+                                            "v1",
+                                            "namespaces",
+                                            ":namespace",
+                                            "triggers",
+                                            ":name"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "namespace"
+                                            },
+                                            {
+                                              "key": "name"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "Unauthorized",
+                                      "code": 401,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                      "createdAt": "2026-07-28T02:00:46.000Z",
+                                      "updatedAt": "2026-07-28T02:00:46.000Z",
+                                      "uid": "35240-1454707a-1a90-45ff-b698-8ba2e7c9fb0a"
+                                    },
+                                    {
+                                      "id": "6b0ae891-a425-4e0a-81a2-1069812a7023",
+                                      "name": "The requested resource was not found.",
+                                      "originalRequest": {
+                                        "method": "GET",
+                                        "header": [
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: bearer",
+                                            "key": "Authorization",
+                                            "value": "Bearer <token>"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/apis/eventing.knative.dev/v1/namespaces/:namespace/triggers/:name",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "apis",
+                                            "eventing.knative.dev",
+                                            "v1",
+                                            "namespaces",
+                                            ":namespace",
+                                            "triggers",
+                                            ":name"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "namespace"
+                                            },
+                                            {
+                                              "key": "name"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "Not Found",
+                                      "code": 404,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                      "createdAt": "2026-07-28T02:00:46.000Z",
+                                      "updatedAt": "2026-07-28T02:00:46.000Z",
+                                      "uid": "35240-6b0ae891-a425-4e0a-81a2-1069812a7023"
+                                    }
+                                  ],
+                                  "createdAt": "2026-07-28T02:00:46.000Z",
+                                  "updatedAt": "2026-07-28T02:00:46.000Z",
+                                  "uid": "35240-e430c99f-4190-48e5-87e4-ea7637e4cb38"
+                                },
+                                {
+                                  "name": "Knative Delete a Trigger",
+                                  "id": "b998aa26-5c3f-442e-823e-3e5d16bc83af",
+                                  "protocolProfileBehavior": {
+                                    "disableBodyPruning": true
+                                  },
+                                  "request": {
+                                    "method": "DELETE",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/eventing.knative.dev/v1/namespaces/:namespace/triggers/:name",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "eventing.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "triggers",
+                                        ":name"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "id": "b5614868-4ddc-4abc-8ccb-96d6ba80603e",
+                                          "key": "namespace",
+                                          "value": "<string>",
+                                          "description": "(Required) Kubernetes namespace containing the resource."
+                                        },
+                                        {
+                                          "id": "a1e9ed02-0425-4000-a340-68ab48b8b02a",
+                                          "key": "name",
+                                          "value": "<string>",
+                                          "description": "(Required) Name of the Knative resource."
+                                        }
+                                      ]
+                                    },
+                                    "description": "Deletes a Trigger. The subscriber destination will stop receiving events from the associated Broker once the Trigger is deleted."
+                                  },
+                                  "response": [
+                                    {
+                                      "id": "a11d6420-2fa5-4454-aa56-63d3f7ddebe1",
+                                      "name": "Trigger deletion initiated.",
+                                      "originalRequest": {
+                                        "method": "DELETE",
+                                        "header": [
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: bearer",
+                                            "key": "Authorization",
+                                            "value": "Bearer <token>"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/apis/eventing.knative.dev/v1/namespaces/:namespace/triggers/:name",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "apis",
+                                            "eventing.knative.dev",
+                                            "v1",
+                                            "namespaces",
+                                            ":namespace",
+                                            "triggers",
+                                            ":name"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "namespace"
+                                            },
+                                            {
+                                              "key": "name"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "OK",
+                                      "code": 200,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                      "createdAt": "2026-07-28T02:00:46.000Z",
+                                      "updatedAt": "2026-07-28T02:00:46.000Z",
+                                      "uid": "35240-a11d6420-2fa5-4454-aa56-63d3f7ddebe1"
+                                    },
+                                    {
+                                      "id": "d47a3527-5455-44a0-b1d2-ac8a6a96006b",
+                                      "name": "Authentication credentials are missing or invalid.",
+                                      "originalRequest": {
+                                        "method": "DELETE",
+                                        "header": [
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: bearer",
+                                            "key": "Authorization",
+                                            "value": "Bearer <token>"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/apis/eventing.knative.dev/v1/namespaces/:namespace/triggers/:name",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "apis",
+                                            "eventing.knative.dev",
+                                            "v1",
+                                            "namespaces",
+                                            ":namespace",
+                                            "triggers",
+                                            ":name"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "namespace"
+                                            },
+                                            {
+                                              "key": "name"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "Unauthorized",
+                                      "code": 401,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                      "createdAt": "2026-07-28T02:00:46.000Z",
+                                      "updatedAt": "2026-07-28T02:00:46.000Z",
+                                      "uid": "35240-d47a3527-5455-44a0-b1d2-ac8a6a96006b"
+                                    },
+                                    {
+                                      "id": "90fde5aa-ffd4-4e5b-bda2-74944f317be9",
+                                      "name": "The requested resource was not found.",
+                                      "originalRequest": {
+                                        "method": "DELETE",
+                                        "header": [
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: bearer",
+                                            "key": "Authorization",
+                                            "value": "Bearer <token>"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/apis/eventing.knative.dev/v1/namespaces/:namespace/triggers/:name",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "apis",
+                                            "eventing.knative.dev",
+                                            "v1",
+                                            "namespaces",
+                                            ":namespace",
+                                            "triggers",
+                                            ":name"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "namespace"
+                                            },
+                                            {
+                                              "key": "name"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "Not Found",
+                                      "code": 404,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                      "createdAt": "2026-07-28T02:00:46.000Z",
+                                      "updatedAt": "2026-07-28T02:00:46.000Z",
+                                      "uid": "35240-90fde5aa-ffd4-4e5b-bda2-74944f317be9"
+                                    }
+                                  ],
+                                  "createdAt": "2026-07-28T02:00:46.000Z",
+                                  "updatedAt": "2026-07-28T02:00:46.000Z",
+                                  "uid": "35240-b998aa26-5c3f-442e-823e-3e5d16bc83af"
+                                }
+                              ],
+                              "id": "48c25174-e31d-4066-89fb-ddddf321346e",
+                              "createdAt": "2026-07-28T02:00:46.000Z",
+                              "updatedAt": "2026-07-28T02:00:46.000Z",
+                              "uid": "35240-48c25174-e31d-4066-89fb-ddddf321346e"
+                            },
+                            {
+                              "name": "Knative List Triggers",
+                              "id": "71f9a635-2e9f-4f0b-82b3-3a678ded797d",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/eventing.knative.dev/v1/namespaces/:namespace/triggers?labelSelector=<string>&limit=<integer>&continue=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "eventing.knative.dev",
+                                    "v1",
+                                    "namespaces",
+                                    ":namespace",
+                                    "triggers"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Selector to filter resources by label key-value pairs.",
+                                      "key": "labelSelector",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "Maximum number of items to return in a single response.",
+                                      "key": "limit",
+                                      "value": "<integer>"
+                                    },
+                                    {
+                                      "description": "Pagination token returned by a previous list call.",
+                                      "key": "continue",
+                                      "value": "<string>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "57f7fe4c-1ff2-471b-8119-00083ba27e4a",
+                                      "key": "namespace",
+                                      "value": "<string>",
+                                      "description": "(Required) Kubernetes namespace containing the resource."
+                                    }
+                                  ]
+                                },
+                                "description": "Returns a list of all Trigger resources in the specified namespace. Triggers define which events from a Broker should be delivered to a specific subscriber destination."
+                              },
+                              "response": [
+                                {
+                                  "id": "88b22e34-5fd2-4d8a-97dd-17c2f71671d2",
+                                  "name": "Successfully listed Triggers.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/eventing.knative.dev/v1/namespaces/:namespace/triggers?labelSelector=<string>&limit=<integer>&continue=<string>",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "eventing.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "triggers"
+                                      ],
+                                      "query": [
+                                        {
+                                          "description": "Selector to filter resources by label key-value pairs.",
+                                          "key": "labelSelector",
+                                          "value": "<string>"
+                                        },
+                                        {
+                                          "description": "Maximum number of items to return in a single response.",
+                                          "key": "limit",
+                                          "value": "<integer>"
+                                        },
+                                        {
+                                          "description": "Pagination token returned by a previous list call.",
+                                          "key": "continue",
+                                          "value": "<string>"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"items\": [\n    {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"metadata\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\",\n        \"labels\": {\n          \"labore_bb2\": \"<string>\"\n        },\n        \"annotations\": {\n          \"dolore_37\": \"<string>\",\n          \"adipisicing5\": \"<string>\",\n          \"Loremc2\": \"<string>\"\n        },\n        \"resourceVersion\": \"<string>\",\n        \"uid\": \"<string>\",\n        \"generation\": \"<integer>\",\n        \"creationTimestamp\": \"<dateTime>\"\n      },\n      \"spec\": {\n        \"broker\": \"<string>\",\n        \"subscriber\": {\n          \"ref\": {\n            \"apiVersion\": \"<string>\",\n            \"kind\": \"<string>\",\n            \"name\": \"<string>\",\n            \"namespace\": \"<string>\"\n          },\n          \"uri\": \"<uri>\"\n        },\n        \"filter\": {\n          \"attributes\": {\n            \"deserunt8e5\": \"<string>\"\n          }\n        },\n        \"delivery\": {\n          \"deadLetterSink\": {\n            \"ref\": {\n              \"apiVersion\": \"<string>\",\n              \"kind\": \"<string>\",\n              \"name\": \"<string>\",\n              \"namespace\": \"<string>\"\n            },\n            \"uri\": \"<uri>\"\n          },\n          \"retry\": \"<integer>\",\n          \"backoffPolicy\": \"exponential\",\n          \"backoffDelay\": \"<string>\",\n          \"timeout\": \"<string>\"\n        }\n      },\n      \"status\": {\n        \"subscriberUri\": \"<uri>\",\n        \"conditions\": [\n          {\n            \"type\": \"<string>\",\n            \"status\": \"False\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"status\": \"Unknown\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          }\n        ]\n      }\n    },\n    {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"metadata\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\",\n        \"labels\": {\n          \"in_1\": \"<string>\"\n        },\n        \"annotations\": {\n          \"et_be2\": \"<string>\",\n          \"ea759\": \"<string>\"\n        },\n        \"resourceVersion\": \"<string>\",\n        \"uid\": \"<string>\",\n        \"generation\": \"<integer>\",\n        \"creationTimestamp\": \"<dateTime>\"\n      },\n      \"spec\": {\n        \"broker\": \"<string>\",\n        \"subscriber\": {\n          \"ref\": {\n            \"apiVersion\": \"<string>\",\n            \"kind\": \"<string>\",\n            \"name\": \"<string>\",\n            \"namespace\": \"<string>\"\n          },\n          \"uri\": \"<uri>\"\n        },\n        \"filter\": {\n          \"attributes\": {\n            \"etb\": \"<string>\",\n            \"adipisicing_c36\": \"<string>\",\n            \"occaecat_3\": \"<string>\"\n          }\n        },\n        \"delivery\": {\n          \"deadLetterSink\": {\n            \"ref\": {\n              \"apiVersion\": \"<string>\",\n              \"kind\": \"<string>\",\n              \"name\": \"<string>\",\n              \"namespace\": \"<string>\"\n            },\n            \"uri\": \"<uri>\"\n          },\n          \"retry\": \"<integer>\",\n          \"backoffPolicy\": \"linear\",\n          \"backoffDelay\": \"<string>\",\n          \"timeout\": \"<string>\"\n        }\n      },\n      \"status\": {\n        \"subscriberUri\": \"<uri>\",\n        \"conditions\": [\n          {\n            \"type\": \"<string>\",\n            \"status\": \"True\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"status\": \"True\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          }\n        ]\n      }\n    }\n  ],\n  \"metadata\": {\n    \"resourceVersion\": \"<string>\",\n    \"continue\": \"<string>\"\n  }\n}",
+                                  "createdAt": "2026-07-28T02:00:46.000Z",
+                                  "updatedAt": "2026-07-28T02:00:46.000Z",
+                                  "uid": "35240-88b22e34-5fd2-4d8a-97dd-17c2f71671d2"
+                                },
+                                {
+                                  "id": "279a29b2-4a8e-4e6d-9442-06b866252017",
+                                  "name": "Authentication credentials are missing or invalid.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/eventing.knative.dev/v1/namespaces/:namespace/triggers?labelSelector=<string>&limit=<integer>&continue=<string>",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "eventing.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "triggers"
+                                      ],
+                                      "query": [
+                                        {
+                                          "description": "Selector to filter resources by label key-value pairs.",
+                                          "key": "labelSelector",
+                                          "value": "<string>"
+                                        },
+                                        {
+                                          "description": "Maximum number of items to return in a single response.",
+                                          "key": "limit",
+                                          "value": "<integer>"
+                                        },
+                                        {
+                                          "description": "Pagination token returned by a previous list call.",
+                                          "key": "continue",
+                                          "value": "<string>"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Unauthorized",
+                                  "code": 401,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                  "createdAt": "2026-07-28T02:00:46.000Z",
+                                  "updatedAt": "2026-07-28T02:00:46.000Z",
+                                  "uid": "35240-279a29b2-4a8e-4e6d-9442-06b866252017"
+                                }
+                              ],
+                              "createdAt": "2026-07-28T02:00:46.000Z",
+                              "updatedAt": "2026-07-28T02:00:46.000Z",
+                              "uid": "35240-71f9a635-2e9f-4f0b-82b3-3a678ded797d"
+                            },
+                            {
+                              "name": "Knative Create a Trigger",
+                              "id": "0883b108-8a57-45dc-b3e7-63922640bc7b",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"tempor_1d\": \"<string>\"\n    },\n    \"annotations\": {\n      \"anim_66\": \"<string>\",\n      \"consequat_8b\": \"<string>\",\n      \"tempor_b4\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"broker\": \"<string>\",\n    \"subscriber\": {\n      \"ref\": {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"uri\": \"<uri>\"\n    },\n    \"filter\": {\n      \"attributes\": {\n        \"voluptate_f\": \"<string>\"\n      }\n    },\n    \"delivery\": {\n      \"deadLetterSink\": {\n        \"ref\": {\n          \"apiVersion\": \"<string>\",\n          \"kind\": \"<string>\",\n          \"name\": \"<string>\",\n          \"namespace\": \"<string>\"\n        },\n        \"uri\": \"<uri>\"\n      },\n      \"retry\": \"<integer>\",\n      \"backoffPolicy\": \"linear\",\n      \"backoffDelay\": \"<string>\",\n      \"timeout\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"subscriberUri\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/eventing.knative.dev/v1/namespaces/:namespace/triggers",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "eventing.knative.dev",
+                                    "v1",
+                                    "namespaces",
+                                    ":namespace",
+                                    "triggers"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "37a12a2d-8e5c-4b2c-bc06-8ee422100d98",
+                                      "key": "namespace",
+                                      "value": "<string>",
+                                      "description": "(Required) Kubernetes namespace containing the resource."
+                                    }
+                                  ]
+                                },
+                                "description": "Creates a new Trigger resource. A Trigger subscribes to events from a named Broker with optional attribute filters. Matching events are delivered to the specified subscriber destination via HTTP POST in CloudEvents format."
+                              },
+                              "response": [
+                                {
+                                  "id": "c90e0f6a-68f6-4cea-9eca-582dafc84b49",
+                                  "name": "Trigger successfully created.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"tempor_1d\": \"<string>\"\n    },\n    \"annotations\": {\n      \"anim_66\": \"<string>\",\n      \"consequat_8b\": \"<string>\",\n      \"tempor_b4\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"broker\": \"<string>\",\n    \"subscriber\": {\n      \"ref\": {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"uri\": \"<uri>\"\n    },\n    \"filter\": {\n      \"attributes\": {\n        \"voluptate_f\": \"<string>\"\n      }\n    },\n    \"delivery\": {\n      \"deadLetterSink\": {\n        \"ref\": {\n          \"apiVersion\": \"<string>\",\n          \"kind\": \"<string>\",\n          \"name\": \"<string>\",\n          \"namespace\": \"<string>\"\n        },\n        \"uri\": \"<uri>\"\n      },\n      \"retry\": \"<integer>\",\n      \"backoffPolicy\": \"linear\",\n      \"backoffDelay\": \"<string>\",\n      \"timeout\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"subscriberUri\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/eventing.knative.dev/v1/namespaces/:namespace/triggers",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "eventing.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "triggers"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Created",
+                                  "code": 201,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"tempor_1d\": \"<string>\"\n    },\n    \"annotations\": {\n      \"anim_66\": \"<string>\",\n      \"consequat_8b\": \"<string>\",\n      \"tempor_b4\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"broker\": \"<string>\",\n    \"subscriber\": {\n      \"ref\": {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"uri\": \"<uri>\"\n    },\n    \"filter\": {\n      \"attributes\": {\n        \"voluptate_f\": \"<string>\"\n      }\n    },\n    \"delivery\": {\n      \"deadLetterSink\": {\n        \"ref\": {\n          \"apiVersion\": \"<string>\",\n          \"kind\": \"<string>\",\n          \"name\": \"<string>\",\n          \"namespace\": \"<string>\"\n        },\n        \"uri\": \"<uri>\"\n      },\n      \"retry\": \"<integer>\",\n      \"backoffPolicy\": \"linear\",\n      \"backoffDelay\": \"<string>\",\n      \"timeout\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"subscriberUri\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                  "createdAt": "2026-07-28T02:00:46.000Z",
+                                  "updatedAt": "2026-07-28T02:00:46.000Z",
+                                  "uid": "35240-c90e0f6a-68f6-4cea-9eca-582dafc84b49"
+                                },
+                                {
+                                  "id": "77a43179-b6ac-4e97-9b26-c62c23301170",
+                                  "name": "The request was malformed or failed validation.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"tempor_1d\": \"<string>\"\n    },\n    \"annotations\": {\n      \"anim_66\": \"<string>\",\n      \"consequat_8b\": \"<string>\",\n      \"tempor_b4\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"broker\": \"<string>\",\n    \"subscriber\": {\n      \"ref\": {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"uri\": \"<uri>\"\n    },\n    \"filter\": {\n      \"attributes\": {\n        \"voluptate_f\": \"<string>\"\n      }\n    },\n    \"delivery\": {\n      \"deadLetterSink\": {\n        \"ref\": {\n          \"apiVersion\": \"<string>\",\n          \"kind\": \"<string>\",\n          \"name\": \"<string>\",\n          \"namespace\": \"<string>\"\n        },\n        \"uri\": \"<uri>\"\n      },\n      \"retry\": \"<integer>\",\n      \"backoffPolicy\": \"linear\",\n      \"backoffDelay\": \"<string>\",\n      \"timeout\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"subscriberUri\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/eventing.knative.dev/v1/namespaces/:namespace/triggers",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "eventing.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "triggers"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Bad Request",
+                                  "code": 400,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                  "createdAt": "2026-07-28T02:00:46.000Z",
+                                  "updatedAt": "2026-07-28T02:00:46.000Z",
+                                  "uid": "35240-77a43179-b6ac-4e97-9b26-c62c23301170"
+                                },
+                                {
+                                  "id": "b9d3dc36-7155-4c2a-b062-f94f217f1d42",
+                                  "name": "Authentication credentials are missing or invalid.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"tempor_1d\": \"<string>\"\n    },\n    \"annotations\": {\n      \"anim_66\": \"<string>\",\n      \"consequat_8b\": \"<string>\",\n      \"tempor_b4\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"broker\": \"<string>\",\n    \"subscriber\": {\n      \"ref\": {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"uri\": \"<uri>\"\n    },\n    \"filter\": {\n      \"attributes\": {\n        \"voluptate_f\": \"<string>\"\n      }\n    },\n    \"delivery\": {\n      \"deadLetterSink\": {\n        \"ref\": {\n          \"apiVersion\": \"<string>\",\n          \"kind\": \"<string>\",\n          \"name\": \"<string>\",\n          \"namespace\": \"<string>\"\n        },\n        \"uri\": \"<uri>\"\n      },\n      \"retry\": \"<integer>\",\n      \"backoffPolicy\": \"linear\",\n      \"backoffDelay\": \"<string>\",\n      \"timeout\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"subscriberUri\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/eventing.knative.dev/v1/namespaces/:namespace/triggers",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "eventing.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "triggers"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Unauthorized",
+                                  "code": 401,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                  "createdAt": "2026-07-28T02:00:46.000Z",
+                                  "updatedAt": "2026-07-28T02:00:46.000Z",
+                                  "uid": "35240-b9d3dc36-7155-4c2a-b062-f94f217f1d42"
+                                },
+                                {
+                                  "id": "1b3fc97e-f497-4601-97b4-c1bcd3f38c43",
+                                  "name": "A resource with this name already exists.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"tempor_1d\": \"<string>\"\n    },\n    \"annotations\": {\n      \"anim_66\": \"<string>\",\n      \"consequat_8b\": \"<string>\",\n      \"tempor_b4\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\"\n  },\n  \"spec\": {\n    \"broker\": \"<string>\",\n    \"subscriber\": {\n      \"ref\": {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\"\n      },\n      \"uri\": \"<uri>\"\n    },\n    \"filter\": {\n      \"attributes\": {\n        \"voluptate_f\": \"<string>\"\n      }\n    },\n    \"delivery\": {\n      \"deadLetterSink\": {\n        \"ref\": {\n          \"apiVersion\": \"<string>\",\n          \"kind\": \"<string>\",\n          \"name\": \"<string>\",\n          \"namespace\": \"<string>\"\n        },\n        \"uri\": \"<uri>\"\n      },\n      \"retry\": \"<integer>\",\n      \"backoffPolicy\": \"linear\",\n      \"backoffDelay\": \"<string>\",\n      \"timeout\": \"<string>\"\n    }\n  },\n  \"status\": {\n    \"subscriberUri\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ]\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/eventing.knative.dev/v1/namespaces/:namespace/triggers",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "eventing.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "triggers"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Conflict",
+                                  "code": 409,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                  "createdAt": "2026-07-28T02:00:46.000Z",
+                                  "updatedAt": "2026-07-28T02:00:46.000Z",
+                                  "uid": "35240-1b3fc97e-f497-4601-97b4-c1bcd3f38c43"
+                                }
+                              ],
+                              "createdAt": "2026-07-28T02:00:46.000Z",
+                              "updatedAt": "2026-07-28T02:00:46.000Z",
+                              "uid": "35240-0883b108-8a57-45dc-b3e7-63922640bc7b"
+                            }
+                          ],
+                          "id": "a8fb9828-9bb8-4703-8ea4-a6ca62223ea8",
+                          "createdAt": "2026-07-28T02:00:46.000Z",
+                          "updatedAt": "2026-07-28T02:00:46.000Z",
+                          "uid": "35240-a8fb9828-9bb8-4703-8ea4-a6ca62223ea8"
+                        }
+                      ],
+                      "id": "087b0c12-0bfe-4807-8ef6-7a4777671eb6",
+                      "createdAt": "2026-07-28T02:00:46.000Z",
+                      "updatedAt": "2026-07-28T02:00:46.000Z",
+                      "uid": "35240-087b0c12-0bfe-4807-8ef6-7a4777671eb6"
+                    }
+                  ],
+                  "id": "54a39b78-8c89-4e0b-8f2c-165ce7fd51a5",
+                  "createdAt": "2026-07-28T02:00:46.000Z",
+                  "updatedAt": "2026-07-28T02:00:46.000Z",
+                  "uid": "35240-54a39b78-8c89-4e0b-8f2c-165ce7fd51a5"
+                }
+              ],
+              "id": "a3b95880-2b4e-4c3f-9509-5a8a4a3aefba",
+              "createdAt": "2026-07-28T02:00:46.000Z",
+              "updatedAt": "2026-07-28T02:00:46.000Z",
+              "uid": "35240-a3b95880-2b4e-4c3f-9509-5a8a4a3aefba"
+            }
+          ],
+          "id": "8d7ecd06-3309-40c7-a775-afccc26aa438",
+          "createdAt": "2026-07-28T02:00:46.000Z",
+          "updatedAt": "2026-07-28T02:00:46.000Z",
+          "uid": "35240-8d7ecd06-3309-40c7-a775-afccc26aa438"
+        }
+      ],
+      "id": "fb0133fe-672c-499b-b9d6-460b92d96692",
+      "createdAt": "2026-07-28T02:00:46.000Z",
+      "updatedAt": "2026-07-28T02:00:46.000Z",
+      "uid": "35240-fb0133fe-672c-499b-b9d6-460b92d96692"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://kubernetes.default.svc"
+    }
+  ]
+}

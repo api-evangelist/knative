@@ -1,0 +1,986 @@
+{
+  "info": {
+    "_postman_id": "dd45fb2a-e068-4ea7-8ea9-2e56acee62ce",
+    "name": "Knative Eventing Apis Routes API",
+    "description": "The Knative Eventing API extends Kubernetes with custom resources for building event-driven architectures. It provides two main patterns: Broker and Trigger for cloud-native event routing with filtering, and Channel and Subscription for pub/sub messaging. Event sources such as ApiServerSource, PingSource, and SinkBinding connect external event producers to the eventing mesh. All events conform to the CloudEvents specification. Resources are served through the Kubernetes API server under the eventing.knative.dev and messaging.knative.dev API groups.\n\nContact Support:\n Name: Knative Community",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-07-28T02:00:42.000Z",
+    "updatedAt": "2026-07-28T02:00:42.000Z",
+    "lastUpdatedBy": "35240",
+    "uid": "35240-dd45fb2a-e068-4ea7-8ea9-2e56acee62ce"
+  },
+  "item": [
+    {
+      "name": "apis",
+      "item": [
+        {
+          "name": "serving.knative.dev",
+          "item": [
+            {
+              "name": "v1",
+              "item": [
+                {
+                  "name": "namespaces",
+                  "item": [
+                    {
+                      "name": "{namespace}",
+                      "item": [
+                        {
+                          "name": "routes",
+                          "item": [
+                            {
+                              "name": "{name}",
+                              "item": [
+                                {
+                                  "name": "Get a Knative Route",
+                                  "id": "4b7089d0-5038-47c3-8279-0c20cac76fc0",
+                                  "protocolProfileBehavior": {
+                                    "disableBodyPruning": true
+                                  },
+                                  "request": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/serving.knative.dev/v1/namespaces/:namespace/routes/:name",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "serving.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "routes",
+                                        ":name"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "id": "9cb5bf03-4dbc-468c-9c0a-d2ac30815ee3",
+                                          "key": "namespace",
+                                          "value": "<string>",
+                                          "description": "(Required) Kubernetes namespace containing the resource."
+                                        },
+                                        {
+                                          "id": "64066783-2003-4d91-afa6-405df29c08eb",
+                                          "key": "name",
+                                          "value": "<string>",
+                                          "description": "(Required) Name of the Knative resource."
+                                        }
+                                      ]
+                                    },
+                                    "description": "Returns the details of a specific Knative Route including its traffic targets, URLs for named routes, and status conditions."
+                                  },
+                                  "response": [
+                                    {
+                                      "id": "03499bec-0d05-4d95-9707-fd1ec7f96d40",
+                                      "name": "Successfully retrieved the Route.",
+                                      "originalRequest": {
+                                        "method": "GET",
+                                        "header": [
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: bearer",
+                                            "key": "Authorization",
+                                            "value": "Bearer <token>"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/apis/serving.knative.dev/v1/namespaces/:namespace/routes/:name",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "apis",
+                                            "serving.knative.dev",
+                                            "v1",
+                                            "namespaces",
+                                            ":namespace",
+                                            "routes",
+                                            ":name"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "namespace"
+                                            },
+                                            {
+                                              "key": "name"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "OK",
+                                      "code": 200,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"enim7d\": \"<string>\"\n    },\n    \"annotations\": {\n      \"qui_22\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"ownerReferences\": [\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"uid\": \"<string>\"\n      },\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"uid\": \"<string>\"\n      }\n    ]\n  },\n  \"spec\": {\n    \"traffic\": [\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      },\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      }\n    ]\n  },\n  \"status\": {\n    \"url\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"True\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ],\n    \"traffic\": [\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      },\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      }\n    ]\n  }\n}",
+                                      "createdAt": "2026-07-28T02:00:42.000Z",
+                                      "updatedAt": "2026-07-28T02:00:42.000Z",
+                                      "uid": "35240-03499bec-0d05-4d95-9707-fd1ec7f96d40"
+                                    },
+                                    {
+                                      "id": "e5f22af5-049d-44db-b304-0f7ffcf0d053",
+                                      "name": "Authentication credentials are missing or invalid.",
+                                      "originalRequest": {
+                                        "method": "GET",
+                                        "header": [
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: bearer",
+                                            "key": "Authorization",
+                                            "value": "Bearer <token>"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/apis/serving.knative.dev/v1/namespaces/:namespace/routes/:name",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "apis",
+                                            "serving.knative.dev",
+                                            "v1",
+                                            "namespaces",
+                                            ":namespace",
+                                            "routes",
+                                            ":name"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "namespace"
+                                            },
+                                            {
+                                              "key": "name"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "Unauthorized",
+                                      "code": 401,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                      "createdAt": "2026-07-28T02:00:42.000Z",
+                                      "updatedAt": "2026-07-28T02:00:42.000Z",
+                                      "uid": "35240-e5f22af5-049d-44db-b304-0f7ffcf0d053"
+                                    },
+                                    {
+                                      "id": "790bdfbc-d603-4b75-98c6-945caf4d2d19",
+                                      "name": "The requested resource was not found.",
+                                      "originalRequest": {
+                                        "method": "GET",
+                                        "header": [
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: bearer",
+                                            "key": "Authorization",
+                                            "value": "Bearer <token>"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/apis/serving.knative.dev/v1/namespaces/:namespace/routes/:name",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "apis",
+                                            "serving.knative.dev",
+                                            "v1",
+                                            "namespaces",
+                                            ":namespace",
+                                            "routes",
+                                            ":name"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "namespace"
+                                            },
+                                            {
+                                              "key": "name"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "Not Found",
+                                      "code": 404,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                      "createdAt": "2026-07-28T02:00:42.000Z",
+                                      "updatedAt": "2026-07-28T02:00:42.000Z",
+                                      "uid": "35240-790bdfbc-d603-4b75-98c6-945caf4d2d19"
+                                    }
+                                  ],
+                                  "createdAt": "2026-07-28T02:00:42.000Z",
+                                  "updatedAt": "2026-07-28T02:00:42.000Z",
+                                  "uid": "35240-4b7089d0-5038-47c3-8279-0c20cac76fc0"
+                                },
+                                {
+                                  "name": "Delete a Knative Route",
+                                  "id": "ab8f8883-859c-4c40-a009-69b763581625",
+                                  "protocolProfileBehavior": {
+                                    "disableBodyPruning": true
+                                  },
+                                  "request": {
+                                    "method": "DELETE",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/serving.knative.dev/v1/namespaces/:namespace/routes/:name",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "serving.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "routes",
+                                        ":name"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "id": "877a1a1d-27f7-4888-9697-40e00f78e263",
+                                          "key": "namespace",
+                                          "value": "<string>",
+                                          "description": "(Required) Kubernetes namespace containing the resource."
+                                        },
+                                        {
+                                          "id": "4181b488-b71a-404d-8053-2ca9bcf5811c",
+                                          "key": "name",
+                                          "value": "<string>",
+                                          "description": "(Required) Name of the Knative resource."
+                                        }
+                                      ]
+                                    },
+                                    "description": "Deletes a Knative Route. Traffic to the associated URL will cease. Note that Routes owned by a Service are automatically deleted when the Service is deleted."
+                                  },
+                                  "response": [
+                                    {
+                                      "id": "c2229155-b4b4-4232-a431-c43f5ed4267b",
+                                      "name": "Route deletion initiated.",
+                                      "originalRequest": {
+                                        "method": "DELETE",
+                                        "header": [
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: bearer",
+                                            "key": "Authorization",
+                                            "value": "Bearer <token>"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/apis/serving.knative.dev/v1/namespaces/:namespace/routes/:name",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "apis",
+                                            "serving.knative.dev",
+                                            "v1",
+                                            "namespaces",
+                                            ":namespace",
+                                            "routes",
+                                            ":name"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "namespace"
+                                            },
+                                            {
+                                              "key": "name"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "OK",
+                                      "code": 200,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                      "createdAt": "2026-07-28T02:00:42.000Z",
+                                      "updatedAt": "2026-07-28T02:00:42.000Z",
+                                      "uid": "35240-c2229155-b4b4-4232-a431-c43f5ed4267b"
+                                    },
+                                    {
+                                      "id": "e9945c33-2f59-411a-b05c-d54a7cc6230c",
+                                      "name": "Authentication credentials are missing or invalid.",
+                                      "originalRequest": {
+                                        "method": "DELETE",
+                                        "header": [
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: bearer",
+                                            "key": "Authorization",
+                                            "value": "Bearer <token>"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/apis/serving.knative.dev/v1/namespaces/:namespace/routes/:name",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "apis",
+                                            "serving.knative.dev",
+                                            "v1",
+                                            "namespaces",
+                                            ":namespace",
+                                            "routes",
+                                            ":name"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "namespace"
+                                            },
+                                            {
+                                              "key": "name"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "Unauthorized",
+                                      "code": 401,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                      "createdAt": "2026-07-28T02:00:42.000Z",
+                                      "updatedAt": "2026-07-28T02:00:42.000Z",
+                                      "uid": "35240-e9945c33-2f59-411a-b05c-d54a7cc6230c"
+                                    },
+                                    {
+                                      "id": "94924feb-13ec-4183-9b38-a8359712bb2f",
+                                      "name": "The requested resource was not found.",
+                                      "originalRequest": {
+                                        "method": "DELETE",
+                                        "header": [
+                                          {
+                                            "key": "Accept",
+                                            "value": "application/json"
+                                          },
+                                          {
+                                            "description": "Added as a part of security scheme: bearer",
+                                            "key": "Authorization",
+                                            "value": "Bearer <token>"
+                                          }
+                                        ],
+                                        "url": {
+                                          "raw": "{{baseUrl}}/apis/serving.knative.dev/v1/namespaces/:namespace/routes/:name",
+                                          "host": [
+                                            "{{baseUrl}}"
+                                          ],
+                                          "path": [
+                                            "apis",
+                                            "serving.knative.dev",
+                                            "v1",
+                                            "namespaces",
+                                            ":namespace",
+                                            "routes",
+                                            ":name"
+                                          ],
+                                          "variable": [
+                                            {
+                                              "key": "namespace"
+                                            },
+                                            {
+                                              "key": "name"
+                                            }
+                                          ]
+                                        }
+                                      },
+                                      "status": "Not Found",
+                                      "code": 404,
+                                      "_postman_previewlanguage": "json",
+                                      "header": [
+                                        {
+                                          "key": "Content-Type",
+                                          "value": "application/json"
+                                        }
+                                      ],
+                                      "cookie": [],
+                                      "responseTime": null,
+                                      "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                      "createdAt": "2026-07-28T02:00:42.000Z",
+                                      "updatedAt": "2026-07-28T02:00:42.000Z",
+                                      "uid": "35240-94924feb-13ec-4183-9b38-a8359712bb2f"
+                                    }
+                                  ],
+                                  "createdAt": "2026-07-28T02:00:42.000Z",
+                                  "updatedAt": "2026-07-28T02:00:42.000Z",
+                                  "uid": "35240-ab8f8883-859c-4c40-a009-69b763581625"
+                                }
+                              ],
+                              "id": "10c13aec-81fb-40eb-95d7-73501563f711",
+                              "createdAt": "2026-07-28T02:00:42.000Z",
+                              "updatedAt": "2026-07-28T02:00:42.000Z",
+                              "uid": "35240-10c13aec-81fb-40eb-95d7-73501563f711"
+                            },
+                            {
+                              "name": "List Knative Routes",
+                              "id": "8cf26fa8-c1e7-4c6d-99a9-7f06f15e7ce8",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/serving.knative.dev/v1/namespaces/:namespace/routes?labelSelector=<string>&limit=<integer>&continue=<string>",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "serving.knative.dev",
+                                    "v1",
+                                    "namespaces",
+                                    ":namespace",
+                                    "routes"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Selector to filter resources by label key-value pairs.",
+                                      "key": "labelSelector",
+                                      "value": "<string>"
+                                    },
+                                    {
+                                      "description": "Maximum number of items to return in a single response.",
+                                      "key": "limit",
+                                      "value": "<integer>"
+                                    },
+                                    {
+                                      "description": "Pagination token returned by a previous list call.",
+                                      "key": "continue",
+                                      "value": "<string>"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "125ac44a-e7da-41d5-91b5-d31f7bad1952",
+                                      "key": "namespace",
+                                      "value": "<string>",
+                                      "description": "(Required) Kubernetes namespace containing the resource."
+                                    }
+                                  ]
+                                },
+                                "description": "Returns a list of all Knative Route resources in the specified namespace. Routes map network endpoints to Revisions and manage percentage-based traffic distribution."
+                              },
+                              "response": [
+                                {
+                                  "id": "ab49d124-cde1-415b-8a9c-9b2b1bc0354c",
+                                  "name": "Successfully listed Routes.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/serving.knative.dev/v1/namespaces/:namespace/routes?labelSelector=<string>&limit=<integer>&continue=<string>",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "serving.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "routes"
+                                      ],
+                                      "query": [
+                                        {
+                                          "description": "Selector to filter resources by label key-value pairs.",
+                                          "key": "labelSelector",
+                                          "value": "<string>"
+                                        },
+                                        {
+                                          "description": "Maximum number of items to return in a single response.",
+                                          "key": "limit",
+                                          "value": "<integer>"
+                                        },
+                                        {
+                                          "description": "Pagination token returned by a previous list call.",
+                                          "key": "continue",
+                                          "value": "<string>"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "OK",
+                                  "code": 200,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"items\": [\n    {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"metadata\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\",\n        \"labels\": {\n          \"est_d\": \"<string>\"\n        },\n        \"annotations\": {\n          \"inb\": \"<string>\",\n          \"elit_2f\": \"<string>\",\n          \"irure_6_\": \"<string>\"\n        },\n        \"resourceVersion\": \"<string>\",\n        \"uid\": \"<string>\",\n        \"generation\": \"<integer>\",\n        \"creationTimestamp\": \"<dateTime>\",\n        \"deletionTimestamp\": \"<dateTime>\",\n        \"ownerReferences\": [\n          {\n            \"apiVersion\": \"<string>\",\n            \"kind\": \"<string>\",\n            \"name\": \"<string>\",\n            \"uid\": \"<string>\"\n          },\n          {\n            \"apiVersion\": \"<string>\",\n            \"kind\": \"<string>\",\n            \"name\": \"<string>\",\n            \"uid\": \"<string>\"\n          }\n        ]\n      },\n      \"spec\": {\n        \"traffic\": [\n          {\n            \"revisionName\": \"<string>\",\n            \"configurationName\": \"<string>\",\n            \"latestRevision\": \"<boolean>\",\n            \"percent\": \"<integer>\",\n            \"tag\": \"<string>\",\n            \"url\": \"<uri>\"\n          },\n          {\n            \"revisionName\": \"<string>\",\n            \"configurationName\": \"<string>\",\n            \"latestRevision\": \"<boolean>\",\n            \"percent\": \"<integer>\",\n            \"tag\": \"<string>\",\n            \"url\": \"<uri>\"\n          }\n        ]\n      },\n      \"status\": {\n        \"url\": \"<uri>\",\n        \"conditions\": [\n          {\n            \"type\": \"<string>\",\n            \"status\": \"True\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"status\": \"Unknown\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          }\n        ],\n        \"traffic\": [\n          {\n            \"revisionName\": \"<string>\",\n            \"configurationName\": \"<string>\",\n            \"latestRevision\": \"<boolean>\",\n            \"percent\": \"<integer>\",\n            \"tag\": \"<string>\",\n            \"url\": \"<uri>\"\n          },\n          {\n            \"revisionName\": \"<string>\",\n            \"configurationName\": \"<string>\",\n            \"latestRevision\": \"<boolean>\",\n            \"percent\": \"<integer>\",\n            \"tag\": \"<string>\",\n            \"url\": \"<uri>\"\n          }\n        ]\n      }\n    },\n    {\n      \"apiVersion\": \"<string>\",\n      \"kind\": \"<string>\",\n      \"metadata\": {\n        \"name\": \"<string>\",\n        \"namespace\": \"<string>\",\n        \"labels\": {\n          \"consequat8\": \"<string>\",\n          \"cillum_b0\": \"<string>\"\n        },\n        \"annotations\": {\n          \"consequat_9_d\": \"<string>\",\n          \"ut7b\": \"<string>\"\n        },\n        \"resourceVersion\": \"<string>\",\n        \"uid\": \"<string>\",\n        \"generation\": \"<integer>\",\n        \"creationTimestamp\": \"<dateTime>\",\n        \"deletionTimestamp\": \"<dateTime>\",\n        \"ownerReferences\": [\n          {\n            \"apiVersion\": \"<string>\",\n            \"kind\": \"<string>\",\n            \"name\": \"<string>\",\n            \"uid\": \"<string>\"\n          },\n          {\n            \"apiVersion\": \"<string>\",\n            \"kind\": \"<string>\",\n            \"name\": \"<string>\",\n            \"uid\": \"<string>\"\n          }\n        ]\n      },\n      \"spec\": {\n        \"traffic\": [\n          {\n            \"revisionName\": \"<string>\",\n            \"configurationName\": \"<string>\",\n            \"latestRevision\": \"<boolean>\",\n            \"percent\": \"<integer>\",\n            \"tag\": \"<string>\",\n            \"url\": \"<uri>\"\n          },\n          {\n            \"revisionName\": \"<string>\",\n            \"configurationName\": \"<string>\",\n            \"latestRevision\": \"<boolean>\",\n            \"percent\": \"<integer>\",\n            \"tag\": \"<string>\",\n            \"url\": \"<uri>\"\n          }\n        ]\n      },\n      \"status\": {\n        \"url\": \"<uri>\",\n        \"conditions\": [\n          {\n            \"type\": \"<string>\",\n            \"status\": \"True\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          },\n          {\n            \"type\": \"<string>\",\n            \"status\": \"Unknown\",\n            \"reason\": \"<string>\",\n            \"message\": \"<string>\",\n            \"lastTransitionTime\": \"<dateTime>\"\n          }\n        ],\n        \"traffic\": [\n          {\n            \"revisionName\": \"<string>\",\n            \"configurationName\": \"<string>\",\n            \"latestRevision\": \"<boolean>\",\n            \"percent\": \"<integer>\",\n            \"tag\": \"<string>\",\n            \"url\": \"<uri>\"\n          },\n          {\n            \"revisionName\": \"<string>\",\n            \"configurationName\": \"<string>\",\n            \"latestRevision\": \"<boolean>\",\n            \"percent\": \"<integer>\",\n            \"tag\": \"<string>\",\n            \"url\": \"<uri>\"\n          }\n        ]\n      }\n    }\n  ],\n  \"metadata\": {\n    \"resourceVersion\": \"<string>\",\n    \"continue\": \"<string>\"\n  }\n}",
+                                  "createdAt": "2026-07-28T02:00:42.000Z",
+                                  "updatedAt": "2026-07-28T02:00:42.000Z",
+                                  "uid": "35240-ab49d124-cde1-415b-8a9c-9b2b1bc0354c"
+                                },
+                                {
+                                  "id": "92209808-a7d8-4ba8-852a-32fe384dcc8c",
+                                  "name": "Authentication credentials are missing or invalid.",
+                                  "originalRequest": {
+                                    "method": "GET",
+                                    "header": [
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/serving.knative.dev/v1/namespaces/:namespace/routes?labelSelector=<string>&limit=<integer>&continue=<string>",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "serving.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "routes"
+                                      ],
+                                      "query": [
+                                        {
+                                          "description": "Selector to filter resources by label key-value pairs.",
+                                          "key": "labelSelector",
+                                          "value": "<string>"
+                                        },
+                                        {
+                                          "description": "Maximum number of items to return in a single response.",
+                                          "key": "limit",
+                                          "value": "<integer>"
+                                        },
+                                        {
+                                          "description": "Pagination token returned by a previous list call.",
+                                          "key": "continue",
+                                          "value": "<string>"
+                                        }
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Unauthorized",
+                                  "code": 401,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                  "createdAt": "2026-07-28T02:00:42.000Z",
+                                  "updatedAt": "2026-07-28T02:00:42.000Z",
+                                  "uid": "35240-92209808-a7d8-4ba8-852a-32fe384dcc8c"
+                                }
+                              ],
+                              "createdAt": "2026-07-28T02:00:42.000Z",
+                              "updatedAt": "2026-07-28T02:00:42.000Z",
+                              "uid": "35240-8cf26fa8-c1e7-4c6d-99a9-7f06f15e7ce8"
+                            },
+                            {
+                              "name": "Create a Knative Route",
+                              "id": "0586a6ad-7d81-4672-9e8b-a4766e090680",
+                              "protocolProfileBehavior": {
+                                "disableBodyPruning": true
+                              },
+                              "request": {
+                                "method": "POST",
+                                "header": [
+                                  {
+                                    "key": "Content-Type",
+                                    "value": "application/json"
+                                  },
+                                  {
+                                    "key": "Accept",
+                                    "value": "application/json"
+                                  }
+                                ],
+                                "body": {
+                                  "mode": "raw",
+                                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"enim7d\": \"<string>\"\n    },\n    \"annotations\": {\n      \"qui_22\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"ownerReferences\": [\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"uid\": \"<string>\"\n      },\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"uid\": \"<string>\"\n      }\n    ]\n  },\n  \"spec\": {\n    \"traffic\": [\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      },\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      }\n    ]\n  },\n  \"status\": {\n    \"url\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"True\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ],\n    \"traffic\": [\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      },\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      }\n    ]\n  }\n}",
+                                  "options": {
+                                    "raw": {
+                                      "headerFamily": "json",
+                                      "language": "json"
+                                    }
+                                  }
+                                },
+                                "url": {
+                                  "raw": "{{baseUrl}}/apis/serving.knative.dev/v1/namespaces/:namespace/routes",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "apis",
+                                    "serving.knative.dev",
+                                    "v1",
+                                    "namespaces",
+                                    ":namespace",
+                                    "routes"
+                                  ],
+                                  "variable": [
+                                    {
+                                      "id": "7cf83bf9-ca76-4817-b4c3-0ae1bca46dbb",
+                                      "key": "namespace",
+                                      "value": "<string>",
+                                      "description": "(Required) Kubernetes namespace containing the resource."
+                                    }
+                                  ]
+                                },
+                                "description": "Creates a new Knative Route resource. Routes can distribute traffic across multiple Revisions using percentage-based splitting. Traffic percentages across all targets must sum to 100."
+                              },
+                              "response": [
+                                {
+                                  "id": "00bbfc41-d6e3-4586-8bcb-e3a28d9e02ba",
+                                  "name": "Route successfully created.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"enim7d\": \"<string>\"\n    },\n    \"annotations\": {\n      \"qui_22\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"ownerReferences\": [\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"uid\": \"<string>\"\n      },\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"uid\": \"<string>\"\n      }\n    ]\n  },\n  \"spec\": {\n    \"traffic\": [\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      },\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      }\n    ]\n  },\n  \"status\": {\n    \"url\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"True\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ],\n    \"traffic\": [\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      },\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      }\n    ]\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/serving.knative.dev/v1/namespaces/:namespace/routes",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "serving.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "routes"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Created",
+                                  "code": 201,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"enim7d\": \"<string>\"\n    },\n    \"annotations\": {\n      \"qui_22\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"ownerReferences\": [\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"uid\": \"<string>\"\n      },\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"uid\": \"<string>\"\n      }\n    ]\n  },\n  \"spec\": {\n    \"traffic\": [\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      },\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      }\n    ]\n  },\n  \"status\": {\n    \"url\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"True\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ],\n    \"traffic\": [\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      },\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      }\n    ]\n  }\n}",
+                                  "createdAt": "2026-07-28T02:00:42.000Z",
+                                  "updatedAt": "2026-07-28T02:00:42.000Z",
+                                  "uid": "35240-00bbfc41-d6e3-4586-8bcb-e3a28d9e02ba"
+                                },
+                                {
+                                  "id": "0812580d-4a60-42d2-a695-b0d555591a75",
+                                  "name": "The request was malformed or failed validation.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"enim7d\": \"<string>\"\n    },\n    \"annotations\": {\n      \"qui_22\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"ownerReferences\": [\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"uid\": \"<string>\"\n      },\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"uid\": \"<string>\"\n      }\n    ]\n  },\n  \"spec\": {\n    \"traffic\": [\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      },\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      }\n    ]\n  },\n  \"status\": {\n    \"url\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"True\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ],\n    \"traffic\": [\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      },\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      }\n    ]\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/serving.knative.dev/v1/namespaces/:namespace/routes",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "serving.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "routes"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Bad Request",
+                                  "code": 400,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                  "createdAt": "2026-07-28T02:00:42.000Z",
+                                  "updatedAt": "2026-07-28T02:00:42.000Z",
+                                  "uid": "35240-0812580d-4a60-42d2-a695-b0d555591a75"
+                                },
+                                {
+                                  "id": "d69f8111-4ebe-4bf0-a44c-12e1ebee3ea1",
+                                  "name": "Authentication credentials are missing or invalid.",
+                                  "originalRequest": {
+                                    "method": "POST",
+                                    "header": [
+                                      {
+                                        "key": "Content-Type",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "key": "Accept",
+                                        "value": "application/json"
+                                      },
+                                      {
+                                        "description": "Added as a part of security scheme: bearer",
+                                        "key": "Authorization",
+                                        "value": "Bearer <token>"
+                                      }
+                                    ],
+                                    "body": {
+                                      "mode": "raw",
+                                      "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"enim7d\": \"<string>\"\n    },\n    \"annotations\": {\n      \"qui_22\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"ownerReferences\": [\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"uid\": \"<string>\"\n      },\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"uid\": \"<string>\"\n      }\n    ]\n  },\n  \"spec\": {\n    \"traffic\": [\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      },\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      }\n    ]\n  },\n  \"status\": {\n    \"url\": \"<uri>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"False\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"True\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ],\n    \"traffic\": [\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      },\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      }\n    ]\n  }\n}",
+                                      "options": {
+                                        "raw": {
+                                          "headerFamily": "json",
+                                          "language": "json"
+                                        }
+                                      }
+                                    },
+                                    "url": {
+                                      "raw": "{{baseUrl}}/apis/serving.knative.dev/v1/namespaces/:namespace/routes",
+                                      "host": [
+                                        "{{baseUrl}}"
+                                      ],
+                                      "path": [
+                                        "apis",
+                                        "serving.knative.dev",
+                                        "v1",
+                                        "namespaces",
+                                        ":namespace",
+                                        "routes"
+                                      ],
+                                      "variable": [
+                                        {
+                                          "key": "namespace"
+                                        }
+                                      ]
+                                    }
+                                  },
+                                  "status": "Unauthorized",
+                                  "code": 401,
+                                  "_postman_previewlanguage": "json",
+                                  "header": [
+                                    {
+                                      "key": "Content-Type",
+                                      "value": "application/json"
+                                    }
+                                  ],
+                                  "cookie": [],
+                                  "responseTime": null,
+                                  "body": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"status\": \"<string>\",\n  \"message\": \"<string>\",\n  \"reason\": \"<string>\",\n  \"code\": \"<integer>\"\n}",
+                                  "createdAt": "2026-07-28T02:00:42.000Z",
+                                  "updatedAt": "2026-07-28T02:00:42.000Z",
+                                  "uid": "35240-d69f8111-4ebe-4bf0-a44c-12e1ebee3ea1"
+                                }
+                              ],
+                              "createdAt": "2026-07-28T02:00:42.000Z",
+                              "updatedAt": "2026-07-28T02:00:42.000Z",
+                              "uid": "35240-0586a6ad-7d81-4672-9e8b-a4766e090680"
+                            }
+                          ],
+                          "id": "6d5b87f5-7905-47e3-98ac-47360d525914",
+                          "createdAt": "2026-07-28T02:00:42.000Z",
+                          "updatedAt": "2026-07-28T02:00:42.000Z",
+                          "uid": "35240-6d5b87f5-7905-47e3-98ac-47360d525914"
+                        }
+                      ],
+                      "id": "ce701a47-48ef-4e43-8a19-f1d86593a42c",
+                      "createdAt": "2026-07-28T02:00:42.000Z",
+                      "updatedAt": "2026-07-28T02:00:42.000Z",
+                      "uid": "35240-ce701a47-48ef-4e43-8a19-f1d86593a42c"
+                    }
+                  ],
+                  "id": "c540203d-829e-4d42-948b-3f40f1d3ab0f",
+                  "createdAt": "2026-07-28T02:00:42.000Z",
+                  "updatedAt": "2026-07-28T02:00:42.000Z",
+                  "uid": "35240-c540203d-829e-4d42-948b-3f40f1d3ab0f"
+                }
+              ],
+              "id": "0844e1fa-769e-4654-b315-a94d294ece6c",
+              "createdAt": "2026-07-28T02:00:42.000Z",
+              "updatedAt": "2026-07-28T02:00:42.000Z",
+              "uid": "35240-0844e1fa-769e-4654-b315-a94d294ece6c"
+            }
+          ],
+          "id": "5a5743e2-0380-4b15-bc2f-bf3c8bb25ca7",
+          "createdAt": "2026-07-28T02:00:42.000Z",
+          "updatedAt": "2026-07-28T02:00:42.000Z",
+          "uid": "35240-5a5743e2-0380-4b15-bc2f-bf3c8bb25ca7"
+        }
+      ],
+      "id": "bae66028-fb03-4958-8235-3c74a82e2a59",
+      "createdAt": "2026-07-28T02:00:42.000Z",
+      "updatedAt": "2026-07-28T02:00:42.000Z",
+      "uid": "35240-bae66028-fb03-4958-8235-3c74a82e2a59"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://kubernetes.default.svc"
+    }
+  ]
+}
