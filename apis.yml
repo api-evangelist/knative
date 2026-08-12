@@ -389,6 +389,19 @@ apis:
   - type: JSONSchema
     url: json-schema/knative-eventing-schema.json
 common:
+  - type: IssueTracker
+    url: https://github.com/knative/func/issues
+  - type: Releases
+    url: https://github.com/knative/func/releases
+  - type: SecurityPolicy
+    url: https://github.com/knative/func/blob/main/SECURITY.md
+  - type: CodeOfConduct
+    url: https://github.com/knative/func/blob/main/CODE-OF-CONDUCT.md
+  - type: ContributionGuide
+    url: https://github.com/knative/func/blob/main/CONTRIBUTING.md
+  - type: License
+    name: Apache-2.0
+    url: https://github.com/knative/func/blob/main/LICENSE
   - type: PostmanWorkspace
     url: https://www.postman.com/kinlaneapi/knative/overview
   - type: AgenticAccess
