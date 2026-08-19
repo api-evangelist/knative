@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knative Eventing Apis EventTypes API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "EventTypes",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Knative List EventTypes",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/eventing.knative.dev/v1beta2/namespaces/:namespace/eventtypes",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "Selector to filter resources by label key-value pairs."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token returned by a previous list call."
+              }
+            ]
+          },
+          "docs": "Returns a list of all EventType resources in the namespace. EventTypes define the catalog of event types that can be consumed from Brokers, enabling event consumers to discover available events."
+        },
+        {
+          "info": {
+            "name": "Knative Create an EventType",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kubernetes.default.svc/apis/eventing.knative.dev/v1beta2/namespaces/:namespace/eventtypes",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new EventType to register an event type in the catalog. EventTypes describe the CloudEvents type, source schema, and broker association so consumers can discover and validate events."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

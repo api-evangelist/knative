@@ -1,0 +1,204 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Knative Eventing Apis EventSources API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "EventSources",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Knative List ApiServerSources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/sources.knative.dev/v1/namespaces/:namespace/apiserversources",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "Selector to filter resources by label key-value pairs."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token returned by a previous list call."
+              }
+            ]
+          },
+          "docs": "Returns a list of all ApiServerSource resources in the specified namespace. ApiServerSources watch the Kubernetes API server for events on specified resource types and forward them as CloudEvents to a sink."
+        },
+        {
+          "info": {
+            "name": "Knative Create an ApiServerSource",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kubernetes.default.svc/apis/sources.knative.dev/v1/namespaces/:namespace/apiserversources",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new ApiServerSource that watches the Kubernetes API server for events on specified resource types and forwards them as CloudEvents to the configured sink. Requires a service account with appropriate RBAC permissions to watch the specified resources."
+        },
+        {
+          "info": {
+            "name": "Knative List PingSources",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/sources.knative.dev/v1/namespaces/:namespace/pingsources",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "Selector to filter resources by label key-value pairs."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token returned by a previous list call."
+              }
+            ]
+          },
+          "docs": "Returns a list of all PingSource resources in the namespace. PingSources emit CloudEvents on a cron-based schedule with a configurable event payload."
+        },
+        {
+          "info": {
+            "name": "Knative Create a PingSource",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kubernetes.default.svc/apis/sources.knative.dev/v1/namespaces/:namespace/pingsources",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new PingSource that fires CloudEvents on a cron schedule. The event payload can be a static JSON data field. PingSources are useful for triggering periodic workflows and scheduled tasks."
+        },
+        {
+          "info": {
+            "name": "Knative List SinkBindings",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://kubernetes.default.svc/apis/sources.knative.dev/v1/namespaces/:namespace/sinkbindings",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              },
+              {
+                "name": "labelSelector",
+                "value": "",
+                "type": "query",
+                "description": "Selector to filter resources by label key-value pairs."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of items to return in a single response."
+              },
+              {
+                "name": "continue",
+                "value": "",
+                "type": "query",
+                "description": "Pagination token returned by a previous list call."
+              }
+            ]
+          },
+          "docs": "Returns a list of all SinkBinding resources in the namespace. SinkBindings augment a PodSpecable workload by injecting the sink URI as the K_SINK environment variable, enabling the workload to send CloudEvents to the configured sink."
+        },
+        {
+          "info": {
+            "name": "Knative Create a SinkBinding",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://kubernetes.default.svc/apis/sources.knative.dev/v1/namespaces/:namespace/sinkbindings",
+            "params": [
+              {
+                "name": "namespace",
+                "value": "",
+                "type": "path",
+                "description": "Kubernetes namespace containing the resource."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new SinkBinding that injects K_SINK into a PodSpecable subject such as a Deployment, StatefulSet, or CronJob. The sink URI is automatically updated if the sink address changes."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

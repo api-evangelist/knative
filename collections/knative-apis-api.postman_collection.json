@@ -1,0 +1,1416 @@
+{
+  "item": [
+    {
+      "id": "22cc123d-d9a9-4ca0-b317-052cee1f12ed",
+      "name": "Apis",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "5c42f503-f580-4f7c-ad0f-874e52cfd7ee",
+          "name": "List Knative Services",
+          "request": {
+            "name": "List Knative Services",
+            "description": {
+              "content": "Returns a list of all Knative Service resources in the specified namespace. Services are the primary resource for deploying serverless workloads and automatically manage Routes, Configurations, and Revisions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                "serving.knative.dev",
+                "v1",
+                "namespaces",
+                ":namespace",
+                "services"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "labelSelector",
+                  "value": "<string>",
+                  "description": "Selector to filter resources by label key-value pairs."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "Maximum number of items to return in a single response."
+                },
+                {
+                  "disabled": false,
+                  "key": "continue",
+                  "value": "<string>",
+                  "description": "Pagination token returned by a previous list call."
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) Kubernetes namespace containing the resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "30a56b3f-8c43-4f42-8a24-69bf1c4fe3ca",
+              "name": "Successfully listed Services.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "serving.knative.dev",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "services"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "labelSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continue",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Kubernetes namespace containing the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"string\",\n  \"kind\": \"string\",\n  \"items\": [\n    {\n      \"apiVersion\": \"string\",\n      \"kind\": \"string\",\n      \"metadata\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\",\n          \"key_3\": \"string\"\n        },\n        \"annotations\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"resourceVersion\": \"string\",\n        \"uid\": \"string\",\n        \"generation\": 7477,\n        \"creationTimestamp\": \"1978-05-09T10:43:13.223Z\",\n        \"deletionTimestamp\": \"2004-05-29T12:10:58.266Z\",\n        \"ownerReferences\": [\n          {\n            \"apiVersion\": \"string\",\n            \"kind\": \"string\",\n            \"name\": \"string\",\n            \"uid\": \"string\"\n          },\n          {\n            \"apiVersion\": \"string\",\n            \"kind\": \"string\",\n            \"name\": \"string\",\n            \"uid\": \"string\"\n          }\n        ]\n      },\n      \"spec\": {\n        \"template\": {\n          \"metadata\": {\n            \"name\": \"string\",\n            \"labels\": {\n              \"key_0\": \"string\"\n            },\n            \"annotations\": {\n              \"key_0\": \"string\"\n            }\n          },\n          \"spec\": {\n            \"containerConcurrency\": 8332,\n            \"timeoutSeconds\": 1729,\n            \"serviceAccountName\": \"string\",\n            \"containers\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        },\n        \"traffic\": [\n          {\n            \"revisionName\": \"string\",\n            \"configurationName\": \"string\",\n            \"latestRevision\": true,\n            \"percent\": 9,\n            \"tag\": \"string\",\n            \"url\": \"http://sNxvYomDOnigifIcUK.ikjU7wXvVx5Vro5QGC2MSeJL287v0\"\n          },\n          {\n            \"revisionName\": \"string\",\n            \"configurationName\": \"string\",\n            \"latestRevision\": false,\n            \"percent\": 30,\n            \"tag\": \"string\",\n            \"url\": \"http://uXlVDhZIqLR.mzbCRspy+OCzgAVuqO558mW3DEn4vCYawjEJn129VxeWzjei4F..HPlF3U8StQm0S2QTvPChCC3Eai0NLnQZDj\"\n          }\n        ]\n      },\n      \"status\": {\n        \"url\": \"https://jmCdnjcbHwsVB.ouxYnMUQfSf92owebbvBj-47vuyM42C6LBj69xbbDOewbk7QWXdYqnlLJlsF1LXb5isHtG\",\n        \"address\": {\n          \"url\": \"string\"\n        },\n        \"latestCreatedRevisionName\": \"string\",\n        \"latestReadyRevisionName\": \"string\",\n        \"observedGeneration\": 6421,\n        \"conditions\": [\n          {\n            \"type\": \"string\",\n            \"status\": \"True\",\n            \"reason\": \"string\",\n            \"message\": \"string\",\n            \"lastTransitionTime\": \"1949-03-09T18:35:56.605Z\"\n          },\n          {\n            \"type\": \"string\",\n            \"status\": \"Unknown\",\n            \"reason\": \"string\",\n            \"message\": \"string\",\n            \"lastTransitionTime\": \"1977-07-31T18:42:00.449Z\"\n          }\n        ],\n        \"traffic\": [\n          {\n            \"revisionName\": \"string\",\n            \"configurationName\": \"string\",\n            \"latestRevision\": false,\n            \"percent\": 27,\n            \"tag\": \"string\",\n            \"url\": \"http://WQhOKGSEA.yoxASmbDCa7rbr13WbJ2+sBwMRkVgRpEkNFSqcVtknyBa22\"\n          },\n          {\n            \"revisionName\": \"string\",\n            \"configurationName\": \"string\",\n            \"latestRevision\": false,\n            \"percent\": 5,\n            \"tag\": \"string\",\n            \"url\": \"https://TnpMFgjVSTHLQjApJegwnvVvcDy.vikpT,93fSa+okP1BXNbea.U4cg9PgEMufOumklm94OluqHaadco,jkxc\"\n          }\n        ]\n      }\n    },\n    {\n      \"apiVersion\": \"string\",\n      \"kind\": \"string\",\n      \"metadata\": {\n        \"name\": \"string\",\n        \"namespace\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"annotations\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"resourceVersion\": \"string\",\n        \"uid\": \"string\",\n        \"generation\": 441,\n        \"creationTimestamp\": \"1964-05-29T02:54:44.626Z\",\n        \"deletionTimestamp\": \"1998-09-19T12:44:29.575Z\",\n        \"ownerReferences\": [\n          {\n            \"apiVersion\": \"string\",\n            \"kind\": \"string\",\n            \"name\": \"string\",\n            \"uid\": \"string\"\n          },\n          {\n            \"apiVersion\": \"string\",\n            \"kind\": \"string\",\n            \"name\": \"string\",\n            \"uid\": \"string\"\n          }\n        ]\n      },\n      \"spec\": {\n        \"template\": {\n          \"metadata\": {\n            \"name\": \"string\",\n            \"labels\": {\n              \"key_0\": \"string\",\n              \"key_1\": \"string\",\n              \"key_2\": \"string\"\n            },\n            \"annotations\": {\n              \"key_0\": \"string\",\n              \"key_1\": \"string\"\n            }\n          },\n          \"spec\": {\n            \"containerConcurrency\": 8833,\n            \"timeoutSeconds\": 2297,\n            \"serviceAccountName\": \"string\",\n            \"containers\": [\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            ]\n          }\n        },\n        \"traffic\": [\n          {\n            \"revisionName\": \"string\",\n            \"configurationName\": \"string\",\n            \"latestRevision\": false,\n            \"percent\": 57,\n            \"tag\": \"string\",\n            \"url\": \"http://vakpVozAGRBfwZLDpZqYwGlVlFQtl.mobdJIPzgcZ-9Ok7hbyuYW.RrmPHWbZPgy9gOwr,K7E2RiU2hF5u8+pmool\"\n          },\n          {\n            \"revisionName\": \"string\",\n            \"configurationName\": \"string\",\n            \"latestRevision\": true,\n            \"percent\": 31,\n            \"tag\": \"string\",\n            \"url\": \"https://OEi.auzrPMbf,FUHhm6ca2JcUksL4x9aASKMAA7l7ocshoICvvm\"\n          }\n        ]\n      },\n      \"status\": {\n        \"url\": \"http://J.kmmSp4xogXcHzj1I+hh00KjpzKvKQ7Lv-xp,k9ODGT\",\n        \"address\": {\n          \"url\": \"string\"\n        },\n        \"latestCreatedRevisionName\": \"string\",\n        \"latestReadyRevisionName\": \"string\",\n        \"observedGeneration\": 7304,\n        \"conditions\": [\n          {\n            \"type\": \"string\",\n            \"status\": \"True\",\n            \"reason\": \"string\",\n            \"message\": \"string\",\n            \"lastTransitionTime\": \"1961-11-29T04:52:08.180Z\"\n          },\n          {\n            \"type\": \"string\",\n            \"status\": \"True\",\n            \"reason\": \"string\",\n            \"message\": \"string\",\n            \"lastTransitionTime\": \"1953-09-27T16:37:47.786Z\"\n          }\n        ],\n        \"traffic\": [\n          {\n            \"revisionName\": \"string\",\n            \"configurationName\": \"string\",\n            \"latestRevision\": false,\n            \"percent\": 65,\n            \"tag\": \"string\",\n            \"url\": \"https://RkaHhJFBUrxDdUcp.yhataj.6AsNX\"\n          },\n          {\n            \"revisionName\": \"string\",\n            \"configurationName\": \"string\",\n            \"latestRevision\": false,\n            \"percent\": 85,\n            \"tag\": \"string\",\n            \"url\": \"http://PkXVWfrqSc.swjBugMr\"\n          }\n        ]\n      }\n    }\n  ],\n  \"metadata\": {\n    \"resourceVersion\": \"string\",\n    \"continue\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bc9dd126-836b-4c34-83fc-16e03d275bfd",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "serving.knative.dev",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "services"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "labelSelector",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "continue",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Kubernetes namespace containing the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"string\",\n  \"kind\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"reason\": \"string\",\n  \"code\": 8383\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9df14cd1-f5fc-46f2-8b5c-ceaa89774476",
+          "name": "Create a Knative Service",
+          "request": {
+            "name": "Create a Knative Service",
+            "description": {
+              "content": "Creates a new Knative Service resource. Knative will automatically create a corresponding Route and Configuration, and will create the first Revision from the provided template. The Service begins routing traffic to the Revision once it becomes ready.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                "serving.knative.dev",
+                "v1",
+                "namespaces",
+                ":namespace",
+                "services"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) Kubernetes namespace containing the resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"annotations\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"ownerReferences\": [\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"uid\": \"<string>\"\n      },\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"uid\": \"<string>\"\n      }\n    ]\n  },\n  \"spec\": {\n    \"template\": {\n      \"metadata\": {\n        \"name\": \"<string>\",\n        \"labels\": {\n          \"key_0\": \"<string>\"\n        },\n        \"annotations\": {\n          \"key_0\": \"<string>\"\n        }\n      },\n      \"spec\": {\n        \"containerConcurrency\": \"<integer>\",\n        \"timeoutSeconds\": \"<integer>\",\n        \"serviceAccountName\": \"<string>\",\n        \"containers\": [\n          {\n            \"image\": \"<string>\",\n            \"name\": \"<string>\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_2\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": \"<object>\",\n            \"livenessProbe\": \"<object>\",\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          },\n          {\n            \"image\": \"<string>\",\n            \"name\": \"<string>\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": \"<object>\",\n            \"livenessProbe\": \"<object>\",\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          }\n        ],\n        \"volumes\": [\n          \"<object>\",\n          \"<object>\"\n        ]\n      }\n    },\n    \"traffic\": [\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      },\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      }\n    ]\n  },\n  \"status\": {\n    \"url\": \"<uri>\",\n    \"address\": {\n      \"url\": \"<string>\"\n    },\n    \"latestCreatedRevisionName\": \"<string>\",\n    \"latestReadyRevisionName\": \"<string>\",\n    \"observedGeneration\": \"<integer>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"<string>\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"<string>\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ],\n    \"traffic\": [\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      },\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f610f166-eb7d-4299-a30e-82d0bf90bdd0",
+              "name": "Service successfully created.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "serving.knative.dev",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "services"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Kubernetes namespace containing the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"generation\": 7663,\n    \"creationTimestamp\": \"1987-06-08T14:22:20.763Z\",\n    \"deletionTimestamp\": \"1996-10-09T15:09:47.606Z\",\n    \"ownerReferences\": [\n      {\n        \"apiVersion\": \"string\",\n        \"kind\": \"string\",\n        \"name\": \"string\",\n        \"uid\": \"string\"\n      },\n      {\n        \"apiVersion\": \"string\",\n        \"kind\": \"string\",\n        \"name\": \"string\",\n        \"uid\": \"string\"\n      }\n    ]\n  },\n  \"spec\": {\n    \"template\": {\n      \"metadata\": {\n        \"name\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"annotations\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"spec\": {\n        \"containerConcurrency\": 5381,\n        \"timeoutSeconds\": 9614,\n        \"serviceAccountName\": \"string\",\n        \"containers\": [\n          {\n            \"image\": \"string\",\n            \"name\": \"string\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": {},\n            \"livenessProbe\": {},\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          },\n          {\n            \"image\": \"string\",\n            \"name\": \"string\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_2\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": {},\n            \"livenessProbe\": {},\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          }\n        ]\n      }\n    },\n    \"traffic\": [\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 69,\n        \"tag\": \"string\",\n        \"url\": \"https://sEQH.ucAh9RHVLmgB\"\n      },\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": false,\n        \"percent\": 93,\n        \"tag\": \"string\",\n        \"url\": \"http://WARrQSS.kwxgH.nlfP8PQ4nfn9LbB\"\n      }\n    ]\n  },\n  \"status\": {\n    \"url\": \"<uri>\",\n    \"address\": {\n      \"url\": \"<string>\"\n    },\n    \"latestCreatedRevisionName\": \"<string>\",\n    \"latestReadyRevisionName\": \"<string>\",\n    \"observedGeneration\": \"<integer>\",\n    \"conditions\": [\n      {\n        \"type\": \"string\",\n        \"status\": \"False\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"lastTransitionTime\": \"1954-02-10T01:06:19.881Z\"\n      },\n      {\n        \"type\": \"string\",\n        \"status\": \"False\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"lastTransitionTime\": \"1966-01-15T23:33:53.044Z\"\n      }\n    ],\n    \"traffic\": [\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 2,\n        \"tag\": \"string\",\n        \"url\": \"https://EtTXUxQpGp.yuwsz.kw7\"\n      },\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 86,\n        \"tag\": \"string\",\n        \"url\": \"https://pQpgynEhtMsaOTKSQ.sia+roiShBubPDAYRQmdMga.ilZSdUnvZ8\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"string\",\n  \"kind\": \"string\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"generation\": 9906,\n    \"creationTimestamp\": \"2002-12-02T11:43:31.158Z\",\n    \"deletionTimestamp\": \"2024-09-02T09:36:59.966Z\",\n    \"ownerReferences\": [\n      {\n        \"apiVersion\": \"string\",\n        \"kind\": \"string\",\n        \"name\": \"string\",\n        \"uid\": \"string\"\n      },\n      {\n        \"apiVersion\": \"string\",\n        \"kind\": \"string\",\n        \"name\": \"string\",\n        \"uid\": \"string\"\n      }\n    ]\n  },\n  \"spec\": {\n    \"template\": {\n      \"metadata\": {\n        \"name\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"annotations\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        }\n      },\n      \"spec\": {\n        \"containerConcurrency\": 6496,\n        \"timeoutSeconds\": 1044,\n        \"serviceAccountName\": \"string\",\n        \"containers\": [\n          {\n            \"image\": \"string\",\n            \"name\": \"string\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_2\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": {},\n            \"livenessProbe\": {},\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          },\n          {\n            \"image\": \"string\",\n            \"name\": \"string\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": {},\n            \"livenessProbe\": {},\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          }\n        ]\n      }\n    },\n    \"traffic\": [\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": false,\n        \"percent\": 28,\n        \"tag\": \"string\",\n        \"url\": \"https://OvbeeyypvhHwNhRHEDIeEvAqhJWGoGISM.rwapouFa0+NyEhZM99SQIBcvuZgq2jgbDgjlp9rsgCP5l7.W7dzd2CL9gNRLDPv\"\n      },\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 15,\n        \"tag\": \"string\",\n        \"url\": \"https://ShAvKOKshYMPMmIzDKFGStNnJfvjDFIjR.ifgevWRf8W8pumZL+PeN2UdFVbBCM5nqmFBqCbH9xL+OWAC5MEtPOQXmIjeiqSoS.4xjRDdUSmkiQYXqQwJdT\"\n      }\n    ]\n  },\n  \"status\": {\n    \"url\": \"https://aIPrzbUBJZmEAmqKMlHNymeAawBK.wpjdQG60EFUXmslsThTPUqGQnY+-cOW6CI081xg1ngQOy3mYk66mrHhIRQ\",\n    \"address\": {\n      \"url\": \"string\"\n    },\n    \"latestCreatedRevisionName\": \"string\",\n    \"latestReadyRevisionName\": \"string\",\n    \"observedGeneration\": 3016,\n    \"conditions\": [\n      {\n        \"type\": \"string\",\n        \"status\": \"Unknown\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"lastTransitionTime\": \"1981-04-13T21:27:44.499Z\"\n      },\n      {\n        \"type\": \"string\",\n        \"status\": \"False\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"lastTransitionTime\": \"1982-06-30T02:52:52.077Z\"\n      }\n    ],\n    \"traffic\": [\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 21,\n        \"tag\": \"string\",\n        \"url\": \"https://LaycZUUFjBzkZlKOIMvOBMeblC.efgvbAKaVSXKoaWz4PE5.F.leUi+TBKZ,uU\"\n      },\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 84,\n        \"tag\": \"string\",\n        \"url\": \"http://ACeEZJxkejohudgBToAtXfqFfRUGVMjK.uafEvTHEwbM2nQ7upv6GHquPJuyAWHjuXkw685kV7B\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f4a942cc-9234-46dd-9918-16aa6a655396",
+              "name": "The request was malformed or failed validation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "serving.knative.dev",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "services"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Kubernetes namespace containing the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"generation\": 7663,\n    \"creationTimestamp\": \"1987-06-08T14:22:20.763Z\",\n    \"deletionTimestamp\": \"1996-10-09T15:09:47.606Z\",\n    \"ownerReferences\": [\n      {\n        \"apiVersion\": \"string\",\n        \"kind\": \"string\",\n        \"name\": \"string\",\n        \"uid\": \"string\"\n      },\n      {\n        \"apiVersion\": \"string\",\n        \"kind\": \"string\",\n        \"name\": \"string\",\n        \"uid\": \"string\"\n      }\n    ]\n  },\n  \"spec\": {\n    \"template\": {\n      \"metadata\": {\n        \"name\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"annotations\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"spec\": {\n        \"containerConcurrency\": 5381,\n        \"timeoutSeconds\": 9614,\n        \"serviceAccountName\": \"string\",\n        \"containers\": [\n          {\n            \"image\": \"string\",\n            \"name\": \"string\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": {},\n            \"livenessProbe\": {},\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          },\n          {\n            \"image\": \"string\",\n            \"name\": \"string\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_2\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": {},\n            \"livenessProbe\": {},\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          }\n        ]\n      }\n    },\n    \"traffic\": [\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 69,\n        \"tag\": \"string\",\n        \"url\": \"https://sEQH.ucAh9RHVLmgB\"\n      },\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": false,\n        \"percent\": 93,\n        \"tag\": \"string\",\n        \"url\": \"http://WARrQSS.kwxgH.nlfP8PQ4nfn9LbB\"\n      }\n    ]\n  },\n  \"status\": {\n    \"url\": \"<uri>\",\n    \"address\": {\n      \"url\": \"<string>\"\n    },\n    \"latestCreatedRevisionName\": \"<string>\",\n    \"latestReadyRevisionName\": \"<string>\",\n    \"observedGeneration\": \"<integer>\",\n    \"conditions\": [\n      {\n        \"type\": \"string\",\n        \"status\": \"False\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"lastTransitionTime\": \"1954-02-10T01:06:19.881Z\"\n      },\n      {\n        \"type\": \"string\",\n        \"status\": \"False\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"lastTransitionTime\": \"1966-01-15T23:33:53.044Z\"\n      }\n    ],\n    \"traffic\": [\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 2,\n        \"tag\": \"string\",\n        \"url\": \"https://EtTXUxQpGp.yuwsz.kw7\"\n      },\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 86,\n        \"tag\": \"string\",\n        \"url\": \"https://pQpgynEhtMsaOTKSQ.sia+roiShBubPDAYRQmdMga.ilZSdUnvZ8\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"string\",\n  \"kind\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"reason\": \"string\",\n  \"code\": 8383\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d6d3d9ed-eba4-4f09-a06c-84338c715209",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "serving.knative.dev",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "services"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Kubernetes namespace containing the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"generation\": 7663,\n    \"creationTimestamp\": \"1987-06-08T14:22:20.763Z\",\n    \"deletionTimestamp\": \"1996-10-09T15:09:47.606Z\",\n    \"ownerReferences\": [\n      {\n        \"apiVersion\": \"string\",\n        \"kind\": \"string\",\n        \"name\": \"string\",\n        \"uid\": \"string\"\n      },\n      {\n        \"apiVersion\": \"string\",\n        \"kind\": \"string\",\n        \"name\": \"string\",\n        \"uid\": \"string\"\n      }\n    ]\n  },\n  \"spec\": {\n    \"template\": {\n      \"metadata\": {\n        \"name\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"annotations\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"spec\": {\n        \"containerConcurrency\": 5381,\n        \"timeoutSeconds\": 9614,\n        \"serviceAccountName\": \"string\",\n        \"containers\": [\n          {\n            \"image\": \"string\",\n            \"name\": \"string\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": {},\n            \"livenessProbe\": {},\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          },\n          {\n            \"image\": \"string\",\n            \"name\": \"string\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_2\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": {},\n            \"livenessProbe\": {},\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          }\n        ]\n      }\n    },\n    \"traffic\": [\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 69,\n        \"tag\": \"string\",\n        \"url\": \"https://sEQH.ucAh9RHVLmgB\"\n      },\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": false,\n        \"percent\": 93,\n        \"tag\": \"string\",\n        \"url\": \"http://WARrQSS.kwxgH.nlfP8PQ4nfn9LbB\"\n      }\n    ]\n  },\n  \"status\": {\n    \"url\": \"<uri>\",\n    \"address\": {\n      \"url\": \"<string>\"\n    },\n    \"latestCreatedRevisionName\": \"<string>\",\n    \"latestReadyRevisionName\": \"<string>\",\n    \"observedGeneration\": \"<integer>\",\n    \"conditions\": [\n      {\n        \"type\": \"string\",\n        \"status\": \"False\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"lastTransitionTime\": \"1954-02-10T01:06:19.881Z\"\n      },\n      {\n        \"type\": \"string\",\n        \"status\": \"False\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"lastTransitionTime\": \"1966-01-15T23:33:53.044Z\"\n      }\n    ],\n    \"traffic\": [\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 2,\n        \"tag\": \"string\",\n        \"url\": \"https://EtTXUxQpGp.yuwsz.kw7\"\n      },\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 86,\n        \"tag\": \"string\",\n        \"url\": \"https://pQpgynEhtMsaOTKSQ.sia+roiShBubPDAYRQmdMga.ilZSdUnvZ8\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"string\",\n  \"kind\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"reason\": \"string\",\n  \"code\": 8383\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3bcda3a4-a970-4b25-a842-cb0e677ec084",
+              "name": "A resource with this name already exists.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "serving.knative.dev",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "services"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Kubernetes namespace containing the resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"generation\": 7663,\n    \"creationTimestamp\": \"1987-06-08T14:22:20.763Z\",\n    \"deletionTimestamp\": \"1996-10-09T15:09:47.606Z\",\n    \"ownerReferences\": [\n      {\n        \"apiVersion\": \"string\",\n        \"kind\": \"string\",\n        \"name\": \"string\",\n        \"uid\": \"string\"\n      },\n      {\n        \"apiVersion\": \"string\",\n        \"kind\": \"string\",\n        \"name\": \"string\",\n        \"uid\": \"string\"\n      }\n    ]\n  },\n  \"spec\": {\n    \"template\": {\n      \"metadata\": {\n        \"name\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"annotations\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"spec\": {\n        \"containerConcurrency\": 5381,\n        \"timeoutSeconds\": 9614,\n        \"serviceAccountName\": \"string\",\n        \"containers\": [\n          {\n            \"image\": \"string\",\n            \"name\": \"string\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": {},\n            \"livenessProbe\": {},\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          },\n          {\n            \"image\": \"string\",\n            \"name\": \"string\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_2\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": {},\n            \"livenessProbe\": {},\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          }\n        ]\n      }\n    },\n    \"traffic\": [\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 69,\n        \"tag\": \"string\",\n        \"url\": \"https://sEQH.ucAh9RHVLmgB\"\n      },\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": false,\n        \"percent\": 93,\n        \"tag\": \"string\",\n        \"url\": \"http://WARrQSS.kwxgH.nlfP8PQ4nfn9LbB\"\n      }\n    ]\n  },\n  \"status\": {\n    \"url\": \"<uri>\",\n    \"address\": {\n      \"url\": \"<string>\"\n    },\n    \"latestCreatedRevisionName\": \"<string>\",\n    \"latestReadyRevisionName\": \"<string>\",\n    \"observedGeneration\": \"<integer>\",\n    \"conditions\": [\n      {\n        \"type\": \"string\",\n        \"status\": \"False\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"lastTransitionTime\": \"1954-02-10T01:06:19.881Z\"\n      },\n      {\n        \"type\": \"string\",\n        \"status\": \"False\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"lastTransitionTime\": \"1966-01-15T23:33:53.044Z\"\n      }\n    ],\n    \"traffic\": [\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 2,\n        \"tag\": \"string\",\n        \"url\": \"https://EtTXUxQpGp.yuwsz.kw7\"\n      },\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 86,\n        \"tag\": \"string\",\n        \"url\": \"https://pQpgynEhtMsaOTKSQ.sia+roiShBubPDAYRQmdMga.ilZSdUnvZ8\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"string\",\n  \"kind\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"reason\": \"string\",\n  \"code\": 8383\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f5f45b73-c8c7-47e5-b45b-8e09ac9e73ec",
+          "name": "Get a Knative Service",
+          "request": {
+            "name": "Get a Knative Service",
+            "description": {
+              "content": "Returns the details of a specific Knative Service including its template spec, traffic configuration, and status conditions reflecting readiness, latestCreatedRevisionName, and latestReadyRevisionName.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                "serving.knative.dev",
+                "v1",
+                "namespaces",
+                ":namespace",
+                "services",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) Kubernetes namespace containing the resource."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) Name of the Knative resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "abd6f420-f5d1-4c41-bf69-24f54e1eb1a3",
+              "name": "Successfully retrieved the Service.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "serving.knative.dev",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "services",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Kubernetes namespace containing the resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of the Knative resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"string\",\n  \"kind\": \"string\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"generation\": 9906,\n    \"creationTimestamp\": \"2002-12-02T11:43:31.158Z\",\n    \"deletionTimestamp\": \"2024-09-02T09:36:59.966Z\",\n    \"ownerReferences\": [\n      {\n        \"apiVersion\": \"string\",\n        \"kind\": \"string\",\n        \"name\": \"string\",\n        \"uid\": \"string\"\n      },\n      {\n        \"apiVersion\": \"string\",\n        \"kind\": \"string\",\n        \"name\": \"string\",\n        \"uid\": \"string\"\n      }\n    ]\n  },\n  \"spec\": {\n    \"template\": {\n      \"metadata\": {\n        \"name\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"annotations\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        }\n      },\n      \"spec\": {\n        \"containerConcurrency\": 6496,\n        \"timeoutSeconds\": 1044,\n        \"serviceAccountName\": \"string\",\n        \"containers\": [\n          {\n            \"image\": \"string\",\n            \"name\": \"string\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_2\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": {},\n            \"livenessProbe\": {},\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          },\n          {\n            \"image\": \"string\",\n            \"name\": \"string\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": {},\n            \"livenessProbe\": {},\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          }\n        ]\n      }\n    },\n    \"traffic\": [\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": false,\n        \"percent\": 28,\n        \"tag\": \"string\",\n        \"url\": \"https://OvbeeyypvhHwNhRHEDIeEvAqhJWGoGISM.rwapouFa0+NyEhZM99SQIBcvuZgq2jgbDgjlp9rsgCP5l7.W7dzd2CL9gNRLDPv\"\n      },\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 15,\n        \"tag\": \"string\",\n        \"url\": \"https://ShAvKOKshYMPMmIzDKFGStNnJfvjDFIjR.ifgevWRf8W8pumZL+PeN2UdFVbBCM5nqmFBqCbH9xL+OWAC5MEtPOQXmIjeiqSoS.4xjRDdUSmkiQYXqQwJdT\"\n      }\n    ]\n  },\n  \"status\": {\n    \"url\": \"https://aIPrzbUBJZmEAmqKMlHNymeAawBK.wpjdQG60EFUXmslsThTPUqGQnY+-cOW6CI081xg1ngQOy3mYk66mrHhIRQ\",\n    \"address\": {\n      \"url\": \"string\"\n    },\n    \"latestCreatedRevisionName\": \"string\",\n    \"latestReadyRevisionName\": \"string\",\n    \"observedGeneration\": 3016,\n    \"conditions\": [\n      {\n        \"type\": \"string\",\n        \"status\": \"Unknown\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"lastTransitionTime\": \"1981-04-13T21:27:44.499Z\"\n      },\n      {\n        \"type\": \"string\",\n        \"status\": \"False\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"lastTransitionTime\": \"1982-06-30T02:52:52.077Z\"\n      }\n    ],\n    \"traffic\": [\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 21,\n        \"tag\": \"string\",\n        \"url\": \"https://LaycZUUFjBzkZlKOIMvOBMeblC.efgvbAKaVSXKoaWz4PE5.F.leUi+TBKZ,uU\"\n      },\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 84,\n        \"tag\": \"string\",\n        \"url\": \"http://ACeEZJxkejohudgBToAtXfqFfRUGVMjK.uafEvTHEwbM2nQ7upv6GHquPJuyAWHjuXkw685kV7B\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f2cc8e2d-9df8-424d-a6ea-c12fa37f1ff6",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "serving.knative.dev",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "services",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Kubernetes namespace containing the resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of the Knative resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"string\",\n  \"kind\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"reason\": \"string\",\n  \"code\": 8383\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fc420f31-ae3e-4568-8668-fd49d3220be4",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "serving.knative.dev",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "services",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Kubernetes namespace containing the resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of the Knative resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"string\",\n  \"kind\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"reason\": \"string\",\n  \"code\": 8383\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "3d2dc278-ff3b-403d-9c63-59eba605918e",
+          "name": "Replace a Knative Service",
+          "request": {
+            "name": "Replace a Knative Service",
+            "description": {
+              "content": "Replaces a Knative Service. Any change to the spec.template causes Knative to create a new Revision. Traffic routing continues to the previous Revision until the new one becomes ready, unless traffic configuration specifies otherwise.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                "serving.knative.dev",
+                "v1",
+                "namespaces",
+                ":namespace",
+                "services",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) Kubernetes namespace containing the resource."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) Name of the Knative resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"<string>\",\n    \"namespace\": \"<string>\",\n    \"labels\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"annotations\": {\n      \"key_0\": \"<string>\",\n      \"key_1\": \"<string>\"\n    },\n    \"resourceVersion\": \"<string>\",\n    \"uid\": \"<string>\",\n    \"generation\": \"<integer>\",\n    \"creationTimestamp\": \"<dateTime>\",\n    \"deletionTimestamp\": \"<dateTime>\",\n    \"ownerReferences\": [\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"uid\": \"<string>\"\n      },\n      {\n        \"apiVersion\": \"<string>\",\n        \"kind\": \"<string>\",\n        \"name\": \"<string>\",\n        \"uid\": \"<string>\"\n      }\n    ]\n  },\n  \"spec\": {\n    \"template\": {\n      \"metadata\": {\n        \"name\": \"<string>\",\n        \"labels\": {\n          \"key_0\": \"<string>\"\n        },\n        \"annotations\": {\n          \"key_0\": \"<string>\"\n        }\n      },\n      \"spec\": {\n        \"containerConcurrency\": \"<integer>\",\n        \"timeoutSeconds\": \"<integer>\",\n        \"serviceAccountName\": \"<string>\",\n        \"containers\": [\n          {\n            \"image\": \"<string>\",\n            \"name\": \"<string>\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_2\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": \"<object>\",\n            \"livenessProbe\": \"<object>\",\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          },\n          {\n            \"image\": \"<string>\",\n            \"name\": \"<string>\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": \"<object>\",\n            \"livenessProbe\": \"<object>\",\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          }\n        ],\n        \"volumes\": [\n          \"<object>\",\n          \"<object>\"\n        ]\n      }\n    },\n    \"traffic\": [\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      },\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      }\n    ]\n  },\n  \"status\": {\n    \"url\": \"<uri>\",\n    \"address\": {\n      \"url\": \"<string>\"\n    },\n    \"latestCreatedRevisionName\": \"<string>\",\n    \"latestReadyRevisionName\": \"<string>\",\n    \"observedGeneration\": \"<integer>\",\n    \"conditions\": [\n      {\n        \"type\": \"<string>\",\n        \"status\": \"<string>\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      },\n      {\n        \"type\": \"<string>\",\n        \"status\": \"<string>\",\n        \"reason\": \"<string>\",\n        \"message\": \"<string>\",\n        \"lastTransitionTime\": \"<dateTime>\"\n      }\n    ],\n    \"traffic\": [\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      },\n      {\n        \"revisionName\": \"<string>\",\n        \"configurationName\": \"<string>\",\n        \"latestRevision\": \"<boolean>\",\n        \"percent\": \"<integer>\",\n        \"tag\": \"<string>\",\n        \"url\": \"<uri>\"\n      }\n    ]\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "26ac722a-0716-4d9c-a4fe-5553c2b9c7b2",
+              "name": "Service successfully replaced.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "serving.knative.dev",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "services",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Kubernetes namespace containing the resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of the Knative resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"generation\": 7663,\n    \"creationTimestamp\": \"1987-06-08T14:22:20.763Z\",\n    \"deletionTimestamp\": \"1996-10-09T15:09:47.606Z\",\n    \"ownerReferences\": [\n      {\n        \"apiVersion\": \"string\",\n        \"kind\": \"string\",\n        \"name\": \"string\",\n        \"uid\": \"string\"\n      },\n      {\n        \"apiVersion\": \"string\",\n        \"kind\": \"string\",\n        \"name\": \"string\",\n        \"uid\": \"string\"\n      }\n    ]\n  },\n  \"spec\": {\n    \"template\": {\n      \"metadata\": {\n        \"name\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"annotations\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"spec\": {\n        \"containerConcurrency\": 5381,\n        \"timeoutSeconds\": 9614,\n        \"serviceAccountName\": \"string\",\n        \"containers\": [\n          {\n            \"image\": \"string\",\n            \"name\": \"string\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": {},\n            \"livenessProbe\": {},\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          },\n          {\n            \"image\": \"string\",\n            \"name\": \"string\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_2\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": {},\n            \"livenessProbe\": {},\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          }\n        ]\n      }\n    },\n    \"traffic\": [\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 69,\n        \"tag\": \"string\",\n        \"url\": \"https://sEQH.ucAh9RHVLmgB\"\n      },\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": false,\n        \"percent\": 93,\n        \"tag\": \"string\",\n        \"url\": \"http://WARrQSS.kwxgH.nlfP8PQ4nfn9LbB\"\n      }\n    ]\n  },\n  \"status\": {\n    \"url\": \"<uri>\",\n    \"address\": {\n      \"url\": \"<string>\"\n    },\n    \"latestCreatedRevisionName\": \"<string>\",\n    \"latestReadyRevisionName\": \"<string>\",\n    \"observedGeneration\": \"<integer>\",\n    \"conditions\": [\n      {\n        \"type\": \"string\",\n        \"status\": \"False\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"lastTransitionTime\": \"1954-02-10T01:06:19.881Z\"\n      },\n      {\n        \"type\": \"string\",\n        \"status\": \"False\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"lastTransitionTime\": \"1966-01-15T23:33:53.044Z\"\n      }\n    ],\n    \"traffic\": [\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 2,\n        \"tag\": \"string\",\n        \"url\": \"https://EtTXUxQpGp.yuwsz.kw7\"\n      },\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 86,\n        \"tag\": \"string\",\n        \"url\": \"https://pQpgynEhtMsaOTKSQ.sia+roiShBubPDAYRQmdMga.ilZSdUnvZ8\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"string\",\n  \"kind\": \"string\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\",\n      \"key_2\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"generation\": 9906,\n    \"creationTimestamp\": \"2002-12-02T11:43:31.158Z\",\n    \"deletionTimestamp\": \"2024-09-02T09:36:59.966Z\",\n    \"ownerReferences\": [\n      {\n        \"apiVersion\": \"string\",\n        \"kind\": \"string\",\n        \"name\": \"string\",\n        \"uid\": \"string\"\n      },\n      {\n        \"apiVersion\": \"string\",\n        \"kind\": \"string\",\n        \"name\": \"string\",\n        \"uid\": \"string\"\n      }\n    ]\n  },\n  \"spec\": {\n    \"template\": {\n      \"metadata\": {\n        \"name\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        },\n        \"annotations\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\"\n        }\n      },\n      \"spec\": {\n        \"containerConcurrency\": 6496,\n        \"timeoutSeconds\": 1044,\n        \"serviceAccountName\": \"string\",\n        \"containers\": [\n          {\n            \"image\": \"string\",\n            \"name\": \"string\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_2\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": {},\n            \"livenessProbe\": {},\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          },\n          {\n            \"image\": \"string\",\n            \"name\": \"string\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": {},\n            \"livenessProbe\": {},\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          }\n        ]\n      }\n    },\n    \"traffic\": [\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": false,\n        \"percent\": 28,\n        \"tag\": \"string\",\n        \"url\": \"https://OvbeeyypvhHwNhRHEDIeEvAqhJWGoGISM.rwapouFa0+NyEhZM99SQIBcvuZgq2jgbDgjlp9rsgCP5l7.W7dzd2CL9gNRLDPv\"\n      },\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 15,\n        \"tag\": \"string\",\n        \"url\": \"https://ShAvKOKshYMPMmIzDKFGStNnJfvjDFIjR.ifgevWRf8W8pumZL+PeN2UdFVbBCM5nqmFBqCbH9xL+OWAC5MEtPOQXmIjeiqSoS.4xjRDdUSmkiQYXqQwJdT\"\n      }\n    ]\n  },\n  \"status\": {\n    \"url\": \"https://aIPrzbUBJZmEAmqKMlHNymeAawBK.wpjdQG60EFUXmslsThTPUqGQnY+-cOW6CI081xg1ngQOy3mYk66mrHhIRQ\",\n    \"address\": {\n      \"url\": \"string\"\n    },\n    \"latestCreatedRevisionName\": \"string\",\n    \"latestReadyRevisionName\": \"string\",\n    \"observedGeneration\": 3016,\n    \"conditions\": [\n      {\n        \"type\": \"string\",\n        \"status\": \"Unknown\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"lastTransitionTime\": \"1981-04-13T21:27:44.499Z\"\n      },\n      {\n        \"type\": \"string\",\n        \"status\": \"False\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"lastTransitionTime\": \"1982-06-30T02:52:52.077Z\"\n      }\n    ],\n    \"traffic\": [\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 21,\n        \"tag\": \"string\",\n        \"url\": \"https://LaycZUUFjBzkZlKOIMvOBMeblC.efgvbAKaVSXKoaWz4PE5.F.leUi+TBKZ,uU\"\n      },\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 84,\n        \"tag\": \"string\",\n        \"url\": \"http://ACeEZJxkejohudgBToAtXfqFfRUGVMjK.uafEvTHEwbM2nQ7upv6GHquPJuyAWHjuXkw685kV7B\"\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "35200608-b748-4148-9eee-b0e81f4b7c59",
+              "name": "The request was malformed or failed validation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "serving.knative.dev",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "services",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Kubernetes namespace containing the resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of the Knative resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"generation\": 7663,\n    \"creationTimestamp\": \"1987-06-08T14:22:20.763Z\",\n    \"deletionTimestamp\": \"1996-10-09T15:09:47.606Z\",\n    \"ownerReferences\": [\n      {\n        \"apiVersion\": \"string\",\n        \"kind\": \"string\",\n        \"name\": \"string\",\n        \"uid\": \"string\"\n      },\n      {\n        \"apiVersion\": \"string\",\n        \"kind\": \"string\",\n        \"name\": \"string\",\n        \"uid\": \"string\"\n      }\n    ]\n  },\n  \"spec\": {\n    \"template\": {\n      \"metadata\": {\n        \"name\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"annotations\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"spec\": {\n        \"containerConcurrency\": 5381,\n        \"timeoutSeconds\": 9614,\n        \"serviceAccountName\": \"string\",\n        \"containers\": [\n          {\n            \"image\": \"string\",\n            \"name\": \"string\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": {},\n            \"livenessProbe\": {},\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          },\n          {\n            \"image\": \"string\",\n            \"name\": \"string\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_2\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": {},\n            \"livenessProbe\": {},\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          }\n        ]\n      }\n    },\n    \"traffic\": [\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 69,\n        \"tag\": \"string\",\n        \"url\": \"https://sEQH.ucAh9RHVLmgB\"\n      },\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": false,\n        \"percent\": 93,\n        \"tag\": \"string\",\n        \"url\": \"http://WARrQSS.kwxgH.nlfP8PQ4nfn9LbB\"\n      }\n    ]\n  },\n  \"status\": {\n    \"url\": \"<uri>\",\n    \"address\": {\n      \"url\": \"<string>\"\n    },\n    \"latestCreatedRevisionName\": \"<string>\",\n    \"latestReadyRevisionName\": \"<string>\",\n    \"observedGeneration\": \"<integer>\",\n    \"conditions\": [\n      {\n        \"type\": \"string\",\n        \"status\": \"False\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"lastTransitionTime\": \"1954-02-10T01:06:19.881Z\"\n      },\n      {\n        \"type\": \"string\",\n        \"status\": \"False\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"lastTransitionTime\": \"1966-01-15T23:33:53.044Z\"\n      }\n    ],\n    \"traffic\": [\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 2,\n        \"tag\": \"string\",\n        \"url\": \"https://EtTXUxQpGp.yuwsz.kw7\"\n      },\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 86,\n        \"tag\": \"string\",\n        \"url\": \"https://pQpgynEhtMsaOTKSQ.sia+roiShBubPDAYRQmdMga.ilZSdUnvZ8\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"string\",\n  \"kind\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"reason\": \"string\",\n  \"code\": 8383\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c55c9a87-702f-4ba9-8b8e-0d8bbf37b688",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "serving.knative.dev",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "services",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Kubernetes namespace containing the resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of the Knative resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"generation\": 7663,\n    \"creationTimestamp\": \"1987-06-08T14:22:20.763Z\",\n    \"deletionTimestamp\": \"1996-10-09T15:09:47.606Z\",\n    \"ownerReferences\": [\n      {\n        \"apiVersion\": \"string\",\n        \"kind\": \"string\",\n        \"name\": \"string\",\n        \"uid\": \"string\"\n      },\n      {\n        \"apiVersion\": \"string\",\n        \"kind\": \"string\",\n        \"name\": \"string\",\n        \"uid\": \"string\"\n      }\n    ]\n  },\n  \"spec\": {\n    \"template\": {\n      \"metadata\": {\n        \"name\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"annotations\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"spec\": {\n        \"containerConcurrency\": 5381,\n        \"timeoutSeconds\": 9614,\n        \"serviceAccountName\": \"string\",\n        \"containers\": [\n          {\n            \"image\": \"string\",\n            \"name\": \"string\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": {},\n            \"livenessProbe\": {},\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          },\n          {\n            \"image\": \"string\",\n            \"name\": \"string\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_2\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": {},\n            \"livenessProbe\": {},\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          }\n        ]\n      }\n    },\n    \"traffic\": [\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 69,\n        \"tag\": \"string\",\n        \"url\": \"https://sEQH.ucAh9RHVLmgB\"\n      },\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": false,\n        \"percent\": 93,\n        \"tag\": \"string\",\n        \"url\": \"http://WARrQSS.kwxgH.nlfP8PQ4nfn9LbB\"\n      }\n    ]\n  },\n  \"status\": {\n    \"url\": \"<uri>\",\n    \"address\": {\n      \"url\": \"<string>\"\n    },\n    \"latestCreatedRevisionName\": \"<string>\",\n    \"latestReadyRevisionName\": \"<string>\",\n    \"observedGeneration\": \"<integer>\",\n    \"conditions\": [\n      {\n        \"type\": \"string\",\n        \"status\": \"False\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"lastTransitionTime\": \"1954-02-10T01:06:19.881Z\"\n      },\n      {\n        \"type\": \"string\",\n        \"status\": \"False\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"lastTransitionTime\": \"1966-01-15T23:33:53.044Z\"\n      }\n    ],\n    \"traffic\": [\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 2,\n        \"tag\": \"string\",\n        \"url\": \"https://EtTXUxQpGp.yuwsz.kw7\"\n      },\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 86,\n        \"tag\": \"string\",\n        \"url\": \"https://pQpgynEhtMsaOTKSQ.sia+roiShBubPDAYRQmdMga.ilZSdUnvZ8\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"string\",\n  \"kind\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"reason\": \"string\",\n  \"code\": 8383\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5b18b535-8956-4027-9c83-eef74a1e3d31",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "serving.knative.dev",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "services",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Kubernetes namespace containing the resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of the Knative resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"apiVersion\": \"<string>\",\n  \"kind\": \"<string>\",\n  \"metadata\": {\n    \"name\": \"string\",\n    \"namespace\": \"string\",\n    \"labels\": {\n      \"key_0\": \"string\"\n    },\n    \"annotations\": {\n      \"key_0\": \"string\"\n    },\n    \"resourceVersion\": \"string\",\n    \"uid\": \"string\",\n    \"generation\": 7663,\n    \"creationTimestamp\": \"1987-06-08T14:22:20.763Z\",\n    \"deletionTimestamp\": \"1996-10-09T15:09:47.606Z\",\n    \"ownerReferences\": [\n      {\n        \"apiVersion\": \"string\",\n        \"kind\": \"string\",\n        \"name\": \"string\",\n        \"uid\": \"string\"\n      },\n      {\n        \"apiVersion\": \"string\",\n        \"kind\": \"string\",\n        \"name\": \"string\",\n        \"uid\": \"string\"\n      }\n    ]\n  },\n  \"spec\": {\n    \"template\": {\n      \"metadata\": {\n        \"name\": \"string\",\n        \"labels\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        },\n        \"annotations\": {\n          \"key_0\": \"string\",\n          \"key_1\": \"string\",\n          \"key_2\": \"string\"\n        }\n      },\n      \"spec\": {\n        \"containerConcurrency\": 5381,\n        \"timeoutSeconds\": 9614,\n        \"serviceAccountName\": \"string\",\n        \"containers\": [\n          {\n            \"image\": \"string\",\n            \"name\": \"string\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": {},\n            \"livenessProbe\": {},\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          },\n          {\n            \"image\": \"string\",\n            \"name\": \"string\",\n            \"ports\": [\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"containerPort\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"protocol\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"env\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"value\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"valueFrom\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ],\n            \"resources\": {\n              \"requests\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_1\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"key_2\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              \"limits\": {\n                \"key_0\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            },\n            \"readinessProbe\": {},\n            \"livenessProbe\": {},\n            \"volumeMounts\": [\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              },\n              {\n                \"name\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                },\n                \"mountPath\": {\n                  \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n                }\n              }\n            ]\n          }\n        ]\n      }\n    },\n    \"traffic\": [\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 69,\n        \"tag\": \"string\",\n        \"url\": \"https://sEQH.ucAh9RHVLmgB\"\n      },\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": false,\n        \"percent\": 93,\n        \"tag\": \"string\",\n        \"url\": \"http://WARrQSS.kwxgH.nlfP8PQ4nfn9LbB\"\n      }\n    ]\n  },\n  \"status\": {\n    \"url\": \"<uri>\",\n    \"address\": {\n      \"url\": \"<string>\"\n    },\n    \"latestCreatedRevisionName\": \"<string>\",\n    \"latestReadyRevisionName\": \"<string>\",\n    \"observedGeneration\": \"<integer>\",\n    \"conditions\": [\n      {\n        \"type\": \"string\",\n        \"status\": \"False\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"lastTransitionTime\": \"1954-02-10T01:06:19.881Z\"\n      },\n      {\n        \"type\": \"string\",\n        \"status\": \"False\",\n        \"reason\": \"string\",\n        \"message\": \"string\",\n        \"lastTransitionTime\": \"1966-01-15T23:33:53.044Z\"\n      }\n    ],\n    \"traffic\": [\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 2,\n        \"tag\": \"string\",\n        \"url\": \"https://EtTXUxQpGp.yuwsz.kw7\"\n      },\n      {\n        \"revisionName\": \"string\",\n        \"configurationName\": \"string\",\n        \"latestRevision\": true,\n        \"percent\": 86,\n        \"tag\": \"string\",\n        \"url\": \"https://pQpgynEhtMsaOTKSQ.sia+roiShBubPDAYRQmdMga.ilZSdUnvZ8\"\n      }\n    ]\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"string\",\n  \"kind\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"reason\": \"string\",\n  \"code\": 8383\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b9c30778-8574-4911-b05b-4bd14845362a",
+          "name": "Delete a Knative Service",
+          "request": {
+            "name": "Delete a Knative Service",
+            "description": {
+              "content": "Deletes a Knative Service and all its owned resources including Routes, Configurations, and Revisions. Pods are terminated and the DNS entries are removed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "apis",
+                "serving.knative.dev",
+                "v1",
+                "namespaces",
+                ":namespace",
+                "services",
+                ":name"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "namespace",
+                  "description": "(Required) Kubernetes namespace containing the resource."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "name",
+                  "description": "(Required) Name of the Knative resource."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "bcd5c523-1a6c-45a1-9ff0-19f0d8c54430",
+              "name": "Service deletion initiated.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "serving.knative.dev",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "services",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Kubernetes namespace containing the resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of the Knative resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"string\",\n  \"kind\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"reason\": \"string\",\n  \"code\": 8383\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b34f6ed2-4edd-4e45-a859-eb35a22a137b",
+              "name": "Authentication credentials are missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "serving.knative.dev",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "services",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Kubernetes namespace containing the resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of the Knative resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"string\",\n  \"kind\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"reason\": \"string\",\n  \"code\": 8383\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9598ea13-a7d4-417b-a112-f9320a076f05",
+              "name": "The requested resource was not found.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "apis",
+                    "serving.knative.dev",
+                    "v1",
+                    "namespaces",
+                    ":namespace",
+                    "services",
+                    ":name"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "namespace",
+                      "description": "(Required) Kubernetes namespace containing the resource."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "name",
+                      "description": "(Required) Name of the Knative resource."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apiVersion\": \"string\",\n  \"kind\": \"string\",\n  \"status\": \"string\",\n  \"message\": \"string\",\n  \"reason\": \"string\",\n  \"code\": 8383\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://kubernetes.default.svc",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "5bed2ba7-9a2b-45b3-9c81-defcc28b4a74",
+    "name": "Knative Eventing Apis API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Knative Eventing API extends Kubernetes with custom resources for building event-driven architectures. It provides two main patterns: Broker and Trigger for cloud-native event routing with filtering, and Channel and Subscription for pub/sub messaging. Event sources such as ApiServerSource, PingSource, and SinkBinding connect external event producers to the eventing mesh. All events conform to the CloudEvents specification. Resources are served through the Kubernetes API server under the eventing.knative.dev and messaging.knative.dev API groups.\n\nContact Support:\n Name: Knative Community",
+      "type": "text/plain"
+    }
+  }
+}
