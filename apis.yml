@@ -6,6 +6,19 @@ description: >-
   event-driven architectures with declarative event routing and delivery. Knative abstracts away infrastructure
   complexity so developers can focus on writing code.
 url: https://knative.dev
+deliveryModel:
+  model: self-hosted
+  license: Apache-2.0
+  open_source: true
+  commercial: false
+  callable_host: false
+  label: Self-hosted open source · you run it yourself
+  confidence: high
+  source:
+  - license
+  - openapi
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
