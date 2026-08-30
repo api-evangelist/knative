@@ -241,7 +241,7 @@ apis:
     for injecting sink URIs into workloads.
   humanURL: https://knative.dev/docs/serving/
   tags:
-  - Event Sources
+  - EventSources
   tags_raw:
   - EventSources
   properties:
