@@ -89,34 +89,6 @@ apis:
   - CLI
   - Developer Tools
   - Kubernetes
-- aid: knative:knative-apis-api
-  name: Knative Apis API
-  description: The Apis API from Knative — 2 operation(s) for apis.
-  humanURL: https://knative.dev/docs/serving/
-  tags: []
-  tags_raw:
-  - Apis
-  properties:
-  - type: OpenAPI
-    url: openapi/knative-apis-api-openapi.yml
-  - type: Documentation
-    url: https://knative.dev/docs/serving/
-  - type: Reference
-    url: https://knative.dev/docs/serving/reference/serving-api/
-  - type: GitHubRepository
-    url: https://github.com/knative/serving
-  - type: JSONSchema
-    url: json-schema/knative-serving-schema.json
-  - type: Documentation
-    url: https://knative.dev/docs/eventing/
-  - type: Reference
-    url: https://knative.dev/docs/eventing/reference/eventing-api/
-  - type: GitHubRepository
-    url: https://github.com/knative/eventing
-  - type: AsyncAPI
-    url: asyncapi/knative-cloudevents-asyncapi.yml
-  - type: JSONSchema
-    url: json-schema/knative-eventing-schema.json
 - aid: knative:knative-brokers-api
   name: Knative Brokers API
   description: >-
@@ -216,69 +188,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/knative-domainmappings-api-openapi.yml
-  - type: Documentation
-    url: https://knative.dev/docs/serving/
-  - type: Reference
-    url: https://knative.dev/docs/serving/reference/serving-api/
-  - type: GitHubRepository
-    url: https://github.com/knative/serving
-  - type: JSONSchema
-    url: json-schema/knative-serving-schema.json
-  - type: Documentation
-    url: https://knative.dev/docs/eventing/
-  - type: Reference
-    url: https://knative.dev/docs/eventing/reference/eventing-api/
-  - type: GitHubRepository
-    url: https://github.com/knative/eventing
-  - type: AsyncAPI
-    url: asyncapi/knative-cloudevents-asyncapi.yml
-  - type: JSONSchema
-    url: json-schema/knative-eventing-schema.json
-- aid: knative:knative-eventsources-api
-  name: Knative EventSources API
-  description: >-
-    Knative event source resources connect external event producers to the eventing mesh. Built-in sources
-    include ApiServerSource for Kubernetes API events, PingSource for scheduled events, and SinkBinding
-    for injecting sink URIs into workloads.
-  humanURL: https://knative.dev/docs/serving/
-  tags:
-  - Event Sources
-  tags_raw:
-  - EventSources
-  properties:
-  - type: OpenAPI
-    url: openapi/knative-eventsources-api-openapi.yml
-  - type: Documentation
-    url: https://knative.dev/docs/serving/
-  - type: Reference
-    url: https://knative.dev/docs/serving/reference/serving-api/
-  - type: GitHubRepository
-    url: https://github.com/knative/serving
-  - type: JSONSchema
-    url: json-schema/knative-serving-schema.json
-  - type: Documentation
-    url: https://knative.dev/docs/eventing/
-  - type: Reference
-    url: https://knative.dev/docs/eventing/reference/eventing-api/
-  - type: GitHubRepository
-    url: https://github.com/knative/eventing
-  - type: AsyncAPI
-    url: asyncapi/knative-cloudevents-asyncapi.yml
-  - type: JSONSchema
-    url: json-schema/knative-eventing-schema.json
-- aid: knative:knative-eventtypes-api
-  name: Knative EventTypes API
-  description: >-
-    Knative EventType resources maintain a catalog of event types that can be consumed from Brokers. EventTypes
-    help consumers discover what events are available without inspecting Broker contents directly.
-  humanURL: https://knative.dev/docs/serving/
-  tags:
-  - Event Types
-  tags_raw:
-  - EventTypes
-  properties:
-  - type: OpenAPI
-    url: openapi/knative-eventtypes-api-openapi.yml
   - type: Documentation
     url: https://knative.dev/docs/serving/
   - type: Reference
@@ -398,6 +307,92 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/knative-triggers-api-openapi.yml
+  - type: Documentation
+    url: https://knative.dev/docs/serving/
+  - type: Reference
+    url: https://knative.dev/docs/serving/reference/serving-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/serving
+  - type: JSONSchema
+    url: json-schema/knative-serving-schema.json
+  - type: Documentation
+    url: https://knative.dev/docs/eventing/
+  - type: Reference
+    url: https://knative.dev/docs/eventing/reference/eventing-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/eventing
+  - type: AsyncAPI
+    url: asyncapi/knative-cloudevents-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/knative-eventing-schema.json
+- aid: knative:knative-apis-api
+  name: Knative APIS API
+  description: The Apis API from Knative — 2 operation(s) for apis.
+  humanURL: https://knative.dev/docs/functions/
+  tags:
+  - Apis
+  properties:
+  - type: OpenAPI
+    url: openapi/knative-apis-api-openapi.yml
+  - type: Documentation
+    url: https://knative.dev/docs/serving/
+  - type: Reference
+    url: https://knative.dev/docs/serving/reference/serving-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/serving
+  - type: JSONSchema
+    url: json-schema/knative-serving-schema.json
+  - type: Documentation
+    url: https://knative.dev/docs/eventing/
+  - type: Reference
+    url: https://knative.dev/docs/eventing/reference/eventing-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/eventing
+  - type: AsyncAPI
+    url: asyncapi/knative-cloudevents-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/knative-eventing-schema.json
+- aid: knative:knative-event-sources-api
+  name: Knative Event Sources API
+  description: >-
+    Knative event source resources connect external event producers to the eventing mesh. Built-in sources
+    include ApiServerSource for Kubernetes API events, PingSource for scheduled events, and SinkBinding
+    for injecting sink URIs into workloads.
+  humanURL: https://knative.dev/docs/functions/
+  tags:
+  - Event Sources
+  properties:
+  - type: OpenAPI
+    url: openapi/knative-event-sources-api-openapi.yml
+  - type: Documentation
+    url: https://knative.dev/docs/serving/
+  - type: Reference
+    url: https://knative.dev/docs/serving/reference/serving-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/serving
+  - type: JSONSchema
+    url: json-schema/knative-serving-schema.json
+  - type: Documentation
+    url: https://knative.dev/docs/eventing/
+  - type: Reference
+    url: https://knative.dev/docs/eventing/reference/eventing-api/
+  - type: GitHubRepository
+    url: https://github.com/knative/eventing
+  - type: AsyncAPI
+    url: asyncapi/knative-cloudevents-asyncapi.yml
+  - type: JSONSchema
+    url: json-schema/knative-eventing-schema.json
+- aid: knative:knative-event-types-api
+  name: Knative Event Types API
+  description: >-
+    Knative EventType resources maintain a catalog of event types that can be consumed from Brokers. EventTypes
+    help consumers discover what events are available without inspecting Broker contents directly.
+  humanURL: https://knative.dev/docs/functions/
+  tags:
+  - Event Types
+  properties:
+  - type: OpenAPI
+    url: openapi/knative-event-types-api-openapi.yml
   - type: Documentation
     url: https://knative.dev/docs/serving/
   - type: Reference
