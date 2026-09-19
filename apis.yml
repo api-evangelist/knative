@@ -329,7 +329,8 @@ apis:
   name: Knative APIS API
   description: The Apis API from Knative — 2 operation(s) for apis.
   humanURL: https://knative.dev/docs/functions/
-  tags:
+  tags: []
+  tags_raw:
   - Apis
   properties:
   - type: OpenAPI
