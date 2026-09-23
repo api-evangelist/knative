@@ -1,7 +1,7 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Knative Eventing Apis Brokers API
-  description: 'The Knative Eventing API extends Kubernetes with custom resources for building event-driven architectures. It provides two main patterns: Broker and Trigger for cloud-native event routing with filtering, and Channel and Subscription for pub/sub messaging. Event sources such as ApiServerSource, PingSource, and SinkBinding connect external event producers to the eventing mesh. All events conform to the CloudEvents specification. Resources are served through the Kubernetes API server under the eventing.knative.dev and messaging.knative.dev API groups.'
+  title: Knative Eventing Brokers API
+  description: The Knative Eventing API extends Kubernetes with custom resources for building event-driven architectures.
   version: '1.0'
   contact:
     name: Knative Community
@@ -105,32 +105,30 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    Conflict:
-      description: A resource with this name already exists.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Status'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Status'
-    BadRequest:
-      description: The request was malformed or failed validation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Status'
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Status'
   schemas:
+    Status:
+      type: object
+      description: Kubernetes API Status response.
+      properties:
+        apiVersion:
+          type: string
+          description: API version of the Status object.
+        kind:
+          type: string
+          const: Status
+          description: Always Status.
+        status:
+          type: string
+          description: Success or Failure.
+        message:
+          type: string
+          description: Human-readable description.
+        reason:
+          type: string
+          description: Machine-readable reason.
+        code:
+          type: integer
+          description: HTTP status code.
     Destination:
       type: object
       description: A destination for delivering CloudEvents. Can reference a Kubernetes service, a Knative Service, a Broker, or a Channel via ref, or specify a direct URI.
@@ -159,70 +157,6 @@ components:
           type: string
           format: uri
           description: Direct URI to deliver events to. Mutually exclusive with ref.
-    BrokerList:
-      type: object
-      description: A list of Broker resources.
-      required:
-      - apiVersion
-      - kind
-      - items
-      properties:
-        apiVersion:
-          type: string
-          description: API version for the list.
-        kind:
-          type: string
-          const: BrokerList
-          description: List kind identifier.
-        metadata:
-          type: object
-          properties:
-            resourceVersion:
-              type: string
-              description: Resource version of the list.
-            continue:
-              type: string
-              description: Pagination continuation token.
-        items:
-          type: array
-          description: List of Broker resources.
-          items:
-            $ref: '#/components/schemas/Broker'
-    ObjectMeta:
-      type: object
-      description: Standard Kubernetes object metadata.
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Unique name of the resource within its namespace.
-        namespace:
-          type: string
-          description: Namespace the resource belongs to.
-        labels:
-          type: object
-          description: Key-value labels for organizing and selecting resources.
-          additionalProperties:
-            type: string
-        annotations:
-          type: object
-          description: Non-identifying metadata for the resource.
-          additionalProperties:
-            type: string
-        resourceVersion:
-          type: string
-          description: Opaque string identifying the resource version.
-        uid:
-          type: string
-          description: Unique identifier assigned by the API server.
-        generation:
-          type: integer
-          description: Sequence number incremented on each spec change.
-        creationTimestamp:
-          type: string
-          format: date-time
-          description: Time the resource was created.
     Condition:
       type: object
       description: A status condition on a Knative resource.
@@ -307,29 +241,41 @@ components:
               description: Status conditions for the Broker.
               items:
                 $ref: '#/components/schemas/Condition'
-    Status:
+    ObjectMeta:
       type: object
-      description: Kubernetes API Status response.
+      description: Standard Kubernetes object metadata.
+      required:
+      - name
       properties:
-        apiVersion:
+        name:
           type: string
-          description: API version of the Status object.
-        kind:
+          description: Unique name of the resource within its namespace.
+        namespace:
           type: string
-          const: Status
-          description: Always Status.
-        status:
+          description: Namespace the resource belongs to.
+        labels:
+          type: object
+          description: Key-value labels for organizing and selecting resources.
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: Non-identifying metadata for the resource.
+          additionalProperties:
+            type: string
+        resourceVersion:
           type: string
-          description: Success or Failure.
-        message:
+          description: Opaque string identifying the resource version.
+        uid:
           type: string
-          description: Human-readable description.
-        reason:
-          type: string
-          description: Machine-readable reason.
-        code:
+          description: Unique identifier assigned by the API server.
+        generation:
           type: integer
-          description: HTTP status code.
+          description: Sequence number incremented on each spec change.
+        creationTimestamp:
+          type: string
+          format: date-time
+          description: Time the resource was created.
     DeliverySpec:
       type: object
       description: Delivery configuration for event sources and Brokers.
@@ -353,14 +299,61 @@ components:
         timeout:
           type: string
           description: Timeout per delivery attempt in ISO 8601 duration format.
+    BrokerList:
+      type: object
+      description: A list of Broker resources.
+      required:
+      - apiVersion
+      - kind
+      - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list.
+        kind:
+          type: string
+          const: BrokerList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of Broker resources.
+          items:
+            $ref: '#/components/schemas/Broker'
+  responses:
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    Conflict:
+      description: A resource with this name already exists.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    BadRequest:
+      description: The request was malformed or failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
   parameters:
-    name:
-      name: name
-      in: path
-      required: true
-      description: Name of the Knative resource.
-      schema:
-        type: string
     namespace:
       name: namespace
       in: path
@@ -368,18 +361,18 @@ components:
       description: Kubernetes namespace containing the resource.
       schema:
         type: string
-    continueToken:
-      name: continue
-      in: query
-      required: false
-      description: Pagination token returned by a previous list call.
-      schema:
-        type: string
     labelSelector:
       name: labelSelector
       in: query
       required: false
       description: Selector to filter resources by label key-value pairs.
+      schema:
+        type: string
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Pagination token returned by a previous list call.
       schema:
         type: string
     limit:
@@ -390,6 +383,13 @@ components:
       schema:
         type: integer
         minimum: 1
+    name:
+      name: name
+      in: path
+      required: true
+      description: Name of the Knative resource.
+      schema:
+        type: string
   securitySchemes:
     bearerAuth:
       type: http

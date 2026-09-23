@@ -1,34 +1,51 @@
 {
   "provider": "knative",
   "sources": [
-    "knative-apis-api-openapi.yml",
-    "knative-brokers-api-openapi.yml",
-    "knative-channels-api-openapi.yml",
-    "knative-configurations-api-openapi.yml",
-    "knative-domainmappings-api-openapi.yml",
-    "knative-eventsources-api-openapi.yml",
-    "knative-eventtypes-api-openapi.yml",
-    "knative-revisions-api-openapi.yml",
-    "knative-routes-api-openapi.yml",
-    "knative-subscriptions-api-openapi.yml",
-    "knative-triggers-api-openapi.yml"
+    "_original/knative-eventing-api-openapi.yml",
+    "_original/knative-serving-api-openapi.yml"
   ],
   "outputs": [
-    "knative-apis-api-openapi.yml",
     "knative-brokers-api-openapi.yml",
     "knative-channels-api-openapi.yml",
-    "knative-configurations-api-openapi.yml",
-    "knative-domainmappings-api-openapi.yml",
     "knative-eventsources-api-openapi.yml",
     "knative-eventtypes-api-openapi.yml",
-    "knative-revisions-api-openapi.yml",
-    "knative-routes-api-openapi.yml",
     "knative-subscriptions-api-openapi.yml",
-    "knative-triggers-api-openapi.yml"
+    "knative-triggers-api-openapi.yml",
+    "knative-apis-api-openapi.yml",
+    "knative-configurations-api-openapi.yml",
+    "knative-domainmappings-api-openapi.yml",
+    "knative-revisions-api-openapi.yml",
+    "knative-routes-api-openapi.yml"
   ],
-  "archived": [],
+  "archived": [
+    "deleted 3 superseded output(s) from the previous generation"
+  ],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (2 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "knative-eventing-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "knative-serving-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "knative-serving-api-openapi.yml: tagged paths GET /apis/serving.knative.dev/v1/namespaces/{namespace}/services -> Apis",
+    "knative-serving-api-openapi.yml: tagged paths POST /apis/serving.knative.dev/v1/namespaces/{namespace}/services -> Apis",
+    "knative-serving-api-openapi.yml: tagged paths GET /apis/serving.knative.dev/v1/namespaces/{namespace}/services/{name} -> Apis",
+    "knative-serving-api-openapi.yml: tagged paths PUT /apis/serving.knative.dev/v1/namespaces/{namespace}/services/{name} -> Apis",
+    "knative-serving-api-openapi.yml: tagged paths DELETE /apis/serving.knative.dev/v1/namespaces/{namespace}/services/{name} -> Apis",
+    "knative-serving-api-openapi.yml: declared missing tag: Apis",
+    "superseded outputs removed: knative-ap-is-api-openapi.yml, knative-event-sources-api-openapi.yml, knative-event-types-api-openapi.yml",
+    "apis.yml register: written (+3 apis, 13 total)"
+  ],
+  "skipped": [
+    "knative-ap-is-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "knative-brokers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "knative-channels-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "knative-configurations-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "knative-domainmappings-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "knative-event-sources-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "knative-event-types-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "knative-revisions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "knative-routes-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "knative-subscriptions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "knative-triggers-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

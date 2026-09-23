@@ -1,0 +1,26 @@
+# Front Door AI Index — knative — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: knative
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: knative.dev
+  final_host: knative.dev
+  ownership: own
+  owner: knative
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 2
+  host_score: 2
+  density: 4.76
+  words: 420
+  tiers:
+    agentic: 1
+    core: 1
+    model: 0
+  ambiguous: 0
+  top_terms:
+    MCP: 1
+    ML: 1
