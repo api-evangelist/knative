@@ -103,6 +103,43 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    name:
+      name: name
+      in: path
+      required: true
+      description: Name of the Knative resource.
+      schema:
+        type: string
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: Kubernetes namespace containing the resource.
+      schema:
+        type: string
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Pagination token returned by a previous list call.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return in a single response.
+      schema:
+        type: integer
+        minimum: 1
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: Selector to filter resources by label key-value pairs.
+      schema:
+        type: string
   schemas:
     Status:
       type: object
@@ -127,33 +164,6 @@ components:
         code:
           type: integer
           description: HTTP status code.
-    Condition:
-      type: object
-      description: A status condition on a Knative resource.
-      required:
-      - type
-      - status
-      properties:
-        type:
-          type: string
-          description: Type of condition such as Ready or Active.
-        status:
-          type: string
-          enum:
-          - 'True'
-          - 'False'
-          - Unknown
-          description: Status of the condition.
-        reason:
-          type: string
-          description: Machine-readable reason for the last condition transition.
-        message:
-          type: string
-          description: Human-readable message explaining the current condition.
-        lastTransitionTime:
-          type: string
-          format: date-time
-          description: Time of the last condition transition.
     DomainMappingList:
       type: object
       description: A list of DomainMapping resources.
@@ -183,63 +193,6 @@ components:
           description: List of DomainMapping resources.
           items:
             $ref: '#/components/schemas/DomainMapping'
-    ObjectMeta:
-      type: object
-      description: Standard Kubernetes object metadata.
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Unique name of the resource within its namespace.
-        namespace:
-          type: string
-          description: Namespace the resource belongs to.
-        labels:
-          type: object
-          description: Key-value labels for organizing and selecting resources.
-          additionalProperties:
-            type: string
-        annotations:
-          type: object
-          description: Non-identifying metadata, including autoscaling configuration annotations.
-          additionalProperties:
-            type: string
-        resourceVersion:
-          type: string
-          description: Opaque string identifying the resource version for optimistic concurrency.
-        uid:
-          type: string
-          description: Unique identifier assigned by the API server.
-        generation:
-          type: integer
-          description: Sequence number incremented on each spec change.
-        creationTimestamp:
-          type: string
-          format: date-time
-          description: Time the resource was created.
-        deletionTimestamp:
-          type: string
-          format: date-time
-          description: Time after which the resource will be deleted.
-        ownerReferences:
-          type: array
-          description: References to objects that own this resource.
-          items:
-            type: object
-            properties:
-              apiVersion:
-                type: string
-                description: API version of the owner.
-              kind:
-                type: string
-                description: Kind of the owner.
-              name:
-                type: string
-                description: Name of the owner.
-              uid:
-                type: string
-                description: UID of the owner.
     DomainMapping:
       type: object
       description: A Knative DomainMapping that maps a custom domain name to a Knative Service, enabling services to be reached at custom hostnames with automatic TLS certificate provisioning.
@@ -302,7 +255,97 @@ components:
               description: Status conditions including CertificateProvisioned and Ready.
               items:
                 $ref: '#/components/schemas/Condition'
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Unique name of the resource within its namespace.
+        namespace:
+          type: string
+          description: Namespace the resource belongs to.
+        labels:
+          type: object
+          description: Key-value labels for organizing and selecting resources.
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: Non-identifying metadata, including autoscaling configuration annotations.
+          additionalProperties:
+            type: string
+        resourceVersion:
+          type: string
+          description: Opaque string identifying the resource version for optimistic concurrency.
+        uid:
+          type: string
+          description: Unique identifier assigned by the API server.
+        generation:
+          type: integer
+          description: Sequence number incremented on each spec change.
+        creationTimestamp:
+          type: string
+          format: date-time
+          description: Time the resource was created.
+        deletionTimestamp:
+          type: string
+          format: date-time
+          description: Time after which the resource will be deleted.
+        ownerReferences:
+          type: array
+          description: References to objects that own this resource.
+          items:
+            type: object
+            properties:
+              apiVersion:
+                type: string
+                description: API version of the owner.
+              kind:
+                type: string
+                description: Kind of the owner.
+              name:
+                type: string
+                description: Name of the owner.
+              uid:
+                type: string
+                description: UID of the owner.
+    Condition:
+      type: object
+      description: A status condition on a Knative resource.
+      required:
+      - type
+      - status
+      properties:
+        type:
+          type: string
+          description: Type of condition such as Ready or Active.
+        status:
+          type: string
+          enum:
+          - 'True'
+          - 'False'
+          - Unknown
+          description: Status of the condition.
+        reason:
+          type: string
+          description: Machine-readable reason for the last condition transition.
+        message:
+          type: string
+          description: Human-readable message explaining the current condition.
+        lastTransitionTime:
+          type: string
+          format: date-time
+          description: Time of the last condition transition.
   responses:
+    BadRequest:
+      description: The request was malformed or failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
     NotFound:
       description: The requested resource was not found.
       content:
@@ -315,49 +358,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Status'
-    BadRequest:
-      description: The request was malformed or failed validation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Status'
-  parameters:
-    namespace:
-      name: namespace
-      in: path
-      required: true
-      description: Kubernetes namespace containing the resource.
-      schema:
-        type: string
-    labelSelector:
-      name: labelSelector
-      in: query
-      required: false
-      description: Selector to filter resources by label key-value pairs.
-      schema:
-        type: string
-    continueToken:
-      name: continue
-      in: query
-      required: false
-      description: Pagination token returned by a previous list call.
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of items to return in a single response.
-      schema:
-        type: integer
-        minimum: 1
-    name:
-      name: name
-      in: path
-      required: true
-      description: Name of the Knative resource.
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http

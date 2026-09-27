@@ -105,30 +105,44 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    name:
+      name: name
+      in: path
+      required: true
+      description: Name of the Knative resource.
+      schema:
+        type: string
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: Kubernetes namespace containing the resource.
+      schema:
+        type: string
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Pagination token returned by a previous list call.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return in a single response.
+      schema:
+        type: integer
+        minimum: 1
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: Selector to filter resources by label key-value pairs.
+      schema:
+        type: string
   schemas:
-    Status:
-      type: object
-      description: Kubernetes API Status response.
-      properties:
-        apiVersion:
-          type: string
-          description: API version of the Status object.
-        kind:
-          type: string
-          const: Status
-          description: Always Status.
-        status:
-          type: string
-          description: Success or Failure.
-        message:
-          type: string
-          description: Human-readable description.
-        reason:
-          type: string
-          description: Machine-readable reason.
-        code:
-          type: integer
-          description: HTTP status code.
     Destination:
       type: object
       description: A destination for delivering CloudEvents. Can reference a Kubernetes service, a Knative Service, a Broker, or a Channel via ref, or specify a direct URI.
@@ -157,6 +171,52 @@ components:
           type: string
           format: uri
           description: Direct URI to deliver events to. Mutually exclusive with ref.
+    Status:
+      type: object
+      description: Kubernetes API Status response.
+      properties:
+        apiVersion:
+          type: string
+          description: API version of the Status object.
+        kind:
+          type: string
+          const: Status
+          description: Always Status.
+        status:
+          type: string
+          description: Success or Failure.
+        message:
+          type: string
+          description: Human-readable description.
+        reason:
+          type: string
+          description: Machine-readable reason.
+        code:
+          type: integer
+          description: HTTP status code.
+    DeliverySpec:
+      type: object
+      description: Delivery configuration for event sources and Brokers.
+      properties:
+        deadLetterSink:
+          $ref: '#/components/schemas/Destination'
+          description: Destination for events that cannot be delivered after retries.
+        retry:
+          type: integer
+          minimum: 0
+          description: Minimum number of retries before sending to the dead-letter sink.
+        backoffPolicy:
+          type: string
+          enum:
+          - linear
+          - exponential
+          description: Backoff policy for retries.
+        backoffDelay:
+          type: string
+          description: Delay between retries in ISO 8601 duration format, for example PT2S.
+        timeout:
+          type: string
+          description: Timeout per delivery attempt in ISO 8601 duration format.
     SubscriptionList:
       type: object
       description: A list of Subscription resources.
@@ -186,6 +246,68 @@ components:
           description: List of Subscription resources.
           items:
             $ref: '#/components/schemas/Subscription'
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Unique name of the resource within its namespace.
+        namespace:
+          type: string
+          description: Namespace the resource belongs to.
+        labels:
+          type: object
+          description: Key-value labels for organizing and selecting resources.
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: Non-identifying metadata for the resource.
+          additionalProperties:
+            type: string
+        resourceVersion:
+          type: string
+          description: Opaque string identifying the resource version.
+        uid:
+          type: string
+          description: Unique identifier assigned by the API server.
+        generation:
+          type: integer
+          description: Sequence number incremented on each spec change.
+        creationTimestamp:
+          type: string
+          format: date-time
+          description: Time the resource was created.
+    Condition:
+      type: object
+      description: A status condition on a Knative resource.
+      required:
+      - type
+      - status
+      properties:
+        type:
+          type: string
+          description: Type of condition such as Ready or Addressable.
+        status:
+          type: string
+          enum:
+          - 'True'
+          - 'False'
+          - Unknown
+          description: Status of the condition.
+        reason:
+          type: string
+          description: Machine-readable reason for the last transition.
+        message:
+          type: string
+          description: Human-readable message for the condition.
+        lastTransitionTime:
+          type: string
+          format: date-time
+          description: Time of the last condition transition.
     Subscription:
       type: object
       description: A Knative Subscription that routes events from a Channel to a subscriber destination. Each Subscription maintains its own delivery state independently of other Subscriptions on the same Channel.
@@ -257,100 +379,15 @@ components:
               description: Status conditions for the Subscription.
               items:
                 $ref: '#/components/schemas/Condition'
-    Condition:
-      type: object
-      description: A status condition on a Knative resource.
-      required:
-      - type
-      - status
-      properties:
-        type:
-          type: string
-          description: Type of condition such as Ready or Addressable.
-        status:
-          type: string
-          enum:
-          - 'True'
-          - 'False'
-          - Unknown
-          description: Status of the condition.
-        reason:
-          type: string
-          description: Machine-readable reason for the last transition.
-        message:
-          type: string
-          description: Human-readable message for the condition.
-        lastTransitionTime:
-          type: string
-          format: date-time
-          description: Time of the last condition transition.
-    ObjectMeta:
-      type: object
-      description: Standard Kubernetes object metadata.
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Unique name of the resource within its namespace.
-        namespace:
-          type: string
-          description: Namespace the resource belongs to.
-        labels:
-          type: object
-          description: Key-value labels for organizing and selecting resources.
-          additionalProperties:
-            type: string
-        annotations:
-          type: object
-          description: Non-identifying metadata for the resource.
-          additionalProperties:
-            type: string
-        resourceVersion:
-          type: string
-          description: Opaque string identifying the resource version.
-        uid:
-          type: string
-          description: Unique identifier assigned by the API server.
-        generation:
-          type: integer
-          description: Sequence number incremented on each spec change.
-        creationTimestamp:
-          type: string
-          format: date-time
-          description: Time the resource was created.
-    DeliverySpec:
-      type: object
-      description: Delivery configuration for event sources and Brokers.
-      properties:
-        deadLetterSink:
-          $ref: '#/components/schemas/Destination'
-          description: Destination for events that cannot be delivered after retries.
-        retry:
-          type: integer
-          minimum: 0
-          description: Minimum number of retries before sending to the dead-letter sink.
-        backoffPolicy:
-          type: string
-          enum:
-          - linear
-          - exponential
-          description: Backoff policy for retries.
-        backoffDelay:
-          type: string
-          description: Delay between retries in ISO 8601 duration format, for example PT2S.
-        timeout:
-          type: string
-          description: Timeout per delivery attempt in ISO 8601 duration format.
   responses:
-    NotFound:
-      description: The requested resource was not found.
+    BadRequest:
+      description: The request was malformed or failed validation.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Status'
-    Conflict:
-      description: A resource with this name already exists.
+    NotFound:
+      description: The requested resource was not found.
       content:
         application/json:
           schema:
@@ -361,49 +398,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Status'
-    BadRequest:
-      description: The request was malformed or failed validation.
+    Conflict:
+      description: A resource with this name already exists.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Status'
-  parameters:
-    labelSelector:
-      name: labelSelector
-      in: query
-      required: false
-      description: Selector to filter resources by label key-value pairs.
-      schema:
-        type: string
-    continueToken:
-      name: continue
-      in: query
-      required: false
-      description: Pagination token returned by a previous list call.
-      schema:
-        type: string
-    namespace:
-      name: namespace
-      in: path
-      required: true
-      description: Kubernetes namespace containing the resource.
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of items to return in a single response.
-      schema:
-        type: integer
-        minimum: 1
-    name:
-      name: name
-      in: path
-      required: true
-      description: Name of the Knative resource.
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http

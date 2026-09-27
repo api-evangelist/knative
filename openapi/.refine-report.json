@@ -18,7 +18,7 @@
     "knative-routes-api-openapi.yml"
   ],
   "archived": [
-    "deleted 3 superseded output(s) from the previous generation"
+    "deleted 2 superseded output(s) from the previous generation"
   ],
   "errors": [],
   "warnings": [],
@@ -32,11 +32,11 @@
     "knative-serving-api-openapi.yml: tagged paths PUT /apis/serving.knative.dev/v1/namespaces/{namespace}/services/{name} -> Apis",
     "knative-serving-api-openapi.yml: tagged paths DELETE /apis/serving.knative.dev/v1/namespaces/{namespace}/services/{name} -> Apis",
     "knative-serving-api-openapi.yml: declared missing tag: Apis",
-    "superseded outputs removed: knative-ap-is-api-openapi.yml, knative-event-sources-api-openapi.yml, knative-event-types-api-openapi.yml",
-    "apis.yml register: written (+3 apis, 13 total)"
+    "superseded outputs removed: knative-event-sources-api-openapi.yml, knative-event-types-api-openapi.yml",
+    "apis.yml register: written (+2 apis, 13 total)"
   ],
   "skipped": [
-    "knative-ap-is-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "knative-apis-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "knative-brokers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "knative-channels-api-openapi.yml: previously refined output, superseded by openapi/_original/",
     "knative-configurations-api-openapi.yml: previously refined output, superseded by openapi/_original/",

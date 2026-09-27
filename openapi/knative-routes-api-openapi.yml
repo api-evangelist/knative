@@ -103,6 +103,43 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
+  parameters:
+    name:
+      name: name
+      in: path
+      required: true
+      description: Name of the Knative resource.
+      schema:
+        type: string
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: Kubernetes namespace containing the resource.
+      schema:
+        type: string
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Pagination token returned by a previous list call.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return in a single response.
+      schema:
+        type: integer
+        minimum: 1
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: Selector to filter resources by label key-value pairs.
+      schema:
+        type: string
   schemas:
     Status:
       type: object
@@ -127,79 +164,35 @@ components:
         code:
           type: integer
           description: HTTP status code.
-    Condition:
+    RouteList:
       type: object
-      description: A status condition on a Knative resource.
-      required:
-      - type
-      - status
-      properties:
-        type:
-          type: string
-          description: Type of condition such as Ready or Active.
-        status:
-          type: string
-          enum:
-          - 'True'
-          - 'False'
-          - Unknown
-          description: Status of the condition.
-        reason:
-          type: string
-          description: Machine-readable reason for the last condition transition.
-        message:
-          type: string
-          description: Human-readable message explaining the current condition.
-        lastTransitionTime:
-          type: string
-          format: date-time
-          description: Time of the last condition transition.
-    Route:
-      type: object
-      description: A Knative Route that manages traffic distribution across Revisions. Routes map network endpoints to one or more Revisions and support percentage-based traffic splitting for progressive rollouts.
+      description: A list of Knative Route resources.
       required:
       - apiVersion
       - kind
-      - metadata
-      - spec
+      - items
       properties:
         apiVersion:
           type: string
-          const: serving.knative.dev/v1
-          description: API version for the Knative Route.
+          description: API version for the list.
         kind:
           type: string
-          const: Route
-          description: Resource kind identifier.
+          const: RouteList
+          description: List kind identifier.
         metadata:
-          $ref: '#/components/schemas/ObjectMeta'
-        spec:
           type: object
-          description: Specification for the Route.
           properties:
-            traffic:
-              type: array
-              description: Traffic targets for this Route. Percentages must sum to 100.
-              items:
-                $ref: '#/components/schemas/TrafficTarget'
-        status:
-          type: object
-          description: Status of the Route.
-          properties:
-            url:
+            resourceVersion:
               type: string
-              format: uri
-              description: Primary URL assigned to this Route.
-            conditions:
-              type: array
-              description: Status conditions for the Route.
-              items:
-                $ref: '#/components/schemas/Condition'
-            traffic:
-              type: array
-              description: Observed traffic distribution.
-              items:
-                $ref: '#/components/schemas/TrafficTarget'
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of Route resources.
+          items:
+            $ref: '#/components/schemas/Route'
     ObjectMeta:
       type: object
       description: Standard Kubernetes object metadata.
@@ -257,35 +250,79 @@ components:
               uid:
                 type: string
                 description: UID of the owner.
-    RouteList:
+    Route:
       type: object
-      description: A list of Knative Route resources.
+      description: A Knative Route that manages traffic distribution across Revisions. Routes map network endpoints to one or more Revisions and support percentage-based traffic splitting for progressive rollouts.
       required:
       - apiVersion
       - kind
-      - items
+      - metadata
+      - spec
       properties:
         apiVersion:
           type: string
-          description: API version for the list.
+          const: serving.knative.dev/v1
+          description: API version for the Knative Route.
         kind:
           type: string
-          const: RouteList
-          description: List kind identifier.
+          const: Route
+          description: Resource kind identifier.
         metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
           type: object
+          description: Specification for the Route.
           properties:
-            resourceVersion:
+            traffic:
+              type: array
+              description: Traffic targets for this Route. Percentages must sum to 100.
+              items:
+                $ref: '#/components/schemas/TrafficTarget'
+        status:
+          type: object
+          description: Status of the Route.
+          properties:
+            url:
               type: string
-              description: Resource version of the list.
-            continue:
-              type: string
-              description: Pagination continuation token.
-        items:
-          type: array
-          description: List of Route resources.
-          items:
-            $ref: '#/components/schemas/Route'
+              format: uri
+              description: Primary URL assigned to this Route.
+            conditions:
+              type: array
+              description: Status conditions for the Route.
+              items:
+                $ref: '#/components/schemas/Condition'
+            traffic:
+              type: array
+              description: Observed traffic distribution.
+              items:
+                $ref: '#/components/schemas/TrafficTarget'
+    Condition:
+      type: object
+      description: A status condition on a Knative resource.
+      required:
+      - type
+      - status
+      properties:
+        type:
+          type: string
+          description: Type of condition such as Ready or Active.
+        status:
+          type: string
+          enum:
+          - 'True'
+          - 'False'
+          - Unknown
+          description: Status of the condition.
+        reason:
+          type: string
+          description: Machine-readable reason for the last condition transition.
+        message:
+          type: string
+          description: Human-readable message explaining the current condition.
+        lastTransitionTime:
+          type: string
+          format: date-time
+          description: Time of the last condition transition.
     TrafficTarget:
       type: object
       description: A traffic target that routes a percentage of traffic to a specific Revision or the latest ready Revision.
@@ -312,6 +349,12 @@ components:
           format: uri
           description: Read-only URL for this traffic target. Set by Knative in status. Named tags receive a subdomain URL.
   responses:
+    BadRequest:
+      description: The request was malformed or failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
     NotFound:
       description: The requested resource was not found.
       content:
@@ -324,49 +367,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Status'
-    BadRequest:
-      description: The request was malformed or failed validation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Status'
-  parameters:
-    namespace:
-      name: namespace
-      in: path
-      required: true
-      description: Kubernetes namespace containing the resource.
-      schema:
-        type: string
-    labelSelector:
-      name: labelSelector
-      in: query
-      required: false
-      description: Selector to filter resources by label key-value pairs.
-      schema:
-        type: string
-    continueToken:
-      name: continue
-      in: query
-      required: false
-      description: Pagination token returned by a previous list call.
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of items to return in a single response.
-      schema:
-        type: integer
-        minimum: 1
-    name:
-      name: name
-      in: path
-      required: true
-      description: Name of the Knative resource.
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http

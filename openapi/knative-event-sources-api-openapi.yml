@@ -154,100 +154,37 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
+  parameters:
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: Kubernetes namespace containing the resource.
+      schema:
+        type: string
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Pagination token returned by a previous list call.
+      schema:
+        type: string
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: Selector to filter resources by label key-value pairs.
+      schema:
+        type: string
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return in a single response.
+      schema:
+        type: integer
+        minimum: 1
   schemas:
-    Status:
-      type: object
-      description: Kubernetes API Status response.
-      properties:
-        apiVersion:
-          type: string
-          description: API version of the Status object.
-        kind:
-          type: string
-          const: Status
-          description: Always Status.
-        status:
-          type: string
-          description: Success or Failure.
-        message:
-          type: string
-          description: Human-readable description.
-        reason:
-          type: string
-          description: Machine-readable reason.
-        code:
-          type: integer
-          description: HTTP status code.
-    SinkBinding:
-      type: object
-      description: A Knative SinkBinding that augments a PodSpecable workload by injecting the sink's URI as the K_SINK environment variable. This enables existing workloads to send CloudEvents without being rewritten as Knative-native event sources.
-      required:
-      - apiVersion
-      - kind
-      - metadata
-      - spec
-      properties:
-        apiVersion:
-          type: string
-          const: sources.knative.dev/v1
-          description: API version for the SinkBinding.
-        kind:
-          type: string
-          const: SinkBinding
-          description: Resource kind identifier.
-        metadata:
-          $ref: '#/components/schemas/ObjectMeta'
-        spec:
-          type: object
-          description: Specification for the SinkBinding.
-          required:
-          - subject
-          - sink
-          properties:
-            subject:
-              type: object
-              description: Reference to the PodSpecable workload to bind to.
-              required:
-              - apiVersion
-              - kind
-              - name
-              properties:
-                apiVersion:
-                  type: string
-                  description: API version of the subject resource.
-                kind:
-                  type: string
-                  description: Kind of the subject resource, such as Deployment or StatefulSet.
-                name:
-                  type: string
-                  description: Name of the subject resource.
-                namespace:
-                  type: string
-                  description: Namespace of the subject resource.
-            sink:
-              $ref: '#/components/schemas/Destination'
-            ceOverrides:
-              type: object
-              description: CloudEvent overrides to merge into all events sent by the subject.
-              properties:
-                extensions:
-                  type: object
-                  description: CloudEvent extension attributes to set on all events.
-                  additionalProperties:
-                    type: string
-        status:
-          type: object
-          description: Status of the SinkBinding.
-          properties:
-            sinkUri:
-              type: string
-              format: uri
-              description: Resolved URI of the sink injected as K_SINK.
-            conditions:
-              type: array
-              description: Status conditions for the SinkBinding.
-              items:
-                $ref: '#/components/schemas/Condition'
     Destination:
       type: object
       description: A destination for delivering CloudEvents. Can reference a Kubernetes service, a Knative Service, a Broker, or a Channel via ref, or specify a direct URI.
@@ -276,6 +213,29 @@ components:
           type: string
           format: uri
           description: Direct URI to deliver events to. Mutually exclusive with ref.
+    Status:
+      type: object
+      description: Kubernetes API Status response.
+      properties:
+        apiVersion:
+          type: string
+          description: API version of the Status object.
+        kind:
+          type: string
+          const: Status
+          description: Always Status.
+        status:
+          type: string
+          description: Success or Failure.
+        message:
+          type: string
+          description: Human-readable description.
+        reason:
+          type: string
+          description: Machine-readable reason.
+        code:
+          type: integer
+          description: HTTP status code.
     ApiServerSource:
       type: object
       description: A Knative ApiServerSource that watches Kubernetes API server events for specified resource types and forwards them as CloudEvents to a sink. Requires a service account with RBAC permissions to watch the specified resources.
@@ -347,33 +307,99 @@ components:
               description: Status conditions for the ApiServerSource.
               items:
                 $ref: '#/components/schemas/Condition'
-    Condition:
+    ApiServerSourceList:
       type: object
-      description: A status condition on a Knative resource.
+      description: A list of ApiServerSource resources.
       required:
-      - type
-      - status
+      - apiVersion
+      - kind
+      - items
       properties:
-        type:
+        apiVersion:
           type: string
-          description: Type of condition such as Ready or Addressable.
-        status:
+          description: API version for the list.
+        kind:
           type: string
-          enum:
-          - 'True'
-          - 'False'
-          - Unknown
-          description: Status of the condition.
-        reason:
+          const: ApiServerSourceList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of ApiServerSource resources.
+          items:
+            $ref: '#/components/schemas/ApiServerSource'
+    SinkBindingList:
+      type: object
+      description: A list of SinkBinding resources.
+      required:
+      - apiVersion
+      - kind
+      - items
+      properties:
+        apiVersion:
           type: string
-          description: Machine-readable reason for the last transition.
-        message:
+          description: API version for the list.
+        kind:
           type: string
-          description: Human-readable message for the condition.
-        lastTransitionTime:
+          const: SinkBindingList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of SinkBinding resources.
+          items:
+            $ref: '#/components/schemas/SinkBinding'
+    ObjectMeta:
+      type: object
+      description: Standard Kubernetes object metadata.
+      required:
+      - name
+      properties:
+        name:
+          type: string
+          description: Unique name of the resource within its namespace.
+        namespace:
+          type: string
+          description: Namespace the resource belongs to.
+        labels:
+          type: object
+          description: Key-value labels for organizing and selecting resources.
+          additionalProperties:
+            type: string
+        annotations:
+          type: object
+          description: Non-identifying metadata for the resource.
+          additionalProperties:
+            type: string
+        resourceVersion:
+          type: string
+          description: Opaque string identifying the resource version.
+        uid:
+          type: string
+          description: Unique identifier assigned by the API server.
+        generation:
+          type: integer
+          description: Sequence number incremented on each spec change.
+        creationTimestamp:
           type: string
           format: date-time
-          description: Time of the last condition transition.
+          description: Time the resource was created.
     PingSource:
       type: object
       description: A Knative PingSource that fires CloudEvents on a cron-based schedule. PingSources are used for periodic triggering of event-driven workflows and scheduled tasks.
@@ -427,6 +453,103 @@ components:
               description: Status conditions for the PingSource.
               items:
                 $ref: '#/components/schemas/Condition'
+    SinkBinding:
+      type: object
+      description: A Knative SinkBinding that augments a PodSpecable workload by injecting the sink's URI as the K_SINK environment variable. This enables existing workloads to send CloudEvents without being rewritten as Knative-native event sources.
+      required:
+      - apiVersion
+      - kind
+      - metadata
+      - spec
+      properties:
+        apiVersion:
+          type: string
+          const: sources.knative.dev/v1
+          description: API version for the SinkBinding.
+        kind:
+          type: string
+          const: SinkBinding
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
+          type: object
+          description: Specification for the SinkBinding.
+          required:
+          - subject
+          - sink
+          properties:
+            subject:
+              type: object
+              description: Reference to the PodSpecable workload to bind to.
+              required:
+              - apiVersion
+              - kind
+              - name
+              properties:
+                apiVersion:
+                  type: string
+                  description: API version of the subject resource.
+                kind:
+                  type: string
+                  description: Kind of the subject resource, such as Deployment or StatefulSet.
+                name:
+                  type: string
+                  description: Name of the subject resource.
+                namespace:
+                  type: string
+                  description: Namespace of the subject resource.
+            sink:
+              $ref: '#/components/schemas/Destination'
+            ceOverrides:
+              type: object
+              description: CloudEvent overrides to merge into all events sent by the subject.
+              properties:
+                extensions:
+                  type: object
+                  description: CloudEvent extension attributes to set on all events.
+                  additionalProperties:
+                    type: string
+        status:
+          type: object
+          description: Status of the SinkBinding.
+          properties:
+            sinkUri:
+              type: string
+              format: uri
+              description: Resolved URI of the sink injected as K_SINK.
+            conditions:
+              type: array
+              description: Status conditions for the SinkBinding.
+              items:
+                $ref: '#/components/schemas/Condition'
+    Condition:
+      type: object
+      description: A status condition on a Knative resource.
+      required:
+      - type
+      - status
+      properties:
+        type:
+          type: string
+          description: Type of condition such as Ready or Addressable.
+        status:
+          type: string
+          enum:
+          - 'True'
+          - 'False'
+          - Unknown
+          description: Status of the condition.
+        reason:
+          type: string
+          description: Machine-readable reason for the last transition.
+        message:
+          type: string
+          description: Human-readable message for the condition.
+        lastTransitionTime:
+          type: string
+          format: date-time
+          description: Time of the last condition transition.
     PingSourceList:
       type: object
       description: A list of PingSource resources.
@@ -456,142 +579,19 @@ components:
           description: List of PingSource resources.
           items:
             $ref: '#/components/schemas/PingSource'
-    ApiServerSourceList:
-      type: object
-      description: A list of ApiServerSource resources.
-      required:
-      - apiVersion
-      - kind
-      - items
-      properties:
-        apiVersion:
-          type: string
-          description: API version for the list.
-        kind:
-          type: string
-          const: ApiServerSourceList
-          description: List kind identifier.
-        metadata:
-          type: object
-          properties:
-            resourceVersion:
-              type: string
-              description: Resource version of the list.
-            continue:
-              type: string
-              description: Pagination continuation token.
-        items:
-          type: array
-          description: List of ApiServerSource resources.
-          items:
-            $ref: '#/components/schemas/ApiServerSource'
-    ObjectMeta:
-      type: object
-      description: Standard Kubernetes object metadata.
-      required:
-      - name
-      properties:
-        name:
-          type: string
-          description: Unique name of the resource within its namespace.
-        namespace:
-          type: string
-          description: Namespace the resource belongs to.
-        labels:
-          type: object
-          description: Key-value labels for organizing and selecting resources.
-          additionalProperties:
-            type: string
-        annotations:
-          type: object
-          description: Non-identifying metadata for the resource.
-          additionalProperties:
-            type: string
-        resourceVersion:
-          type: string
-          description: Opaque string identifying the resource version.
-        uid:
-          type: string
-          description: Unique identifier assigned by the API server.
-        generation:
-          type: integer
-          description: Sequence number incremented on each spec change.
-        creationTimestamp:
-          type: string
-          format: date-time
-          description: Time the resource was created.
-    SinkBindingList:
-      type: object
-      description: A list of SinkBinding resources.
-      required:
-      - apiVersion
-      - kind
-      - items
-      properties:
-        apiVersion:
-          type: string
-          description: API version for the list.
-        kind:
-          type: string
-          const: SinkBindingList
-          description: List kind identifier.
-        metadata:
-          type: object
-          properties:
-            resourceVersion:
-              type: string
-              description: Resource version of the list.
-            continue:
-              type: string
-              description: Pagination continuation token.
-        items:
-          type: array
-          description: List of SinkBinding resources.
-          items:
-            $ref: '#/components/schemas/SinkBinding'
   responses:
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Status'
     BadRequest:
       description: The request was malformed or failed validation.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Status'
-  parameters:
-    namespace:
-      name: namespace
-      in: path
-      required: true
-      description: Kubernetes namespace containing the resource.
-      schema:
-        type: string
-    labelSelector:
-      name: labelSelector
-      in: query
-      required: false
-      description: Selector to filter resources by label key-value pairs.
-      schema:
-        type: string
-    continueToken:
-      name: continue
-      in: query
-      required: false
-      description: Pagination token returned by a previous list call.
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of items to return in a single response.
-      schema:
-        type: integer
-        minimum: 1
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
   securitySchemes:
     bearerAuth:
       type: http
