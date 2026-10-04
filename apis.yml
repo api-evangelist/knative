@@ -34,6 +34,9 @@ accessModel:
   generated: '2026-09-03'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/knative.png
+x-docs-platform: mkdocs
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-10-03
 tags:
   - Auto-Scaling
   - Cloud-Native
@@ -413,6 +416,9 @@ apis:
   - type: JSONSchema
     url: json-schema/knative-eventing-schema.json
 common:
+  - type: CapabilityMap
+    url: capabilities/knative-capability-edges.yml
+    name: Knative Business Capability Map
   - type: IssueTracker
     url: https://github.com/knative/func/issues
   - type: Releases
