@@ -78,20 +78,28 @@ paths:
         '404':
           $ref: '#/components/responses/NotFound'
 components:
-  responses:
-    NotFound:
-      description: The requested resource was not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Status'
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Status'
   parameters:
+    name:
+      name: name
+      in: path
+      required: true
+      description: Name of the Knative resource.
+      schema:
+        type: string
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: Kubernetes namespace containing the resource.
+      schema:
+        type: string
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Pagination token returned by a previous list call.
+      schema:
+        type: string
     labelSelector:
       name: labelSelector
       in: query
@@ -107,102 +115,98 @@ components:
       schema:
         type: integer
         minimum: 1
-    continueToken:
-      name: continue
-      in: query
-      required: false
-      description: Pagination token returned by a previous list call.
-      schema:
-        type: string
-    namespace:
-      name: namespace
-      in: path
-      required: true
-      description: Kubernetes namespace containing the resource.
-      schema:
-        type: string
-    name:
-      name: name
-      in: path
-      required: true
-      description: Name of the Knative resource.
-      schema:
-        type: string
+  responses:
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    NotFound:
+      description: The requested resource was not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
   schemas:
-    Container:
+    Revision:
       type: object
-      description: A container definition for a Knative Revision.
+      description: A Knative Revision, an immutable snapshot of application code and configuration at a point in time. Revisions are created automatically when a Configuration is updated and are the units that Knative scales up and down to handle traffic.
       required:
-      - image
+      - apiVersion
+      - kind
+      - metadata
       properties:
-        name:
+        apiVersion:
           type: string
-          description: Name of the container. Defaults to the first container name.
-        image:
+          const: serving.knative.dev/v1
+          description: API version for the Knative Revision.
+        kind:
           type: string
-          description: OCI image reference for the container.
-        ports:
-          type: array
-          description: Ports exposed by the container. Knative uses the first container port for routing.
-          items:
-            type: object
-            properties:
-              containerPort:
-                type: integer
-                description: Port number exposed by the container.
-              name:
-                type: string
-                description: Port name, typically h2c for HTTP/2 or http1 for HTTP/1.1.
-              protocol:
-                type: string
-                description: Protocol for the port, usually TCP.
-        env:
-          type: array
-          description: Environment variables set in the container.
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-                description: Environment variable name.
-              value:
-                type: string
-                description: Literal value for the environment variable.
-              valueFrom:
-                type: object
-                description: Source for the environment variable value from a ConfigMap or Secret.
-        resources:
+          const: Revision
+          description: Resource kind identifier.
+        metadata:
+          $ref: '#/components/schemas/ObjectMeta'
+        spec:
           type: object
-          description: Compute resource requests and limits for the container.
+          description: The immutable spec of the Revision.
           properties:
-            requests:
-              type: object
-              description: Minimum resources requested.
-              additionalProperties:
-                type: string
-            limits:
-              type: object
-              description: Maximum resources allowed.
-              additionalProperties:
-                type: string
-        readinessProbe:
+            containerConcurrency:
+              type: integer
+              description: Maximum concurrent requests per container instance.
+            timeoutSeconds:
+              type: integer
+              description: Request timeout in seconds.
+            serviceAccountName:
+              type: string
+              description: Service account used by the Revision pods.
+            containers:
+              type: array
+              description: Containers in the Revision pod.
+              items:
+                $ref: '#/components/schemas/Container'
+        status:
           type: object
-          description: Probe to determine when the container is ready to accept traffic.
-        livenessProbe:
-          type: object
-          description: Probe to determine if the container is still running.
-        volumeMounts:
-          type: array
-          description: Volume mounts for the container.
-          items:
-            type: object
-            properties:
-              name:
-                type: string
-                description: Name of the volume to mount.
-              mountPath:
-                type: string
-                description: Path within the container to mount the volume.
+          description: Status of the Revision.
+          properties:
+            serviceName:
+              type: string
+              description: Name of the Service that owns this Revision.
+            logUrl:
+              type: string
+              description: URL to the log output for this Revision.
+            conditions:
+              type: array
+              description: Status conditions for the Revision.
+              items:
+                $ref: '#/components/schemas/Condition'
+    Condition:
+      type: object
+      description: A status condition on a Knative resource.
+      required:
+      - type
+      - status
+      properties:
+        type:
+          type: string
+          description: Type of condition such as Ready or Active.
+        status:
+          type: string
+          enum:
+          - 'True'
+          - 'False'
+          - Unknown
+          description: Status of the condition.
+        reason:
+          type: string
+          description: Machine-readable reason for the last condition transition.
+        message:
+          type: string
+          description: Human-readable message explaining the current condition.
+        lastTransitionTime:
+          type: string
+          format: date-time
+          description: Time of the last condition transition.
     RevisionList:
       type: object
       description: A list of Knative Revision resources.
@@ -289,57 +293,6 @@ components:
               uid:
                 type: string
                 description: UID of the owner.
-    Revision:
-      type: object
-      description: A Knative Revision, an immutable snapshot of application code and configuration at a point in time. Revisions are created automatically when a Configuration is updated and are the units that Knative scales up and down to handle traffic.
-      required:
-      - apiVersion
-      - kind
-      - metadata
-      properties:
-        apiVersion:
-          type: string
-          const: serving.knative.dev/v1
-          description: API version for the Knative Revision.
-        kind:
-          type: string
-          const: Revision
-          description: Resource kind identifier.
-        metadata:
-          $ref: '#/components/schemas/ObjectMeta'
-        spec:
-          type: object
-          description: The immutable spec of the Revision.
-          properties:
-            containerConcurrency:
-              type: integer
-              description: Maximum concurrent requests per container instance.
-            timeoutSeconds:
-              type: integer
-              description: Request timeout in seconds.
-            serviceAccountName:
-              type: string
-              description: Service account used by the Revision pods.
-            containers:
-              type: array
-              description: Containers in the Revision pod.
-              items:
-                $ref: '#/components/schemas/Container'
-        status:
-          type: object
-          description: Status of the Revision.
-          properties:
-            serviceName:
-              type: string
-              description: Name of the Service that owns this Revision.
-            logUrl:
-              type: string
-              description: URL to the log output for this Revision.
-            conditions:
-              type: array
-              description: Status conditions for the Revision.
-              items:
-                $ref: '#/components/schemas/Condition'
     Status:
       type: object
       description: Kubernetes API Status response for errors and operation results.
@@ -363,33 +316,80 @@ components:
         code:
           type: integer
           description: HTTP status code.
-    Condition:
+    Container:
       type: object
-      description: A status condition on a Knative resource.
+      description: A container definition for a Knative Revision.
       required:
-      - type
-      - status
+      - image
       properties:
-        type:
+        name:
           type: string
-          description: Type of condition such as Ready or Active.
-        status:
+          description: Name of the container. Defaults to the first container name.
+        image:
           type: string
-          enum:
-          - 'True'
-          - 'False'
-          - Unknown
-          description: Status of the condition.
-        reason:
-          type: string
-          description: Machine-readable reason for the last condition transition.
-        message:
-          type: string
-          description: Human-readable message explaining the current condition.
-        lastTransitionTime:
-          type: string
-          format: date-time
-          description: Time of the last condition transition.
+          description: OCI image reference for the container.
+        ports:
+          type: array
+          description: Ports exposed by the container. Knative uses the first container port for routing.
+          items:
+            type: object
+            properties:
+              containerPort:
+                type: integer
+                description: Port number exposed by the container.
+              name:
+                type: string
+                description: Port name, typically h2c for HTTP/2 or http1 for HTTP/1.1.
+              protocol:
+                type: string
+                description: Protocol for the port, usually TCP.
+        env:
+          type: array
+          description: Environment variables set in the container.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Environment variable name.
+              value:
+                type: string
+                description: Literal value for the environment variable.
+              valueFrom:
+                type: object
+                description: Source for the environment variable value from a ConfigMap or Secret.
+        resources:
+          type: object
+          description: Compute resource requests and limits for the container.
+          properties:
+            requests:
+              type: object
+              description: Minimum resources requested.
+              additionalProperties:
+                type: string
+            limits:
+              type: object
+              description: Maximum resources allowed.
+              additionalProperties:
+                type: string
+        readinessProbe:
+          type: object
+          description: Probe to determine when the container is ready to accept traffic.
+        livenessProbe:
+          type: object
+          description: Probe to determine if the container is still running.
+        volumeMounts:
+          type: array
+          description: Volume mounts for the container.
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+                description: Name of the volume to mount.
+              mountPath:
+                type: string
+                description: Path within the container to mount the volume.
   securitySchemes:
     bearerAuth:
       type: http
