@@ -1,0 +1,25 @@
+slug: knative
+provider: Knative
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Software & Technology
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 1
+edges:
+- tag: APIs
+  spec_file: knative-apis-api-openapi.yml
+  capability_id: BC-4210.40
+  capability_id_l1: BC-4210
+  capability_name: Deployment Orchestration
+  confidence: 0.7
+  evidence: POST .../services createService Create a Knative Service; "traffic splitting between revisions,
+    and progressive rollouts"
+  reason: Operations deploy and manage serverless workloads with traffic splitting and progressive rollouts
+    — deployment orchestration of software changes to running infrastructure.
