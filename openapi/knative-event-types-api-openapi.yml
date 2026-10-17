@@ -62,79 +62,7 @@ paths:
         '401':
           $ref: '#/components/responses/Unauthorized'
 components:
-  responses:
-    Unauthorized:
-      description: Authentication credentials are missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Status'
-    BadRequest:
-      description: The request was malformed or failed validation.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Status'
-  parameters:
-    namespace:
-      name: namespace
-      in: path
-      required: true
-      description: Kubernetes namespace containing the resource.
-      schema:
-        type: string
-    continueToken:
-      name: continue
-      in: query
-      required: false
-      description: Pagination token returned by a previous list call.
-      schema:
-        type: string
-    labelSelector:
-      name: labelSelector
-      in: query
-      required: false
-      description: Selector to filter resources by label key-value pairs.
-      schema:
-        type: string
-    limit:
-      name: limit
-      in: query
-      required: false
-      description: Maximum number of items to return in a single response.
-      schema:
-        type: integer
-        minimum: 1
   schemas:
-    EventTypeList:
-      type: object
-      description: A list of EventType resources.
-      required:
-      - apiVersion
-      - kind
-      - items
-      properties:
-        apiVersion:
-          type: string
-          description: API version for the list.
-        kind:
-          type: string
-          const: EventTypeList
-          description: List kind identifier.
-        metadata:
-          type: object
-          properties:
-            resourceVersion:
-              type: string
-              description: Resource version of the list.
-            continue:
-              type: string
-              description: Pagination continuation token.
-        items:
-          type: array
-          description: List of EventType resources.
-          items:
-            $ref: '#/components/schemas/EventType'
     ObjectMeta:
       type: object
       description: Standard Kubernetes object metadata.
@@ -170,29 +98,6 @@ components:
           type: string
           format: date-time
           description: Time the resource was created.
-    Status:
-      type: object
-      description: Kubernetes API Status response.
-      properties:
-        apiVersion:
-          type: string
-          description: API version of the Status object.
-        kind:
-          type: string
-          const: Status
-          description: Always Status.
-        status:
-          type: string
-          description: Success or Failure.
-        message:
-          type: string
-          description: Human-readable description.
-        reason:
-          type: string
-          description: Machine-readable reason.
-        code:
-          type: integer
-          description: HTTP status code.
     EventType:
       type: object
       description: A Knative EventType that catalogs an event type available from a Broker. EventTypes help consumers discover which events are available without having to inspect Broker or Trigger configuration directly.
@@ -235,6 +140,101 @@ components:
             broker:
               type: string
               description: Name of the Broker that produces this event type.
+    Status:
+      type: object
+      description: Kubernetes API Status response.
+      properties:
+        apiVersion:
+          type: string
+          description: API version of the Status object.
+        kind:
+          type: string
+          const: Status
+          description: Always Status.
+        status:
+          type: string
+          description: Success or Failure.
+        message:
+          type: string
+          description: Human-readable description.
+        reason:
+          type: string
+          description: Machine-readable reason.
+        code:
+          type: integer
+          description: HTTP status code.
+    EventTypeList:
+      type: object
+      description: A list of EventType resources.
+      required:
+      - apiVersion
+      - kind
+      - items
+      properties:
+        apiVersion:
+          type: string
+          description: API version for the list.
+        kind:
+          type: string
+          const: EventTypeList
+          description: List kind identifier.
+        metadata:
+          type: object
+          properties:
+            resourceVersion:
+              type: string
+              description: Resource version of the list.
+            continue:
+              type: string
+              description: Pagination continuation token.
+        items:
+          type: array
+          description: List of EventType resources.
+          items:
+            $ref: '#/components/schemas/EventType'
+  parameters:
+    limit:
+      name: limit
+      in: query
+      required: false
+      description: Maximum number of items to return in a single response.
+      schema:
+        type: integer
+        minimum: 1
+    continueToken:
+      name: continue
+      in: query
+      required: false
+      description: Pagination token returned by a previous list call.
+      schema:
+        type: string
+    namespace:
+      name: namespace
+      in: path
+      required: true
+      description: Kubernetes namespace containing the resource.
+      schema:
+        type: string
+    labelSelector:
+      name: labelSelector
+      in: query
+      required: false
+      description: Selector to filter resources by label key-value pairs.
+      schema:
+        type: string
+  responses:
+    BadRequest:
+      description: The request was malformed or failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
+    Unauthorized:
+      description: Authentication credentials are missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Status'
   securitySchemes:
     bearerAuth:
       type: http
