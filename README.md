@@ -1,4 +1,4 @@
-# Knative (knative)
+# Knative
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,131 +66,188 @@
 
 Knative is a CNCF graduated platform that extends Kubernetes to provide serverless capabilities. It consists of Serving for deploying and scaling serverless workloads with automatic scale-to-zero, and Eventing for building event-driven architectures with declarative event routing and delivery. Knative abstracts away infrastructure complexity so developers can focus on writing code.
 
-**APIs.json:** [https://knative.dev](https://knative.dev)
+**Areas:** Auto-Scaling · Cloud-Native · Event-Driven · Graduated · Kubernetes · Serverless
 
-## Scope
+## Knative on APIs.io
 
-- **Type:** Index
+Everything profiled for Knative is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/knative/](https://apis.io/providers/knative/)** — or go straight to one of the APIs or properties below.
 
-## Tags
+### APIs (13)
 
-- Auto-Scaling
-- Cloud Native
-- Event-Driven
-- Graduated
-- Kubernetes
-- Serverless
+- [Knative Functions](https://apis.io/apis/knative/knative-functions/) — Knative Functions enables developers to create, build, and deploy stateless, event-driven functions as Knative Services using the func CLI or the kn func…
+- [Knative CLI (kn)](https://apis.io/apis/knative/knative-cli/) — The Knative CLI (kn) provides a command-line interface for creating and managing Knative resources including Services, Revisions, Routes, event sources, and…
+- [Knative Brokers API](https://apis.io/apis/knative/knative-brokers-api/) — Knative Broker resources collect pools of events that can be consumed using Triggers. Brokers provide event routing with filtering, guaranteed delivery, and…
+- [Knative Channels API](https://apis.io/apis/knative/knative-channels-api/) — Knative Channel resources represent a generic pub/sub messaging channel. Channels receive events and fan them out to all Subscriptions. The default channel…
+- [Knative Configurations API](https://apis.io/apis/knative/knative-configurations-api/) — Knative Configuration resources maintain the desired state for a deployment by capturing container templates. Each update to a Configuration creates a new…
+- [Knative DomainMappings API](https://apis.io/apis/knative/knative-domainmappings-api/) — Knative DomainMapping resources map a custom domain name to a Knative Service, enabling services to be served under custom hostnames with automatic TLS…
+- [Knative Revisions API](https://apis.io/apis/knative/knative-revisions-api/) — Knative Revision resources are immutable snapshots of application code and configuration at a point in time. Revisions are created by Configuration updates…
+- [Knative Routes API](https://apis.io/apis/knative/knative-routes-api/) — Knative Route resources manage the network endpoints and traffic distribution across Revisions. Routes support percentage-based traffic splitting for canary…
+- [Knative Subscriptions API](https://apis.io/apis/knative/knative-subscriptions-api/) — Knative Subscription resources define a delivery destination for events sent to a Channel. Each Subscription routes events from a Channel to a subscriber…
+- [Knative Triggers API](https://apis.io/apis/knative/knative-triggers-api/) — Knative Trigger resources define filtered delivery options for events arriving at a Broker. A Trigger selects events by attribute filters and routes…
+- [Knative APIS API](https://apis.io/apis/knative/knative-apis-api/) — The Apis API from Knative — 2 operation(s) for apis.
+- [Knative Event Sources API](https://apis.io/apis/knative/knative-event-sources-api/) — Knative event source resources connect external event producers to the eventing mesh. Built-in sources include ApiServerSource for Kubernetes API events,…
+- [Knative Event Types API](https://apis.io/apis/knative/knative-event-types-api/) — Knative EventType resources maintain a catalog of event types that can be consumed from Brokers. EventTypes help consumers discover what events are…
 
-## Timestamps
+### Published properties
 
-- **Created:** 2026-03-16
-- **Modified:** 2026-05-19
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-## APIs
+#### AsyncAPI (1)
 
-### Knative Serving API
+Event-driven and webhook contracts.
 
-Knative Serving extends the Kubernetes API with custom resources for deploying serverless workloads. The Service, Route, Configuration, and Revision resources enable automatic scaling including scale-to-zero, traffic splitting between revisions, and progressive rollouts. Serving handles container lifecycle, networking, and autoscaling automatically.
+- [Knative Eventing CloudEvents](https://apis.io/asyncapis/knative/knative-cloudevents-asyncapi/)
 
-- **Human URL:** [https://knative.dev/docs/serving/](https://knative.dev/docs/serving/)
+#### Event channels (3)
 
-#### Tags
+Individual events and webhooks the provider emits.
 
-- Auto-Scaling
-- Serverless
-- Serving
+- [/broker](https://apis.io/channels/knative/broker/)
+- [/channel](https://apis.io/channels/knative/channel/)
+- [/sink](https://apis.io/channels/knative/sink/)
 
-#### Properties
+#### Agentic access (1)
 
-- [Documentation](https://knative.dev/docs/serving/)
-- [Reference](https://knative.dev/docs/serving/reference/serving-api/)
-- [GitHub Repository](https://github.com/knative/serving)
-- [OpenAPI](openapi/knative-serving-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/knative-serving-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/knative-serving-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [JSON Schema](json-schema/knative-serving-schema.json) — [JSON Schema](https://json-schema.org/specification)
+Which operations an agent can call, which act, and which need a human in the loop.
 
-### Knative Eventing API
+- [Knative Agentic Access](https://apis.io/agentic-access/knative/knative-agentic-access/)
 
-Knative Eventing provides a set of Kubernetes custom resources for building event-driven architectures. It includes Broker and Trigger resources for event routing, Channel and Subscription for pub/sub messaging, and source resources for connecting external event producers to the eventing mesh. Events conform to the CloudEvents specification.
+#### JSON Schema (2)
 
-- **Human URL:** [https://knative.dev/docs/eventing/](https://knative.dev/docs/eventing/)
+The data models the API reads and writes.
 
-#### Tags
+- [Knative Eventing Resources](https://apis.io/schemas/knative/knative-eventing/)
+- [Knative Serving Resources](https://apis.io/schemas/knative/knative-serving/)
 
-- Event-Driven
-- Events
-- Pub/Sub
+#### JSON-LD (1)
 
-#### Properties
+Linked-data contexts for the provider's vocabulary.
 
-- [Documentation](https://knative.dev/docs/eventing/)
-- [Reference](https://knative.dev/docs/eventing/reference/eventing-api/)
-- [GitHub Repository](https://github.com/knative/eventing)
-- [OpenAPI](openapi/knative-eventing-api-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/knative-eventing-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/knative-eventing-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [AsyncAPI](asyncapi/knative-cloudevents-asyncapi.yml) — [AsyncAPI Specification](https://www.asyncapi.com/docs/reference/specification/latest)
-- [JSON Schema](json-schema/knative-eventing-schema.json) — [JSON Schema](https://json-schema.org/specification)
+- [Knative Context](https://apis.io/jsonld/knative/knative-context/)
 
-### Knative Functions
+#### Collections (24)
 
-Knative Functions enables developers to create, build, and deploy stateless, event-driven functions as Knative Services using the func CLI or the kn func plugin. Functions can be written in multiple languages and are automatically deployed as auto-scaling Knative Services that respond to HTTP requests or CloudEvents.
+Postman and Open Collection request collections.
 
-- **Human URL:** [https://knative.dev/docs/functions/](https://knative.dev/docs/functions/)
+- [Knative Eventing Apis API](https://apis.io/collections/knative/open-knative-apis-api/)
+- [Knative Eventing Apis Brokers API](https://apis.io/collections/knative/open-knative-brokers-api/)
+- [Knative Eventing Apis Channels API](https://apis.io/collections/knative/open-knative-channels-api/)
+- [Knative Eventing Apis Configurations API](https://apis.io/collections/knative/open-knative-configurations-api/)
+- [Knative Eventing Apis DomainMappings API](https://apis.io/collections/knative/open-knative-domainmappings-api/)
+- [Knative Eventing API](https://apis.io/collections/knative/open-knative-eventing-api/)
+- [Knative Eventing Apis EventSources API](https://apis.io/collections/knative/open-knative-eventsources-api/)
+- [Knative Eventing Apis EventTypes API](https://apis.io/collections/knative/open-knative-eventtypes-api/)
+- [Knative Eventing Apis Revisions API](https://apis.io/collections/knative/open-knative-revisions-api/)
+- [Knative Eventing Apis Routes API](https://apis.io/collections/knative/open-knative-routes-api/)
+- [Knative Serving API](https://apis.io/collections/knative/open-knative-serving-api/)
+- [Knative Eventing Apis Subscriptions API](https://apis.io/collections/knative/open-knative-subscriptions-api/)
+- [Knative Eventing Apis Triggers API](https://apis.io/collections/knative/open-knative-triggers-api/)
+- [Knative Eventing Apis API](https://apis.io/collections/knative/postman-knative-apis-api/)
+- [Knative Eventing Apis Brokers API](https://apis.io/collections/knative/postman-knative-brokers-api/)
+- [Knative Eventing Apis Channels API](https://apis.io/collections/knative/postman-knative-channels-api/)
+- [Knative Eventing Apis Configurations API](https://apis.io/collections/knative/postman-knative-configurations-api/)
+- [Knative Eventing Apis DomainMappings API](https://apis.io/collections/knative/postman-knative-domainmappings-api/)
+- [Knative Eventing Apis EventSources API](https://apis.io/collections/knative/postman-knative-eventsources-api/)
+- [Knative Eventing Apis EventTypes API](https://apis.io/collections/knative/postman-knative-eventtypes-api/)
+- [Knative Eventing Apis Revisions API](https://apis.io/collections/knative/postman-knative-revisions-api/)
+- [Knative Eventing Apis Routes API](https://apis.io/collections/knative/postman-knative-routes-api/)
+- [Knative Eventing Apis Subscriptions API](https://apis.io/collections/knative/postman-knative-subscriptions-api/)
+- [Knative Eventing Apis Triggers API](https://apis.io/collections/knative/postman-knative-triggers-api/)
 
-#### Tags
+#### Governance rules (2)
 
-- CLI
-- Event-Driven
-- Functions
-- Serverless
+Spectral rulesets for the provider's contracts.
 
-#### Properties
+- [Knative — asyncapi rules](https://apis.io/rules/knative/knative-asyncapi-spectral-rules/)
+- [Knative — jsonschema rules](https://apis.io/rules/knative/knative-jsonschema-spectral-rules/)
 
-- [Documentation](https://knative.dev/docs/functions/)
-- [Getting Started](https://knative.dev/docs/getting-started/about-knative-functions/)
-- [GitHub Repository](https://github.com/knative/func)
-- [Postman Collection](collections/knative-eventing-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/knative-eventing-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/knative-serving-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/knative-serving-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Security (2)
 
-### Knative CLI (kn)
+Authentication, trust centre, and vulnerability disclosure.
 
-The Knative CLI (kn) provides a command-line interface for creating and managing Knative resources including Services, Revisions, Routes, event sources, and Brokers. It simplifies tasks like traffic splitting and autoscaling configuration without requiring direct YAML editing.
+- [Knative Authentication](https://apis.io/security/knative/knative-authentication/)
+- [Knative Domain Security](https://apis.io/security/knative/knative-domain-security/)
 
-- **Human URL:** [https://knative.dev/docs/client/](https://knative.dev/docs/client/)
+#### Plans and pricing (1)
 
-#### Tags
+Published plans, tiers and prices.
 
-- CLI
-- Developer Tools
-- Kubernetes
+- [Knative Plans Pricing](https://apis.io/plans/knative/knative-plans-pricing/)
 
-#### Properties
+#### Rate limits (1)
 
-- [Documentation](https://knative.dev/docs/client/)
-- [GitHub Repository](https://github.com/knative/client)
-- [Postman Collection](collections/knative-eventing-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/knative-eventing-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Postman Collection](collections/knative-serving-api.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/knative-serving-api.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+Published request limits.
 
-## Common Properties
+- [Knative Rate Limits](https://apis.io/rate-limits/knative/knative-rate-limits/)
 
-- [LinkedIn](https://www.linkedin.com/company/knative)
-- [JSON-LD](json-ld/knative-context.jsonld) — [JSON-LD](https://www.w3.org/TR/json-ld11/)
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Knative Finops](https://apis.io/finops/knative/knative-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://knative.dev/)
 - [Documentation](https://knative.dev/docs/)
-- [Getting Started](https://knative.dev/docs/getting-started/)
-- [Blog](https://knative.dev/blog/)
+- [Getting started](https://knative.dev/docs/getting-started/)
 - [Changelog](https://knative.dev/docs/reference/relnotes/)
-- [GitHub Organization](https://github.com/knative)
-- [GitHub Repository](https://github.com/knative/docs)
-- [Community](https://knative.dev/community/)
+- [Blog](https://knative.dev/blog/)
+- [GitHub](https://github.com/knative)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 47.1** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 64.3 |
+| Contract quality | 68.8 |
+| Contract governance | 13.6 |
+| Operational transparency | 39.5 |
+| Developer ergonomics | 48.8 |
+| Access clarity | 7.9 |
+
+**Agent readiness 23.4** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | derived (partial credit) |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | paginated |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 16.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/knative/](https://apis.io/providers/knative/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Knative: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/knative/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
